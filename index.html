@@ -68,8 +68,11 @@ nav{display:flex;gap:44px}
 .hero-role{margin-top:18px;font-size:10.5px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.48);opacity:0;animation:heroIn .9s .55s cubic-bezier(.4,0,.2,1) forwards}
 .hero-role span{color:#7ecfc9}
 @keyframes heroIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.sound-btn{position:absolute;bottom:60px;right:52px;z-index:3;background:none;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.55);font-family:'Manrope',sans-serif;font-size:9.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;padding:10px 22px;cursor:pointer;transition:all .3s;opacity:0;animation:heroIn .9s .7s cubic-bezier(.4,0,.2,1) forwards}
-.sound-btn:hover{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.45)}
+.sound-btn{display:none}
+.hero-controls{position:absolute;bottom:0;left:0;right:0;z-index:4;padding:48px 52px 20px;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 100%)}
+.hero-controls .bvs-scrub-row{margin-bottom:10px}
+.hero-controls .bvs-scrub{background:rgba(255,255,255,.2)}
+.hero-controls .bvs-btn-row{display:flex;align-items:center;gap:10px}
 
 /* ── SECTION LABEL ── */
 .slabel{font-size:9.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:18px;margin-bottom:52px}
@@ -301,11 +304,11 @@ nav{display:flex;gap:44px}
 .gfx-slideshow{padding:48px 52px 32px;max-width:1380px;margin:0 auto}
 .gfx-slideshow-label{font-size:9.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:18px;margin-bottom:36px}
 .gfx-slideshow-label::after{content:'';flex:1;height:1px;background:var(--border)}
-.gfx-stage{position:relative;border-radius:var(--radius-lg);overflow:hidden;background:#0a0a0a;cursor:grab;user-select:none;height:54vh;min-height:300px;max-height:520px}
+.gfx-stage{position:relative;border-radius:var(--radius-lg);overflow:hidden;background:#0a0a0a;cursor:grab;user-select:none}
 .gfx-stage:active{cursor:grabbing}
-.gfx-track{display:flex;will-change:transform;transition:transform .5s cubic-bezier(.4,0,.2,1);height:100%}
-.gfx-slide{min-width:100%;flex-shrink:0;height:100%}
-.gfx-slide img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}
+.gfx-track{display:flex;will-change:transform;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.gfx-slide{min-width:100%;flex-shrink:0}
+.gfx-slide img{width:100%;height:auto;display:block;pointer-events:none}
 .gfx-nav{display:flex;align-items:center;gap:14px;margin-top:18px;padding:0 4px}
 .gfx-dots{display:flex;gap:8px;align-items:center;flex:1}
 .gfx-dot{width:6px;height:6px;border-radius:50%;background:var(--border-med);cursor:pointer;transition:all .3s;border:none;padding:0}
@@ -370,9 +373,9 @@ nav{display:flex;gap:44px}
 <!-- ══ HOME ══ -->
 <section class="section active" id="section-home">
 
-  <div class="hero">
+  <div class="hero" id="card-herov">
     <div class="hero-vid" id="hero-vid">
-      <video id="hero-video" autoplay muted loop playsinline preload="auto"
+      <video id="herov" autoplay muted loop playsinline preload="auto"
         style="width:100%;height:100%;object-fit:contain;pointer-events:none;display:block;">
         <source src="reel.mp4" type="video/mp4">
       </video>
@@ -382,7 +385,17 @@ nav{display:flex;gap:44px}
       <div class="hero-name">Tadashi</div>
       <div class="hero-role">Filmmaker &nbsp;<span>·</span>&nbsp; Producer &nbsp;<span>·</span>&nbsp; Creative Director</div>
     </div>
-    <button class="sound-btn" id="soundBtn">Unmute</button>
+    <div class="hero-controls bvs-controls" style="opacity:1">
+      <div class="bvs-scrub-row">
+        <div class="bvs-scrub" data-vid="herov"><div class="bvs-scrub-fill" id="fill-herov" style="width:0%"><div class="bvs-scrub-thumb"></div></div></div>
+        <span class="bvs-time" id="time-herov">0:00 / 0:00</span>
+      </div>
+      <div class="bvs-btn-row">
+        <button class="bvs-ctrl-btn" id="play-herov" onclick="bvsPlay('herov',this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+        <button class="bvs-sound-btn" id="snd-herov" onclick="bvsSound('herov',this)">Unmute</button>
+        <button class="bvs-ctrl-btn bvs-full-right" onclick="bvsFull('card-herov')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></button>
+      </div>
+    </div>
   </div>
 
   <div class="bio">
@@ -593,6 +606,10 @@ nav{display:flex;gap:44px}
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
       Design &amp; Art
     </a>
+    <a class="exp-nav-btn" href="#exp-photography" onclick="expScroll('exp-photography',this)">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      Photography
+    </a>
   </div>
 
   <!-- HIGHLIGHTS SLIDESHOW -->
@@ -726,6 +743,24 @@ nav{display:flex;gap:44px}
     <div class="design-section fade-in">
       <div class="slabel">Design &amp; Art</div>
 
+      <div class="design-grid">
+
+        <div class="design-item">
+          <img src="scar_city_anim.gif" alt="Scar City — pixel art animation">
+          <div class="design-item-overlay">
+            <span class="design-item-label">Scar City</span>
+          </div>
+        </div>
+
+        <div class="design-item">
+          <img src="scar_animation_1.gif" alt="Scar character — pixel art">
+          <div class="design-item-overlay">
+            <span class="design-item-label">Scar Character</span>
+          </div>
+        </div>
+
+      </div>
+
       <!-- Graphic Design Portfolio Slideshow -->
       <div class="gfx-slideshow">
         <div class="gfx-slideshow-label">Graphic Design Portfolio</div>
@@ -760,25 +795,45 @@ nav{display:flex;gap:44px}
         </div>
       </div>
 
-      <div class="design-grid">
-
-        <div class="design-item">
-          <img src="scar_city_anim.gif" alt="Scar City — pixel art animation">
-          <div class="design-item-overlay">
-            <span class="design-item-label">Scar City</span>
-          </div>
-        </div>
-
-        <div class="design-item">
-          <img src="scar_animation_1.gif" alt="Scar character — pixel art">
-          <div class="design-item-overlay">
-            <span class="design-item-label">Scar Character</span>
-          </div>
-        </div>
-
-      </div>
     </div>
   </div><!-- /exp-design -->
+
+  <!-- ══ PHOTOGRAPHY ══ -->
+  <div id="exp-photography">
+    <div class="design-section fade-in">
+      <div class="slabel">Photography</div>
+      <div class="gfx-slideshow">
+        <div class="gfx-slideshow-label">Photography Portfolio</div>
+        <div class="gfx-stage" id="photo-stage">
+          <div class="gfx-track" id="photo-track">
+            <div class="gfx-slide"><img src="photo_1.jpg" alt="Photography — Cover" loading="lazy"></div>
+            <div class="gfx-slide"><img src="photo_2.jpg" alt="Photography — People" loading="lazy"></div>
+            <div class="gfx-slide"><img src="photo_3.jpg" alt="Photography — Dedicated to Perfection" loading="lazy"></div>
+            <div class="gfx-slide"><img src="photo_4.jpg" alt="Photography — Creative" loading="lazy"></div>
+            <div class="gfx-slide"><img src="photo_5.jpg" alt="Photography — Smoke & Mirrors" loading="lazy"></div>
+            <div class="gfx-slide"><img src="photo_6.jpg" alt="Photography — Illustrations & Creations" loading="lazy"></div>
+          </div>
+        </div>
+        <div class="gfx-nav">
+          <div class="gfx-dots" id="photo-dots">
+            <button class="gfx-dot on" data-i="0"></button>
+            <button class="gfx-dot" data-i="1"></button>
+            <button class="gfx-dot" data-i="2"></button>
+            <button class="gfx-dot" data-i="3"></button>
+            <button class="gfx-dot" data-i="4"></button>
+            <button class="gfx-dot" data-i="5"></button>
+          </div>
+          <span class="gfx-counter" id="photo-counter">1 / 6</span>
+          <button class="gfx-arr" id="photo-prev">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="gfx-arr" id="photo-next">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div><!-- /exp-photography -->
 
   <div id="exp-entries">
   <div class="filters fade-in" style="padding-top:56px">
@@ -911,21 +966,6 @@ function observeFades() {
     .forEach(el => fadeObs.observe(el));
 }
 
-// ── HERO VIDEO ──
-const heroVid = document.getElementById('hero-video');
-let muted = true;
-document.getElementById('soundBtn').addEventListener('click', () => {
-  if (muted) {
-    heroVid.muted = false;
-    heroVid.volume = 0.8;
-    document.getElementById('soundBtn').textContent = 'Mute';
-  } else {
-    heroVid.muted = true;
-    document.getElementById('soundBtn').textContent = 'Unmute';
-  }
-  muted = !muted;
-});
-
 // ── BIO VIDEO STRIP ──
 (function(){
   const strip = document.getElementById('bvs-strip');
@@ -933,7 +973,7 @@ document.getElementById('soundBtn').addEventListener('click', () => {
   const sfill = document.getElementById('bvs-scroll-fill');
   if (!strip) return;
 
-  const vidIds = ['biov1','biov2','biov3','biov4'];
+  const vidIds = ['herov','biov1','biov2','biov3','biov4'];
   let rafId = null;
 
   // ── single-play enforcement ──
@@ -1347,6 +1387,57 @@ observeFades();
   dotsEl.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.i, true)));
 
   // drag / swipe
+  stage.addEventListener('pointerdown', e => {
+    if (e.button !== 0 && e.pointerType === 'mouse') return;
+    dragging = true; isDragged = false; dragStartX = e.clientX; dragDelta = 0;
+    stage.setPointerCapture(e.pointerId);
+    track.style.transition = 'none';
+  });
+  stage.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    dragDelta = e.clientX - dragStartX;
+    if (Math.abs(dragDelta) > 4) isDragged = true;
+    track.style.transform = 'translateX(calc(-' + (cur * 100) + '% + ' + dragDelta + 'px))';
+  });
+  stage.addEventListener('pointerup', () => {
+    if (!dragging) return;
+    dragging = false;
+    if (isDragged) {
+      if (Math.abs(dragDelta) > stage.offsetWidth * 0.08) {
+        goTo(dragDelta < 0 ? cur + 1 : cur - 1, true);
+      } else {
+        goTo(cur, true);
+      }
+    }
+  });
+  stage.addEventListener('pointercancel', () => { dragging = false; goTo(cur, true); });
+  stage.addEventListener('click', e => { if (isDragged) e.preventDefault(); }, true);
+
+  goTo(0, false);
+})();
+
+// ── PHOTOGRAPHY PORTFOLIO SLIDESHOW ──
+(function () {
+  const track   = document.getElementById('photo-track');
+  const stage   = document.getElementById('photo-stage');
+  const dotsEl  = document.querySelectorAll('#photo-dots .gfx-dot');
+  const counter = document.getElementById('photo-counter');
+  const total   = 6;
+  let cur = 0;
+  let dragging = false, dragStartX = 0, dragDelta = 0, isDragged = false;
+
+  function goTo(n, animate) {
+    cur = ((n % total) + total) % total;
+    track.style.transition = animate === false ? 'none' : 'transform .5s cubic-bezier(.4,0,.2,1)';
+    track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+    dotsEl.forEach((d, i) => d.classList.toggle('on', i === cur));
+    counter.textContent = (cur + 1) + ' / ' + total;
+  }
+
+  document.getElementById('photo-prev').addEventListener('click', () => goTo(cur - 1, true));
+  document.getElementById('photo-next').addEventListener('click', () => goTo(cur + 1, true));
+  dotsEl.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.i, true)));
+
   stage.addEventListener('pointerdown', e => {
     if (e.button !== 0 && e.pointerType === 'mouse') return;
     dragging = true; isDragged = false; dragStartX = e.clientX; dragDelta = 0;
