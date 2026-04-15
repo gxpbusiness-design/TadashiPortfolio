@@ -59,17 +59,19 @@ nav{display:flex;gap:44px}
 @keyframes sectionFade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── HERO ── */
-.hero{position:relative;width:100%;height:calc(100vh - var(--hh));background:#0a0a0a}
-.hero-vid{position:absolute;inset:0;background:#0a0a0a;display:flex;align-items:center;justify-content:center}
+.hero{position:relative;width:100%;background:transparent;padding:48px 52px 52px}
+.hero-wrap{max-width:1100px;margin:0 auto;position:relative}
+.hero-vid{position:relative;border-radius:var(--radius-lg);overflow:hidden;background:#111;aspect-ratio:16/9}
+.hero-vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 
-.hero-grad{position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(0,0,0,.08) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,.4) 70%,rgba(0,0,0,.82) 100%)}
-.hero-info{position:absolute;bottom:60px;left:52px;z-index:3}
-.hero-name{font-size:clamp(48px,9vw,96px);font-weight:800;letter-spacing:-.02em;line-height:.92;color:#f5f2ee;opacity:0;animation:heroIn .9s .3s cubic-bezier(.4,0,.2,1) forwards}
-.hero-role{margin-top:18px;font-size:10.5px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.48);opacity:0;animation:heroIn .9s .55s cubic-bezier(.4,0,.2,1) forwards}
+.hero-grad{position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(0,0,0,.08) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,.4) 70%,rgba(0,0,0,.82) 100%);border-radius:var(--radius-lg)}
+.hero-info{position:absolute;bottom:72px;left:36px;z-index:3}
+.hero-name{font-size:clamp(36px,6vw,72px);font-weight:800;letter-spacing:-.02em;line-height:.92;color:#f5f2ee;opacity:0;animation:heroIn .9s .3s cubic-bezier(.4,0,.2,1) forwards}
+.hero-role{margin-top:14px;font-size:10.5px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.48);opacity:0;animation:heroIn .9s .55s cubic-bezier(.4,0,.2,1) forwards}
 .hero-role span{color:#7ecfc9}
 @keyframes heroIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 .sound-btn{display:none}
-.hero-controls{position:absolute;bottom:0;left:0;right:0;z-index:4;padding:48px 52px 20px;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 100%)}
+.hero-controls{position:absolute;bottom:0;left:0;right:0;z-index:4;padding:32px 20px 14px;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 100%);border-radius:0 0 var(--radius-lg) var(--radius-lg)}
 .hero-controls .bvs-scrub-row{margin-bottom:10px}
 .hero-controls .bvs-scrub{background:rgba(255,255,255,.2)}
 .hero-controls .bvs-btn-row{display:flex;align-items:center;gap:10px}
@@ -374,26 +376,27 @@ nav{display:flex;gap:44px}
 <section class="section active" id="section-home">
 
   <div class="hero" id="card-herov">
-    <div class="hero-vid" id="hero-vid">
-      <video id="herov" autoplay muted loop playsinline preload="auto"
-        style="width:100%;height:100%;object-fit:contain;pointer-events:none;display:block;">
-        <source src="reel.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="hero-grad"></div>
-    <div class="hero-info">
-      <div class="hero-name">Tadashi</div>
-      <div class="hero-role">Filmmaker &nbsp;<span>·</span>&nbsp; Producer &nbsp;<span>·</span>&nbsp; Creative Director</div>
-    </div>
-    <div class="hero-controls bvs-controls" style="opacity:1">
-      <div class="bvs-scrub-row">
-        <div class="bvs-scrub" data-vid="herov"><div class="bvs-scrub-fill" id="fill-herov" style="width:0%"><div class="bvs-scrub-thumb"></div></div></div>
-        <span class="bvs-time" id="time-herov">0:00 / 0:00</span>
-      </div>
-      <div class="bvs-btn-row">
-        <button class="bvs-ctrl-btn" id="play-herov" onclick="bvsPlay('herov',this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
-        <button class="bvs-sound-btn" id="snd-herov" onclick="bvsSound('herov',this)">Unmute</button>
-        <button class="bvs-ctrl-btn bvs-full-right" onclick="bvsFull('card-herov')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></button>
+    <div class="hero-wrap">
+      <div class="hero-vid" id="hero-vid">
+        <video id="herov" autoplay muted loop playsinline preload="auto">
+          <source src="reel.mp4" type="video/mp4">
+        </video>
+        <div class="hero-grad"></div>
+        <div class="hero-info">
+          <div class="hero-name">Tadashi</div>
+          <div class="hero-role">Filmmaker &nbsp;<span>·</span>&nbsp; Producer &nbsp;<span>·</span>&nbsp; Creative Director</div>
+        </div>
+        <div class="hero-controls bvs-controls" style="opacity:1">
+          <div class="bvs-scrub-row">
+            <div class="bvs-scrub" data-vid="herov"><div class="bvs-scrub-fill" id="fill-herov" style="width:0%"><div class="bvs-scrub-thumb"></div></div></div>
+            <span class="bvs-time" id="time-herov">0:00 / 0:00</span>
+          </div>
+          <div class="bvs-btn-row">
+            <button class="bvs-ctrl-btn" id="play-herov" onclick="bvsPlay('herov',this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+            <button class="bvs-sound-btn" id="snd-herov" onclick="bvsSound('herov',this)">Unmute</button>
+            <button class="bvs-ctrl-btn bvs-full-right" onclick="bvsFull('card-herov')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
