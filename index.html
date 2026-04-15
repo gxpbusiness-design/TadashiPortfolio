@@ -81,45 +81,42 @@ nav{display:flex;gap:44px}
 .bio-text h2 em{font-style:normal;color:var(--teal);font-weight:300}
 .bio-text p{font-size:14.5px;line-height:1.9;color:var(--dim);margin-bottom:18px;font-weight:300}
 
-/* ── BIO VIDEOS ── */
-.bio-videos{padding:0 52px 80px;max-width:1380px;margin:0 auto}
-.bio-videos-hd{margin-bottom:36px}
+/* ── BIO VIDEO STRIP ── */
+.bio-videos{padding:0 0 80px;max-width:100%}
+.bio-videos-hd{padding:0 52px;max-width:1380px;margin:0 auto 36px}
 .bio-videos-eyebrow{font-size:9.5px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
 .bio-videos-title{font-size:clamp(28px,4vw,46px);font-weight:300;letter-spacing:.04em;color:var(--text);line-height:1.1}
 .bio-videos-title em{font-style:italic;font-weight:700}
 
-/* slideshow */
-.bvs-wrap{position:relative;border-radius:var(--radius-lg);overflow:hidden;user-select:none;background:#0a0a0a}
-.bvs-track{display:flex;touch-action:pan-y}
-.bvs-slide{min-width:100%;position:relative;aspect-ratio:16/9;background:#0a0a0a;overflow:hidden;flex-shrink:0}
-.bvs-slide video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
+.bvs-strip{display:flex;gap:14px;padding:0 52px;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab}
+.bvs-strip:active{cursor:grabbing}
+.bvs-strip::-webkit-scrollbar{display:none}
+.bvs-card{flex-shrink:0;position:relative;border-radius:var(--radius-lg);overflow:hidden;background:#0a0a0a;scroll-snap-align:start}
+/* landscape cards */
+.bvs-card.land{height:58vh;width:auto;aspect-ratio:16/9}
+/* portrait cards */
+.bvs-card.port{height:58vh;width:auto;aspect-ratio:9/16}
+.bvs-card video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
 
-/* controls bar */
-.bvs-controls{position:absolute;bottom:0;left:0;right:0;z-index:4;padding:32px 18px 14px;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 100%);display:flex;flex-direction:column;gap:10px;opacity:0;transition:opacity .3s}
-.bvs-slide:hover .bvs-controls,.bvs-slide.show-ctrl .bvs-controls{opacity:1}
-
-/* scrubber */
-.bvs-scrub-row{display:flex;align-items:center;gap:10px}
+/* controls */
+.bvs-controls{position:absolute;bottom:0;left:0;right:0;z-index:4;padding:32px 16px 12px;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%);display:flex;flex-direction:column;gap:8px;opacity:0;transition:opacity .3s}
+.bvs-card:hover .bvs-controls,.bvs-card.show-ctrl .bvs-controls{opacity:1}
+.bvs-scrub-row{display:flex;align-items:center;gap:8px}
 .bvs-scrub{flex:1;height:4px;background:rgba(255,255,255,.25);border-radius:100px;cursor:pointer;position:relative;outline:none}
 .bvs-scrub-fill{height:100%;background:var(--salmon);border-radius:100px;pointer-events:none;position:relative}
-.bvs-scrub-thumb{width:13px;height:13px;border-radius:50%;background:#fff;position:absolute;right:-6px;top:50%;transform:translateY(-50%);pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,.4)}
-.bvs-time{font-size:9px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.65);white-space:nowrap;min-width:70px;text-align:right}
-
-/* btn row */
-.bvs-btn-row{display:flex;align-items:center;gap:10px}
-.bvs-ctrl-btn{background:none;border:none;cursor:pointer;color:#fff;padding:4px;display:flex;align-items:center;justify-content:center;opacity:.85;transition:opacity .2s}
+.bvs-scrub-thumb{width:12px;height:12px;border-radius:50%;background:#fff;position:absolute;right:-6px;top:50%;transform:translateY(-50%);pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.bvs-time{font-size:9px;font-weight:600;color:rgba(255,255,255,.6);white-space:nowrap;min-width:64px;text-align:right}
+.bvs-btn-row{display:flex;align-items:center;gap:8px}
+.bvs-ctrl-btn{background:none;border:none;cursor:pointer;color:#fff;padding:4px;display:flex;align-items:center;opacity:.85;transition:opacity .2s}
 .bvs-ctrl-btn:hover{opacity:1}
-.bvs-slide-label{font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.45);flex:1;padding-left:4px}
-.bvs-sound-btn{background:none;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.6);font-family:'Manrope',sans-serif;font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:5px 12px;cursor:pointer;transition:all .25s;border-radius:100px}
-.bvs-sound-btn:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.5)}
+.bvs-sound-btn{background:none;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.6);font-family:'Manrope',sans-serif;font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:5px 12px;cursor:pointer;transition:all .25s;border-radius:100px;margin-left:auto}
+.bvs-sound-btn:hover{background:rgba(255,255,255,.1);color:#fff}
 
-/* slide arrows */
-.bvs-arr{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:1px solid var(--glass-border);background:var(--glass);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);transition:all .25s;box-shadow:var(--glass-shadow);z-index:5}
-.bvs-arr:hover{background:var(--surf);border-color:var(--teal);color:var(--teal)}
-.bvs-prev{left:12px}
-.bvs-next{right:12px}
-.bvs-progress{margin:14px 0 0;height:3px;background:rgba(0,0,0,0.08);border-radius:100px}
-.bvs-progress-fill{height:100%;background:var(--salmon);border-radius:100px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+/* scroll hint */
+.bvs-hint{padding:14px 52px 0;font-size:9.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px;transition:opacity .5s}
+.bvs-hint.hide{opacity:0}
+.bvs-scroll-prog{margin:14px 52px 0;height:3px;background:rgba(0,0,0,0.08);border-radius:100px}
+.bvs-scroll-fill{height:100%;background:var(--salmon);border-radius:100px;width:0%;transition:width .1s linear}
 .gallery-outer{position:relative;padding:80px 0 80px}
 .gallery-sticky{background:transparent}
 .gallery-header{padding:0 52px;margin-bottom:32px;display:flex;align-items:center;justify-content:space-between}
@@ -380,143 +377,97 @@ nav{display:flex;gap:44px}
   </div>
 
   <!-- BIO VIDEOS -->
-  <div class="bio-videos fade-in">
+    <div class="bio-videos fade-in">
     <div class="bio-videos-hd">
       <div class="bio-videos-eyebrow">Vision</div>
       <div class="bio-videos-title">Unorthodox &amp; <em>Composed</em></div>
     </div>
 
-    <!-- VIDEO SLIDESHOW -->
-    <div class="bvs-wrap">
-      <div class="bvs-track" id="bvs-track">
-        <div class="bvs-slide active">
-          <video autoplay muted loop playsinline preload="none" id="biov1">
-            <source src="the_gem.mp4" type="video/mp4">
-          </video>
-          <div class="bvs-controls">
-            <!-- scrubber -->
-            <div class="bvs-scrub-row">
-              <div class="bvs-scrub" data-vid="biov1" id="scrub-biov1">
-                <div class="bvs-scrub-fill" id="fill-biov1" style="width:0%">
-                  <div class="bvs-scrub-thumb"></div>
-                </div>
-              </div>
-              <span class="bvs-time" id="time-biov1">0:00 / 0:00</span>
-            </div>
-            <!-- buttons -->
-            <div class="bvs-btn-row">
-              <button class="bvs-ctrl-btn" id="play-biov1" onclick="bvsPlay('biov1',this)">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </button>
-              <span class="bvs-slide-label">01 / 04</span>
-              <button class="bvs-sound-btn" id="snd-biov1" onclick="bvsSound('biov1',this)">Unmute</button>
-              <button class="bvs-ctrl-btn" onclick="bvsFull('biov1')">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
-              </button>
-            </div>
+    <div class="bvs-hint" id="bvs-hint">
+      <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><line x1="0" y1="5" x2="13" y2="5" stroke="currentColor" stroke-width="1.2"/><polyline points="9 1 13 5 9 9" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+      Swipe to explore
+    </div>
+
+    <div class="bvs-strip" id="bvs-strip">
+
+      <!-- Video 1: the_gem — landscape 16:9 -->
+      <div class="bvs-card land" id="card-biov1">
+        <video muted loop playsinline preload="none" id="biov1">
+          <source src="the_gem.mp4" type="video/mp4">
+        </video>
+        <div class="bvs-controls">
+          <div class="bvs-scrub-row">
+            <div class="bvs-scrub" data-vid="biov1"><div class="bvs-scrub-fill" id="fill-biov1" style="width:0%"><div class="bvs-scrub-thumb"></div></div></div>
+            <span class="bvs-time" id="time-biov1">0:00 / 0:00</span>
+          </div>
+          <div class="bvs-btn-row">
+            <button class="bvs-ctrl-btn" id="play-biov1" onclick="bvsPlay('biov1',this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+            <button class="bvs-ctrl-btn" onclick="bvsFull('card-biov1')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></button>
+            <button class="bvs-sound-btn" id="snd-biov1" onclick="bvsSound('biov1',this)">Unmute</button>
           </div>
         </div>
-
-        <div class="bvs-slide">
-          <video autoplay muted loop playsinline preload="none" id="biov2">
-            <source src="jumpsc.mp4" type="video/mp4">
-          </video>
-          <div class="bvs-controls">
-            <!-- scrubber -->
-            <div class="bvs-scrub-row">
-              <div class="bvs-scrub" data-vid="biov2" id="scrub-biov2">
-                <div class="bvs-scrub-fill" id="fill-biov2" style="width:0%">
-                  <div class="bvs-scrub-thumb"></div>
-                </div>
-              </div>
-              <span class="bvs-time" id="time-biov2">0:00 / 0:00</span>
-            </div>
-            <!-- buttons -->
-            <div class="bvs-btn-row">
-              <button class="bvs-ctrl-btn" id="play-biov2" onclick="bvsPlay('biov2',this)">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </button>
-              <span class="bvs-slide-label">02 / 04</span>
-              <button class="bvs-sound-btn" id="snd-biov2" onclick="bvsSound('biov2',this)">Unmute</button>
-              <button class="bvs-ctrl-btn" onclick="bvsFull('biov2')">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="bvs-slide">
-          <video autoplay muted loop playsinline preload="none" id="biov3">
-            <source src="vid3.mp4" type="video/mp4">
-          </video>
-          <div class="bvs-controls">
-            <!-- scrubber -->
-            <div class="bvs-scrub-row">
-              <div class="bvs-scrub" data-vid="biov3" id="scrub-biov3">
-                <div class="bvs-scrub-fill" id="fill-biov3" style="width:0%">
-                  <div class="bvs-scrub-thumb"></div>
-                </div>
-              </div>
-              <span class="bvs-time" id="time-biov3">0:00 / 0:00</span>
-            </div>
-            <!-- buttons -->
-            <div class="bvs-btn-row">
-              <button class="bvs-ctrl-btn" id="play-biov3" onclick="bvsPlay('biov3',this)">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </button>
-              <span class="bvs-slide-label">03 / 04</span>
-              <button class="bvs-sound-btn" id="snd-biov3" onclick="bvsSound('biov3',this)">Unmute</button>
-              <button class="bvs-ctrl-btn" onclick="bvsFull('biov3')">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="bvs-slide">
-          <video autoplay muted loop playsinline preload="none" id="biov4">
-            <source src="vid4.mp4" type="video/mp4">
-          </video>
-          <div class="bvs-controls">
-            <!-- scrubber -->
-            <div class="bvs-scrub-row">
-              <div class="bvs-scrub" data-vid="biov4" id="scrub-biov4">
-                <div class="bvs-scrub-fill" id="fill-biov4" style="width:0%">
-                  <div class="bvs-scrub-thumb"></div>
-                </div>
-              </div>
-              <span class="bvs-time" id="time-biov4">0:00 / 0:00</span>
-            </div>
-            <!-- buttons -->
-            <div class="bvs-btn-row">
-              <button class="bvs-ctrl-btn" id="play-biov4" onclick="bvsPlay('biov4',this)">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </button>
-              <span class="bvs-slide-label">04 / 04</span>
-              <button class="bvs-sound-btn" id="snd-biov4" onclick="bvsSound('biov4',this)">Unmute</button>
-              <button class="bvs-ctrl-btn" onclick="bvsFull('biov4')">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
       </div>
 
-      <!-- arrows -->
-      <button class="bvs-arr bvs-prev" id="bvs-prev">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <button class="bvs-arr bvs-next" id="bvs-next">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
+      <!-- Video 2: jumpsc — landscape 16:9 -->
+      <div class="bvs-card land" id="card-biov2">
+        <video muted loop playsinline preload="none" id="biov2">
+          <source src="jumpsc.mp4" type="video/mp4">
+        </video>
+        <div class="bvs-controls">
+          <div class="bvs-scrub-row">
+            <div class="bvs-scrub" data-vid="biov2"><div class="bvs-scrub-fill" id="fill-biov2" style="width:0%"><div class="bvs-scrub-thumb"></div></div></div>
+            <span class="bvs-time" id="time-biov2">0:00 / 0:00</span>
+          </div>
+          <div class="bvs-btn-row">
+            <button class="bvs-ctrl-btn" id="play-biov2" onclick="bvsPlay('biov2',this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+            <button class="bvs-ctrl-btn" onclick="bvsFull('card-biov2')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></button>
+            <button class="bvs-sound-btn" id="snd-biov2" onclick="bvsSound('biov2',this)">Unmute</button>
+          </div>
+        </div>
+      </div>
 
-      <!-- progress bar -->
-      <div class="bvs-progress"><div class="bvs-progress-fill" id="bvs-pfill" style="width:25%"></div></div>
+      <!-- Video 3: vid3 — portrait 9:16 -->
+      <div class="bvs-card port" id="card-biov3">
+        <video muted loop playsinline preload="none" id="biov3">
+          <source src="vid3.mp4" type="video/mp4">
+        </video>
+        <div class="bvs-controls">
+          <div class="bvs-scrub-row">
+            <div class="bvs-scrub" data-vid="biov3"><div class="bvs-scrub-fill" id="fill-biov3" style="width:0%"><div class="bvs-scrub-thumb"></div></div></div>
+            <span class="bvs-time" id="time-biov3">0:00 / 0:00</span>
+          </div>
+          <div class="bvs-btn-row">
+            <button class="bvs-ctrl-btn" id="play-biov3" onclick="bvsPlay('biov3',this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+            <button class="bvs-ctrl-btn" onclick="bvsFull('card-biov3')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></button>
+            <button class="bvs-sound-btn" id="snd-biov3" onclick="bvsSound('biov3',this)">Unmute</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video 4: vid4 — portrait ~9:16 -->
+      <div class="bvs-card port" id="card-biov4" style="aspect-ratio:608/1080">
+        <video muted loop playsinline preload="none" id="biov4">
+          <source src="vid4.mp4" type="video/mp4">
+        </video>
+        <div class="bvs-controls">
+          <div class="bvs-scrub-row">
+            <div class="bvs-scrub" data-vid="biov4"><div class="bvs-scrub-fill" id="fill-biov4" style="width:0%"><div class="bvs-scrub-thumb"></div></div></div>
+            <span class="bvs-time" id="time-biov4">0:00 / 0:00</span>
+          </div>
+          <div class="bvs-btn-row">
+            <button class="bvs-ctrl-btn" id="play-biov4" onclick="bvsPlay('biov4',this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+            <button class="bvs-ctrl-btn" onclick="bvsFull('card-biov4')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></button>
+            <button class="bvs-sound-btn" id="snd-biov4" onclick="bvsSound('biov4',this)">Unmute</button>
+          </div>
+        </div>
+      </div>
+
     </div>
+
+    <div class="bvs-scroll-prog"><div class="bvs-scroll-fill" id="bvs-scroll-fill"></div></div>
   </div>
 
-  <!-- HORIZONTAL SCROLL GALLERY -->
+  <!-- HORIZONTAL SCROLL GALLERY --><!-- HORIZONTAL SCROLL GALLERY -->
   <div class="gallery-outer" id="gallery-outer">
     <div class="gallery-sticky" id="gallery-sticky">
       <div class="gallery-header">
@@ -921,81 +872,76 @@ document.getElementById('soundBtn').addEventListener('click', () => {
   muted = !muted;
 });
 
-// ── BIO VIDEO SLIDESHOW + PLAYER ──
+// ── BIO VIDEO STRIP ──
 (function(){
-  const track = document.getElementById('bvs-track');
-  const slides = document.querySelectorAll('.bvs-slide');
-  const pfill  = document.getElementById('bvs-pfill');
-  const wrap   = document.querySelector('.bvs-wrap');
-  if (!track || !slides.length) return;
+  const strip = document.getElementById('bvs-strip');
+  const hint  = document.getElementById('bvs-hint');
+  const sfill = document.getElementById('bvs-scroll-fill');
+  if (!strip) return;
 
-  let cur = 0;
-  const total = slides.length;
   const vidIds = ['biov1','biov2','biov3','biov4'];
-
-  // ── scrubber updates (rAF loop) ──
-  function pad(n){ return n < 10 ? '0'+n : n; }
-  function fmtTime(s){ return Math.floor(s/60)+':'+pad(Math.floor(s%60)); }
-
-  function updateScrub(id) {
-    const v = document.getElementById(id);
-    const fill = document.getElementById('fill-'+id);
-    const time = document.getElementById('time-'+id);
-    if (!v || !fill || isNaN(v.duration)) return;
-    const pct = v.currentTime / v.duration * 100;
-    fill.style.width = pct + '%';
-    time.textContent = fmtTime(v.currentTime) + ' / ' + fmtTime(v.duration);
-  }
-
   let rafId = null;
-  function scrubLoop() {
-    updateScrub(vidIds[cur]);
-    rafId = requestAnimationFrame(scrubLoop);
-  }
-  function startScrubLoop(){ if(!rafId) rafId = requestAnimationFrame(scrubLoop); }
-  function stopScrubLoop(){ if(rafId){ cancelAnimationFrame(rafId); rafId = null; } }
 
-  // ── slide switch ──
-  function goTo(n) {
-    stopScrubLoop();
-    cur = ((n % total) + total) % total;
-    track.style.transition = 'transform .5s cubic-bezier(.4,0,.2,1)';
-    track.style.transform = 'translateX(-' + (cur * 100) + '%)';
-    if (pfill) pfill.style.width = ((cur + 1) / total * 100) + '%';
-
-    slides.forEach((s, i) => {
-      const v = s.querySelector('video');
-      if (!v) return;
-      if (i === cur) {
-        v.play();
-        updatePlayBtn(vidIds[i], v);
-        s.classList.add('show-ctrl');
-        setTimeout(() => s.classList.remove('show-ctrl'), 2500);
-      } else {
-        v.pause();
-      }
+  // ── single-play enforcement ──
+  function pauseAllExcept(activeId) {
+    vidIds.forEach(id => {
+      if (id === activeId) return;
+      const v = document.getElementById(id);
+      if (v && !v.paused) { v.pause(); updatePlayBtn(id); }
     });
-    startScrubLoop();
   }
 
-  function updatePlayBtn(id, v) {
+  // ── scrub loop ──
+  function pad(n){ return n < 10 ? '0'+n : n; }
+  function fmt(s){ return Math.floor(s/60)+':'+pad(Math.floor(s%60)); }
+
+  function tickScrubs() {
+    vidIds.forEach(id => {
+      const v = document.getElementById(id);
+      const fill = document.getElementById('fill-'+id);
+      const time = document.getElementById('time-'+id);
+      if (!v || !fill || !time || isNaN(v.duration) || v.paused) return;
+      const pct = v.currentTime / v.duration * 100;
+      fill.style.width = pct + '%';
+      time.textContent = fmt(v.currentTime) + ' / ' + fmt(v.duration);
+    });
+    rafId = requestAnimationFrame(tickScrubs);
+  }
+  requestAnimationFrame(tickScrubs);
+
+  // ── update time on load ──
+  vidIds.forEach(id => {
+    const v = document.getElementById(id);
+    if (!v) return;
+    v.addEventListener('loadedmetadata', () => {
+      const time = document.getElementById('time-'+id);
+      if (time) time.textContent = '0:00 / ' + fmt(v.duration);
+    });
+  });
+
+  // ── play/pause btn icon ──
+  function updatePlayBtn(id) {
+    const v = document.getElementById(id);
     const btn = document.getElementById('play-'+id);
-    if (!btn) return;
+    if (!v || !btn) return;
     btn.innerHTML = v.paused
       ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>'
       : '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
   }
 
-  // ── play/pause ──
+  // ── public controls ──
   window.bvsPlay = function(id, btn) {
     const v = document.getElementById(id);
     if (!v) return;
-    if (v.paused) { v.play(); startScrubLoop(); }
-    else { v.pause(); stopScrubLoop(); }
-    updatePlayBtn(id, v);
+    if (v.paused) {
+      pauseAllExcept(id);
+      v.play();
+    } else {
+      v.pause();
+    }
+    updatePlayBtn(id);
   };
 
-  // ── mute toggle ──
   window.bvsSound = function(id, btn) {
     const v = document.getElementById(id);
     if (!v) return;
@@ -1003,71 +949,53 @@ document.getElementById('soundBtn').addEventListener('click', () => {
     btn.textContent = v.muted ? 'Unmute' : 'Mute';
   };
 
-  // ── fullscreen ──
-  window.bvsFull = function(id) {
-    const slide = document.getElementById(id).closest('.bvs-slide');
-    if (!slide) return;
-    if (slide.requestFullscreen) slide.requestFullscreen();
-    else if (slide.webkitRequestFullscreen) slide.webkitRequestFullscreen();
+  window.bvsFull = function(cardId) {
+    const card = document.getElementById(cardId);
+    if (!card) return;
+    if (card.requestFullscreen) card.requestFullscreen();
+    else if (card.webkitRequestFullscreen) card.webkitRequestFullscreen();
   };
 
-  // ── scrubber click/drag ──
+  // ── scrubber ──
   document.querySelectorAll('.bvs-scrub').forEach(scrub => {
     const id = scrub.dataset.vid;
-    let scrubbing = false;
-
+    let active = false;
     function seek(e) {
       const v = document.getElementById(id);
       if (!v || isNaN(v.duration)) return;
-      const rect = scrub.getBoundingClientRect();
-      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      const r = scrub.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
       v.currentTime = pct * v.duration;
-      updateScrub(id);
+      const fill = document.getElementById('fill-'+id);
+      const time = document.getElementById('time-'+id);
+      if (fill) fill.style.width = (pct * 100) + '%';
+      if (time) time.textContent = fmt(v.currentTime) + ' / ' + fmt(v.duration);
     }
+    scrub.addEventListener('pointerdown', e => { active = true; scrub.setPointerCapture(e.pointerId); seek(e); e.stopPropagation(); });
+    scrub.addEventListener('pointermove', e => { if (active) { seek(e); e.stopPropagation(); } });
+    scrub.addEventListener('pointerup',   e => { active = false; e.stopPropagation(); });
+  });
 
-    scrub.addEventListener('pointerdown', e => {
-      scrubbing = true;
-      scrub.setPointerCapture(e.pointerId);
-      seek(e);
-      e.stopPropagation(); // don't trigger slideshow swipe
+  // ── scroll progress bar + hint ──
+  strip.addEventListener('scroll', () => {
+    const max = strip.scrollWidth - strip.clientWidth;
+    if (sfill && max > 0) sfill.style.width = (strip.scrollLeft / max * 100) + '%';
+    if (hint && strip.scrollLeft > 20) hint.classList.add('hide');
+    else if (hint) hint.classList.remove('hide');
+
+    // show controls on visible card
+    document.querySelectorAll('.bvs-card').forEach(card => {
+      const r = card.getBoundingClientRect();
+      const sr = strip.getBoundingClientRect();
+      const visible = r.left < sr.right - 80 && r.right > sr.left + 80;
+      if (visible) {
+        card.classList.add('show-ctrl');
+        clearTimeout(card._t);
+        card._t = setTimeout(() => card.classList.remove('show-ctrl'), 2500);
+      }
     });
-    scrub.addEventListener('pointermove', e => { if (scrubbing) { seek(e); e.stopPropagation(); } });
-    scrub.addEventListener('pointerup', e => { scrubbing = false; e.stopPropagation(); });
-  });
-
-  // ── slide swipe (only on non-scrubber areas) ──
-  let dragStart = 0, dragging = false, delta = 0, wasDragged = false;
-  wrap.addEventListener('pointerdown', e => {
-    if (e.target.closest('.bvs-scrub,.bvs-ctrl-btn,.bvs-sound-btn,.bvs-arr')) return;
-    dragging = true; wasDragged = false; dragStart = e.clientX; delta = 0;
-    track.style.transition = 'none';
-    wrap.setPointerCapture(e.pointerId);
-  });
-  wrap.addEventListener('pointermove', e => {
-    if (!dragging) return;
-    delta = e.clientX - dragStart;
-    if (Math.abs(delta) > 4) wasDragged = true;
-    track.style.transform = 'translateX(calc(-' + (cur * 100) + '% + ' + delta + 'px))';
-  });
-  wrap.addEventListener('pointerup', () => {
-    if (!dragging) return; dragging = false;
-    if (wasDragged && Math.abs(delta) > wrap.offsetWidth * 0.08)
-      goTo(delta < 0 ? cur + 1 : cur - 1);
-    else goTo(cur);
-  });
-  wrap.addEventListener('click', e => { if (wasDragged) e.preventDefault(); }, true);
-
-  document.getElementById('bvs-next').addEventListener('click', () => goTo(cur + 1));
-  document.getElementById('bvs-prev').addEventListener('click', () => goTo(cur - 1));
-
-  // ── show controls on touch ──
-  wrap.addEventListener('touchstart', () => {
-    slides[cur].classList.add('show-ctrl');
-    clearTimeout(wrap._ctrlTimer);
-    wrap._ctrlTimer = setTimeout(() => slides[cur].classList.remove('show-ctrl'), 3000);
   }, { passive: true });
 
-  goTo(0);
 })();
 
 
