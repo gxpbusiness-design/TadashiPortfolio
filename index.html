@@ -82,14 +82,28 @@ nav{display:flex;gap:44px}
 .bio-text p{font-size:14.5px;line-height:1.9;color:var(--dim);margin-bottom:18px;font-weight:300}
 
 /* ── BIO VIDEOS ── */
-.bio-videos{padding:0 0 0;max-width:100%}
-.bio-videos-hd{padding:0 52px;margin:0 0 36px}
+.bio-videos{padding:0 52px 80px;max-width:1380px;margin:0 auto}
+.bio-videos-hd{margin-bottom:36px}
 .bio-videos-eyebrow{font-size:9.5px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
 .bio-videos-title{font-size:clamp(28px,4vw,46px);font-weight:300;letter-spacing:.04em;color:var(--text);line-height:1.1}
 .bio-videos-title em{font-style:italic;font-weight:700}
-.bio-video{width:100%;height:calc(100vh - var(--hh));background:#0a0a0a;display:flex;align-items:center;justify-content:center;margin-bottom:4px;position:relative}
-.bio-video:last-of-type{margin-bottom:0}
-.bio-video video{width:100%;height:100%;object-fit:contain;display:block;pointer-events:auto}
+
+/* slideshow */
+.bvs-wrap{position:relative;border-radius:var(--radius-lg);overflow:hidden;cursor:grab;user-select:none}
+.bvs-wrap:active{cursor:grabbing}
+.bvs-track{display:flex}
+.bvs-slide{min-width:100%;position:relative;aspect-ratio:16/9;background:#0a0a0a;overflow:hidden;flex-shrink:0}
+.bvs-slide video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
+.bvs-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,.65) 100%);display:flex;align-items:flex-end;justify-content:space-between;padding:20px 24px;z-index:2}
+.bvs-label{font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.bvs-sound{background:none;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.6);font-family:'Manrope',sans-serif;font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:6px 14px;cursor:pointer;transition:all .25s;border-radius:100px}
+.bvs-sound:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.5)}
+.bvs-arr{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:1px solid var(--glass-border);background:var(--glass);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);transition:all .25s;box-shadow:var(--glass-shadow);z-index:3}
+.bvs-arr:hover{background:var(--surf);border-color:var(--teal);color:var(--teal)}
+.bvs-prev{left:16px}
+.bvs-next{right:16px}
+.bvs-progress{margin:14px 0 0;height:3px;background:rgba(0,0,0,0.08);border-radius:100px}
+.bvs-progress-fill{height:100%;background:var(--salmon);border-radius:100px;transition:width .4s cubic-bezier(.4,0,.2,1)}
 .gallery-outer{position:relative;padding:80px 0 80px}
 .gallery-sticky{background:transparent}
 .gallery-header{padding:0 52px;margin-bottom:32px;display:flex;align-items:center;justify-content:space-between}
@@ -355,21 +369,63 @@ nav{display:flex;gap:44px}
       <div class="bio-videos-eyebrow">Vision</div>
       <div class="bio-videos-title">Unorthodox &amp; <em>Composed</em></div>
     </div>
-    <div class="bio-video" style="height:calc(100vh - var(--hh))">
-      <video autoplay muted loop playsinline preload="none" id="biov1"
-        style="width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;">
-        <source src="the_gem.mp4" type="video/mp4">
-      </video>
-      <div class="hero-grad"></div>
-      <button class="sound-btn" style="bottom:28px;right:28px" onclick="toggleBioVid('biov1',this)">Unmute</button>
-    </div>
-    <div class="bio-video" style="height:calc(100vh - var(--hh))">
-      <video autoplay muted loop playsinline preload="none" id="biov2"
-        style="width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;">
-        <source src="jumpsc.mp4" type="video/mp4">
-      </video>
-      <div class="hero-grad"></div>
-      <button class="sound-btn" style="bottom:28px;right:28px" onclick="toggleBioVid('biov2',this)">Unmute</button>
+
+    <!-- VIDEO SLIDESHOW -->
+    <div class="bvs-wrap">
+      <div class="bvs-track" id="bvs-track">
+
+        <div class="bvs-slide active">
+          <video autoplay muted loop playsinline preload="none" id="biov1">
+            <source src="the_gem.mp4" type="video/mp4">
+          </video>
+          <div class="bvs-overlay">
+            <span class="bvs-label">01 / 04</span>
+            <button class="bvs-sound" onclick="toggleBioVid('biov1',this)">Unmute</button>
+          </div>
+        </div>
+
+        <div class="bvs-slide">
+          <video autoplay muted loop playsinline preload="none" id="biov2">
+            <source src="jumpsc.mp4" type="video/mp4">
+          </video>
+          <div class="bvs-overlay">
+            <span class="bvs-label">02 / 04</span>
+            <button class="bvs-sound" onclick="toggleBioVid('biov2',this)">Unmute</button>
+          </div>
+        </div>
+
+        <div class="bvs-slide">
+          <video autoplay muted loop playsinline preload="none" id="biov3">
+            <source src="vid3.mp4" type="video/mp4">
+          </video>
+          <div class="bvs-overlay">
+            <span class="bvs-label">03 / 04</span>
+            <button class="bvs-sound" onclick="toggleBioVid('biov3',this)">Unmute</button>
+          </div>
+        </div>
+
+        <div class="bvs-slide">
+          <video autoplay muted loop playsinline preload="none" id="biov4">
+            <source src="vid4.mp4" type="video/mp4">
+          </video>
+          <div class="bvs-overlay">
+            <span class="bvs-label">04 / 04</span>
+            <button class="bvs-sound" onclick="toggleBioVid('biov4',this)">Unmute</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- arrows -->
+      <button class="bvs-arr bvs-prev" id="bvs-prev">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="bvs-arr bvs-next" id="bvs-next">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <!-- progress bar -->
+      <div class="bvs-progress"><div class="bvs-progress-fill" id="bvs-pfill" style="width:25%"></div></div>
     </div>
   </div>
 
@@ -628,15 +684,6 @@ nav{display:flex;gap:44px}
           </div>
         </div>
 
-        <div class="design-item" style="grid-column:span 2;overflow:hidden">
-          <video class="design-video" autoplay muted loop playsinline preload="auto" style="width:100%;display:block">
-            <source src="animations.mp4" type="video/mp4">
-          </video>
-          <div class="design-item-overlay">
-            <span class="design-item-label">Animation Reel</span>
-          </div>
-        </div>
-
       </div>
     </div>
   </div><!-- /exp-design -->
@@ -786,6 +833,58 @@ document.getElementById('soundBtn').addEventListener('click', () => {
   }
   muted = !muted;
 });
+
+// ── BIO VIDEO SLIDESHOW ──
+(function(){
+  const track = document.getElementById('bvs-track');
+  const slides = document.querySelectorAll('.bvs-slide');
+  const pfill  = document.getElementById('bvs-pfill');
+  if (!track || !slides.length) return;
+
+  let cur = 0;
+  const total = slides.length;
+
+  function goTo(n) {
+    cur = ((n % total) + total) % total;
+    track.style.transition = 'transform .5s cubic-bezier(.4,0,.2,1)';
+    track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+    if (pfill) pfill.style.width = ((cur + 1) / total * 100) + '%';
+    // play current video
+    slides.forEach((s, i) => {
+      const v = s.querySelector('video');
+      if (!v) return;
+      if (i === cur) { v.play(); }
+      else { v.pause(); }
+    });
+  }
+
+  document.getElementById('bvs-next').addEventListener('click', () => goTo(cur + 1));
+  document.getElementById('bvs-prev').addEventListener('click', () => goTo(cur - 1));
+
+  // drag support
+  let dragStart = 0, dragging = false, delta = 0, wasDragged = false;
+  const wrap = track.parentElement;
+  wrap.addEventListener('pointerdown', e => {
+    dragging = true; wasDragged = false; dragStart = e.clientX; delta = 0;
+    track.style.transition = 'none';
+    wrap.setPointerCapture(e.pointerId);
+  });
+  wrap.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    delta = e.clientX - dragStart;
+    if (Math.abs(delta) > 4) wasDragged = true;
+    track.style.transform = 'translateX(calc(-' + (cur * 100) + '% + ' + delta + 'px))';
+  });
+  wrap.addEventListener('pointerup', () => {
+    if (!dragging) return; dragging = false;
+    if (wasDragged && Math.abs(delta) > wrap.offsetWidth * 0.08)
+      goTo(delta < 0 ? cur + 1 : cur - 1);
+    else goTo(cur);
+  });
+  wrap.addEventListener('click', e => { if (wasDragged) e.preventDefault(); }, true);
+
+  goTo(0);
+})();
 
 function toggleBioVid(id, btn) {
   const v = document.getElementById(id);
