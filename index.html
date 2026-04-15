@@ -296,6 +296,23 @@ nav{display:flex;gap:44px}
 .design-add{border:1.5px dashed var(--border-med);border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:40px 20px;color:var(--muted);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;min-height:200px;cursor:default}
 .design-add svg{opacity:.3}
 
+/* ── GRAPHIC DESIGN SLIDESHOW ── */
+.gfx-slideshow{padding:48px 52px 32px;max-width:1380px;margin:0 auto}
+.gfx-slideshow-label{font-size:9.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:18px;margin-bottom:36px}
+.gfx-slideshow-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.gfx-stage{position:relative;border-radius:var(--radius-lg);overflow:hidden;background:#0a0a0a;cursor:grab;user-select:none}
+.gfx-stage:active{cursor:grabbing}
+.gfx-track{display:flex;will-change:transform;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.gfx-slide{min-width:100%;flex-shrink:0}
+.gfx-slide img{width:100%;height:auto;display:block;pointer-events:none}
+.gfx-nav{display:flex;align-items:center;gap:14px;margin-top:18px;padding:0 4px}
+.gfx-dots{display:flex;gap:8px;align-items:center;flex:1}
+.gfx-dot{width:6px;height:6px;border-radius:50%;background:var(--border-med);cursor:pointer;transition:all .3s;border:none;padding:0}
+.gfx-dot.on{width:22px;border-radius:100px;background:var(--teal)}
+.gfx-arr{width:40px;height:40px;border-radius:50%;border:1px solid var(--glass-border);background:var(--glass);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);transition:all .25s;box-shadow:var(--glass-shadow)}
+.gfx-arr:hover{background:var(--surf);border-color:var(--teal);color:var(--teal)}
+.gfx-counter{font-family:'Manrope',sans-serif;font-size:10px;font-weight:600;letter-spacing:.12em;color:var(--muted);min-width:38px;text-align:right}
+
 /* ── SERVICES ── */
 .services{padding:140px 52px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center}
 .services h1{font-size:clamp(44px,8vw,88px);font-weight:800;letter-spacing:-.03em;margin-bottom:22px}
@@ -707,6 +724,41 @@ nav{display:flex;gap:44px}
   <div id="exp-design">
     <div class="design-section fade-in">
       <div class="slabel">Design &amp; Art</div>
+
+      <!-- Graphic Design Portfolio Slideshow -->
+      <div class="gfx-slideshow">
+        <div class="gfx-slideshow-label">Graphic Design Portfolio</div>
+        <div class="gfx-stage" id="gfx-stage">
+          <div class="gfx-track" id="gfx-track">
+            <div class="gfx-slide"><img src="gfx_design_1.jpg" alt="Graphic Design — Cover" loading="lazy"></div>
+            <div class="gfx-slide"><img src="gfx_design_2.jpg" alt="Graphic Design — Unbound" loading="lazy"></div>
+            <div class="gfx-slide"><img src="gfx_design_3.jpg" alt="Graphic Design — Types" loading="lazy"></div>
+            <div class="gfx-slide"><img src="gfx_design_4.jpg" alt="Graphic Design — Designs" loading="lazy"></div>
+            <div class="gfx-slide"><img src="gfx_design_5.jpg" alt="Graphic Design — Presentations" loading="lazy"></div>
+            <div class="gfx-slide"><img src="gfx_design_6.jpg" alt="Graphic Design — Ebooks" loading="lazy"></div>
+            <div class="gfx-slide"><img src="gfx_design_7.jpg" alt="Graphic Design — Socials" loading="lazy"></div>
+          </div>
+        </div>
+        <div class="gfx-nav">
+          <div class="gfx-dots" id="gfx-dots">
+            <button class="gfx-dot on" data-i="0"></button>
+            <button class="gfx-dot" data-i="1"></button>
+            <button class="gfx-dot" data-i="2"></button>
+            <button class="gfx-dot" data-i="3"></button>
+            <button class="gfx-dot" data-i="4"></button>
+            <button class="gfx-dot" data-i="5"></button>
+            <button class="gfx-dot" data-i="6"></button>
+          </div>
+          <span class="gfx-counter" id="gfx-counter">1 / 7</span>
+          <button class="gfx-arr" id="gfx-prev">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="gfx-arr" id="gfx-next">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+
       <div class="design-grid">
 
         <div class="design-item">
@@ -1270,6 +1322,58 @@ window.addEventListener('resize', () => {
 
 // initial observe on load
 observeFades();
+
+// ── GRAPHIC DESIGN PORTFOLIO SLIDESHOW ──
+(function () {
+  const track   = document.getElementById('gfx-track');
+  const stage   = document.getElementById('gfx-stage');
+  const dotsEl  = document.querySelectorAll('#gfx-dots .gfx-dot');
+  const counter = document.getElementById('gfx-counter');
+  const total   = 7;
+  let cur = 0;
+  let dragging = false, dragStartX = 0, dragDelta = 0, isDragged = false;
+
+  function goTo(n, animate) {
+    cur = ((n % total) + total) % total;
+    track.style.transition = animate === false ? 'none' : 'transform .5s cubic-bezier(.4,0,.2,1)';
+    track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+    dotsEl.forEach((d, i) => d.classList.toggle('on', i === cur));
+    counter.textContent = (cur + 1) + ' / ' + total;
+  }
+
+  document.getElementById('gfx-prev').addEventListener('click', () => goTo(cur - 1, true));
+  document.getElementById('gfx-next').addEventListener('click', () => goTo(cur + 1, true));
+  dotsEl.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.i, true)));
+
+  // drag / swipe
+  stage.addEventListener('pointerdown', e => {
+    if (e.button !== 0 && e.pointerType === 'mouse') return;
+    dragging = true; isDragged = false; dragStartX = e.clientX; dragDelta = 0;
+    stage.setPointerCapture(e.pointerId);
+    track.style.transition = 'none';
+  });
+  stage.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    dragDelta = e.clientX - dragStartX;
+    if (Math.abs(dragDelta) > 4) isDragged = true;
+    track.style.transform = 'translateX(calc(-' + (cur * 100) + '% + ' + dragDelta + 'px))';
+  });
+  stage.addEventListener('pointerup', () => {
+    if (!dragging) return;
+    dragging = false;
+    if (isDragged) {
+      if (Math.abs(dragDelta) > stage.offsetWidth * 0.08) {
+        goTo(dragDelta < 0 ? cur + 1 : cur - 1, true);
+      } else {
+        goTo(cur, true);
+      }
+    }
+  });
+  stage.addEventListener('pointercancel', () => { dragging = false; goTo(cur, true); });
+  stage.addEventListener('click', e => { if (isDragged) e.preventDefault(); }, true);
+
+  goTo(0, false);
+})();
 </script>
 </body>
 </html>
