@@ -127,26 +127,29 @@ html,body{height:100%;overflow:hidden;background:linear-gradient(160deg,rgba(180
 .proj-item-role{font-size:10px;font-weight:400;color:rgba(255,255,255,.3);letter-spacing:.04em}
 .proj-item-tag{display:inline-block;font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:2px 7px;border-radius:100px;background:rgba(240,120,101,.15);color:var(--salmon);margin-top:5px}
 
-.proj-viewer{flex:1;display:flex;flex-direction:column;position:relative;background:#000;min-width:0}
-.proj-video-wrap{flex:1;position:relative;overflow:hidden;min-height:0}
-.proj-video-wrap video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;background:#000}
-.proj-video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.proj-viewer{flex:1;display:flex;flex-direction:column;position:relative;background:#000;min-width:0;overflow:hidden}
+.proj-video-wrap{flex:1;position:relative;background:#000;overflow:hidden}
+.proj-video-wrap video,.proj-video-wrap iframe,.proj-thumb-container{position:absolute;inset:0;width:100%;height:100%}
+.proj-video-wrap video{object-fit:contain;display:block;background:#000}
+.proj-video-wrap iframe{border:none}
+.proj-thumb-container{background:#000}
+.proj-thumb-container img{width:100%;height:100%;object-fit:contain;display:block}
 .proj-empty{
   position:absolute;inset:0;display:flex;flex-direction:column;
   align-items:center;justify-content:center;gap:12px;
-  color:rgba(255,255,255,.25);
+  color:rgba(255,255,255,.2);pointer-events:none;
 }
 .proj-empty svg{opacity:.3}
 .proj-empty p{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase}
 .proj-info{
-  padding:18px 24px;background:#0f0f0f;
+  padding:16px 24px;background:#0f0f0f;
   border-top:1px solid rgba(255,255,255,0.06);
-  display:none;
+  display:none;flex-shrink:0;
 }
 .proj-info.show{display:block}
-.proj-info-title{font-size:18px;font-weight:800;color:#f5f2ee;letter-spacing:-.02em;margin-bottom:6px}
-.proj-info-role{font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:8px}
-.proj-info-desc{font-size:12.5px;line-height:1.7;color:rgba(255,255,255,.5);font-weight:300}
+.proj-info-title{font-size:17px;font-weight:800;color:#f5f2ee;letter-spacing:-.02em;margin-bottom:5px}
+.proj-info-role{font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px}
+.proj-info-desc{font-size:12px;line-height:1.7;color:rgba(255,255,255,.45);font-weight:300}
 .proj-info-link{
   display:inline-flex;align-items:center;gap:8px;
   margin-top:10px;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
@@ -155,11 +158,11 @@ html,body{height:100%;overflow:hidden;background:linear-gradient(160deg,rgba(180
 .proj-info-link:hover{color:#f28873}
 .proj-play-overlay{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  background:rgba(0,0,0,0.35);transition:opacity .3s;cursor:pointer;
+  background:rgba(0,0,0,0.3);transition:opacity .3s;cursor:pointer;z-index:5;
 }
 .proj-play-overlay.hidden{opacity:0;pointer-events:none}
 .proj-play-btn{
-  width:64px;height:64px;border-radius:50%;background:rgba(240,120,101,.85);
+  width:60px;height:60px;border-radius:50%;background:rgba(240,120,101,.85);
   display:flex;align-items:center;justify-content:center;
   box-shadow:0 4px 24px rgba(240,120,101,.4);
   transition:transform .2s,background .2s;
@@ -766,12 +769,11 @@ window.bvsFull = function(containerId) {
 };
 
 // ── PROJECTS ──
-let projActive = null;
 let projHoverTimer = null;
 
 document.querySelectorAll('.proj-item').forEach(item => {
   item.addEventListener('mouseenter', () => {
-    projHoverTimer = setTimeout(() => loadProj(item, false), 200);
+    projHoverTimer = setTimeout(() => loadProj(item, false), 150);
   });
   item.addEventListener('mouseleave', () => { clearTimeout(projHoverTimer); });
   item.addEventListener('click', () => {
@@ -781,30 +783,31 @@ document.querySelectorAll('.proj-item').forEach(item => {
 });
 
 function loadProj(item, play) {
-  const type = item.dataset.type;
-  const src = item.dataset.src;
-  const title = item.dataset.title;
-  const role = item.dataset.role;
-  const desc = item.dataset.desc;
-  const poster = item.dataset.poster || '';
-  const link = item.dataset.link || '';
+  const type  = item.dataset.type;
+  const src   = item.dataset.src;
+  const title = item.dataset.title || '';
+  const role  = item.dataset.role  || '';
+  const desc  = item.dataset.desc  || '';
+  const link  = item.dataset.link  || '';
   const thumb = item.dataset.thumb || '';
 
-  // Mark active
   document.querySelectorAll('.proj-item').forEach(i => i.classList.remove('active'));
   item.classList.add('active');
 
-  const wrap = document.getElementById('proj-video-wrap');
-  const info = document.getElementById('proj-info');
+  const wrap  = document.getElementById('proj-video-wrap');
+  const info  = document.getElementById('proj-info');
   const empty = document.getElementById('proj-empty');
 
-  if (empty) empty.style.display = 'none';
+  // Clear everything inside wrap
+  wrap.innerHTML = '';
 
-  // Clear previous player
-  const old = wrap.querySelector('video,iframe,.proj-thumb-container');
-  if (old) old.remove();
-  const oldOverlay = wrap.querySelector('.proj-play-overlay');
-  if (oldOverlay) oldOverlay.remove();
+  // Re-add empty placeholder (hidden)
+  const emptyEl = document.createElement('div');
+  emptyEl.id = 'proj-empty';
+  emptyEl.className = 'proj-empty';
+  emptyEl.style.display = 'none';
+  emptyEl.innerHTML = '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg><p>hover a project to preview</p>';
+  wrap.appendChild(emptyEl);
 
   if (type === 'local') {
     const vid = document.createElement('video');
@@ -813,10 +816,8 @@ function loadProj(item, play) {
     vid.loop = true;
     vid.playsInline = true;
     vid.preload = 'auto';
-    vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;background:#000';
-    wrap.insertBefore(vid, wrap.firstChild);
+    wrap.appendChild(vid);
 
-    // Play overlay
     const overlay = document.createElement('div');
     overlay.className = 'proj-play-overlay' + (play ? ' hidden' : '');
     overlay.innerHTML = '<div class="proj-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>';
@@ -824,37 +825,36 @@ function loadProj(item, play) {
 
     overlay.addEventListener('click', () => {
       vid.muted = false;
-      vid.play();
+      vid.play().catch(()=>{});
       overlay.classList.add('hidden');
     });
 
     if (play) {
       vid.muted = false;
-      vid.play().catch(() => { vid.muted = true; vid.play(); });
+      vid.play().catch(() => { vid.muted = true; vid.play().catch(()=>{}); });
     } else {
+      vid.muted = true;
       vid.play().catch(()=>{});
     }
+
   } else {
     // YouTube
     if (play) {
       const fr = document.createElement('iframe');
       fr.src = src;
-      fr.allow = 'autoplay; fullscreen';
-      fr.style.cssText = 'width:100%;height:100%;border:none;display:block';
-      wrap.insertBefore(fr, wrap.firstChild);
+      fr.allow = 'autoplay; fullscreen; picture-in-picture';
+      fr.allowFullscreen = true;
+      wrap.appendChild(fr);
     } else {
-      // Show thumbnail with play overlay
       const thumbDiv = document.createElement('div');
       thumbDiv.className = 'proj-thumb-container';
-      thumbDiv.style.cssText = 'position:absolute;inset:0;background:#000';
       if (thumb) {
         const img = document.createElement('img');
         img.src = thumb;
         img.onerror = () => { img.src = thumb.replace('maxresdefault','hqdefault'); };
-        img.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;position:absolute;inset:0';
         thumbDiv.appendChild(img);
       }
-      wrap.insertBefore(thumbDiv, wrap.firstChild);
+      wrap.appendChild(thumbDiv);
 
       const overlay = document.createElement('div');
       overlay.className = 'proj-play-overlay';
