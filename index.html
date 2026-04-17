@@ -207,15 +207,25 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 .vid-strip{display:flex;gap:10px;padding:0 20px 0;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab}
 .vid-strip:active{cursor:grabbing}
 .vid-strip::-webkit-scrollbar{display:none}
-.vcard{flex-shrink:0;position:relative;height:55vh;min-height:200px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:linear-gradient(160deg,rgba(180,220,235,.28),rgba(245,210,185,.22) 50%,rgba(240,185,195,.25)),#f0ece8;scroll-snap-align:start;cursor:pointer}
+.vcard{flex-shrink:0;position:relative;height:79vh;min-height:288px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:linear-gradient(160deg,rgba(180,220,235,.28),rgba(245,210,185,.22) 50%,rgba(240,185,195,.25)),#f0ece8;scroll-snap-align:start;cursor:pointer}
 .vcard-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;background:#000}
-.vcard-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);transition:background .2s;z-index:2}
-.vcard:hover .vcard-overlay{background:rgba(0,0,0,.15)}
-.vcard.playing .vcard-overlay{background:rgba(0,0,0,0)}
-.vcard-play{width:34px;height:34px;border-radius:50%;background:rgba(240,120,101,.85);display:flex;align-items:center;justify-content:center;transition:transform .2s,opacity .2s}
-.vcard:hover .vcard-play{transform:scale(1.08)}
-.vcard.playing .vcard-play{opacity:0}
-.vcard-label{position:absolute;bottom:7px;left:10px;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.6);z-index:3;pointer-events:none}
+.vcard-label{position:absolute;top:12px;left:14px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8);z-index:3;pointer-events:none;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.vcard-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);cursor:pointer;z-index:4;transition:opacity .2s}
+.vcard-overlay.hidden{opacity:0;pointer-events:none}
+.vcard-play{width:52px;height:52px;border-radius:50%;background:rgba(240,120,101,.9);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,120,101,.4);transition:transform .2s}
+.vcard-overlay:hover .vcard-play{transform:scale(1.08)}
+.vcard-ctrl{position:absolute;bottom:0;left:0;right:0;z-index:5;padding:28px 14px 12px;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);display:none;flex-direction:column;gap:7px}
+.vcard.active .vcard-ctrl{display:flex}
+.vc-scrub-row{display:flex;align-items:center;gap:8px}
+.vc-scrub{flex:1;height:4px;background:rgba(255,255,255,.25);border-radius:100px;cursor:pointer;position:relative}
+.vc-fill{height:100%;background:var(--salmon);border-radius:100px;width:0%;position:relative}
+.vc-thumb{width:11px;height:11px;border-radius:50%;background:#fff;position:absolute;right:-5px;top:50%;transform:translateY(-50%);box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.vc-time{font-size:9px;font-weight:600;color:rgba(255,255,255,.6);white-space:nowrap}
+.vc-btns{display:flex;align-items:center;gap:8px}
+.vc-btn{background:none;border:none;cursor:pointer;color:#fff;padding:3px;display:flex;align-items:center;opacity:.8;transition:opacity .2s}
+.vc-btn:hover{opacity:1}
+.vc-full{margin-left:auto}
+
 
 /* FCTA */
 .fcta{position:fixed;bottom:28px;right:28px;z-index:150}
@@ -359,24 +369,56 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
   <section id="sec-projects" class="page-section dark-section">
     <div class="section-label">highlights</div>
     <div class="vid-strip" id="vid-strip">
-      <div class="vcard">
-        <video class="vcard-vid" id="strip-v0" muted loop playsinline preload="metadata"><source src="the_gem.mp4" type="video/mp4"></video>
-        <div class="vcard-overlay"><div class="vcard-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+      <div class="vcard" id="vcard-0">
+        <video class="vcard-vid" id="strip-v0" playsinline preload="metadata"><source src="the_gem.mp4" type="video/mp4"></video>
+        <div class="vcard-overlay" id="vov-0"><div class="vcard-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+        <div class="vcard-ctrl" id="vctrl-0">
+          <div class="vc-scrub-row"><div class="vc-scrub" id="vscrub-0"><div class="vc-fill" id="vfill-0"><div class="vc-thumb"></div></div></div><span class="vc-time" id="vtime-0">0:00</span></div>
+          <div class="vc-btns">
+            <button class="vc-btn" id="vplay-0" onclick="vcPlay(0)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></button>
+            <button class="vc-btn vc-mute" id="vmute-0" onclick="vcMute(0)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+            <button class="vc-btn vc-full" onclick="vcFull(0)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></button>
+          </div>
+        </div>
         <div class="vcard-label">the gem <span style="opacity:.5;font-weight:400">(Short)</span></div>
       </div>
-      <div class="vcard">
-        <video class="vcard-vid" id="strip-v1" muted loop playsinline preload="metadata"><source src="vid3.mp4" type="video/mp4"></video>
-        <div class="vcard-overlay"><div class="vcard-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+      <div class="vcard" id="vcard-1" style="aspect-ratio:9/16">
+        <video class="vcard-vid" id="strip-v1" playsinline preload="metadata"><source src="vid3.mp4" type="video/mp4"></video>
+        <div class="vcard-overlay" id="vov-1"><div class="vcard-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+        <div class="vcard-ctrl" id="vctrl-1">
+          <div class="vc-scrub-row"><div class="vc-scrub" id="vscrub-1"><div class="vc-fill" id="vfill-1"><div class="vc-thumb"></div></div></div><span class="vc-time" id="vtime-1">0:00</span></div>
+          <div class="vc-btns">
+            <button class="vc-btn" id="vplay-1" onclick="vcPlay(1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></button>
+            <button class="vc-btn vc-mute" id="vmute-1" onclick="vcMute(1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+            <button class="vc-btn vc-full" onclick="vcFull(1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></button>
+          </div>
+        </div>
         <div class="vcard-label">just a cat <span style="opacity:.5;font-weight:400">(Visual Poem)</span></div>
       </div>
-      <div class="vcard">
-        <video class="vcard-vid" id="strip-v2" muted loop playsinline preload="metadata"><source src="jumpsc.mp4" type="video/mp4"></video>
-        <div class="vcard-overlay"><div class="vcard-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+      <div class="vcard" id="vcard-2">
+        <video class="vcard-vid" id="strip-v2" playsinline preload="metadata"><source src="jumpsc.mp4" type="video/mp4"></video>
+        <div class="vcard-overlay" id="vov-2"><div class="vcard-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+        <div class="vcard-ctrl" id="vctrl-2">
+          <div class="vc-scrub-row"><div class="vc-scrub" id="vscrub-2"><div class="vc-fill" id="vfill-2"><div class="vc-thumb"></div></div></div><span class="vc-time" id="vtime-2">0:00</span></div>
+          <div class="vc-btns">
+            <button class="vc-btn" id="vplay-2" onclick="vcPlay(2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></button>
+            <button class="vc-btn vc-mute" id="vmute-2" onclick="vcMute(2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+            <button class="vc-btn vc-full" onclick="vcFull(2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></button>
+          </div>
+        </div>
         <div class="vcard-label">Unlocked <span style="opacity:.5;font-weight:400">(Short)</span></div>
       </div>
-      <div class="vcard" style="aspect-ratio:9/16">
-        <video class="vcard-vid" id="strip-v3" muted loop playsinline preload="metadata"><source src="vid4.mp4" type="video/mp4"></video>
-        <div class="vcard-overlay"><div class="vcard-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+      <div class="vcard" id="vcard-3" style="aspect-ratio:9/16">
+        <video class="vcard-vid" id="strip-v3" playsinline preload="metadata"><source src="vid4.mp4" type="video/mp4"></video>
+        <div class="vcard-overlay" id="vov-3"><div class="vcard-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+        <div class="vcard-ctrl" id="vctrl-3">
+          <div class="vc-scrub-row"><div class="vc-scrub" id="vscrub-3"><div class="vc-fill" id="vfill-3"><div class="vc-thumb"></div></div></div><span class="vc-time" id="vtime-3">0:00</span></div>
+          <div class="vc-btns">
+            <button class="vc-btn" id="vplay-3" onclick="vcPlay(3)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></button>
+            <button class="vc-btn vc-mute" id="vmute-3" onclick="vcMute(3)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+            <button class="vc-btn vc-full" onclick="vcFull(3)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></button>
+          </div>
+        </div>
         <div class="vcard-label">CLOAKS <span style="opacity:.5;font-weight:400">(Short)</span></div>
       </div>
     </div>
@@ -545,30 +587,120 @@ function goFull(id) {
 }
 
 // ─── VIDEO STRIP ───
-document.querySelectorAll('.vcard').forEach(card => {
-  const vid = card.querySelector('.vcard-vid');
-  if (!vid) return;
-  card.addEventListener('mouseenter', () => { vid.muted = true; vid.play().catch(() => {}); });
-  card.addEventListener('mouseleave', () => { if (!card.classList.contains('playing')) vid.pause(); });
-  card.addEventListener('click', () => {
-    if (card.classList.contains('playing')) {
-      vid.muted = true; card.classList.remove('playing');
-    } else {
-      document.querySelectorAll('.vcard').forEach(c => { c.classList.remove('playing'); const v = c.querySelector('.vcard-vid'); if (v) v.muted = true; });
-      vid.muted = false; vid.play().catch(() => { vid.muted = true; vid.play().catch(() => {}); });
-      card.classList.add('playing');
+const VCARDS = 4;
+let activeVcard = -1;
+
+function vcFmt(s) {
+  if (!s || isNaN(s)) return '0:00';
+  return Math.floor(s/60) + ':' + String(Math.floor(s%60)).padStart(2,'0');
+}
+
+function vcStopAll() {
+  for (let i = 0; i < VCARDS; i++) {
+    const v = document.getElementById('strip-v' + i);
+    const card = document.getElementById('vcard-' + i);
+    const ov = document.getElementById('vov-' + i);
+    if (v) { v.pause(); v.currentTime = 0; }
+    if (card) card.classList.remove('active');
+    if (ov) ov.classList.remove('hidden');
+  }
+  activeVcard = -1;
+}
+
+function vcStart(i) {
+  vcStopAll();
+  const v   = document.getElementById('strip-v' + i);
+  const card = document.getElementById('vcard-' + i);
+  const ov  = document.getElementById('vov-' + i);
+  if (!v || !card) return;
+  activeVcard = i;
+  card.classList.add('active');
+  ov.classList.add('hidden');
+  v.muted = false;
+  v.currentTime = 0;
+  v.play().catch(() => {});
+  // update play btn to pause icon
+  const pb = document.getElementById('vplay-' + i);
+  if (pb) pb.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+}
+
+window.vcPlay = function(i) {
+  const v = document.getElementById('strip-v' + i);
+  const pb = document.getElementById('vplay-' + i);
+  if (!v) return;
+  if (v.paused) {
+    v.play().catch(() => {});
+    if (pb) pb.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+  } else {
+    v.pause();
+    if (pb) pb.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+  }
+};
+
+window.vcMute = function(i) {
+  const v = document.getElementById('strip-v' + i);
+  const mb = document.getElementById('vmute-' + i);
+  if (!v) return;
+  v.muted = !v.muted;
+  if (mb) mb.innerHTML = v.muted
+    ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>'
+    : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
+};
+
+window.vcFull = function(i) {
+  const card = document.getElementById('vcard-' + i);
+  if (!card) return;
+  if (document.fullscreenElement) document.exitFullscreen();
+  else card.requestFullscreen().catch(() => {});
+};
+
+// Scrub bars
+for (let i = 0; i < VCARDS; i++) {
+  (function(idx) {
+    const scrub = document.getElementById('vscrub-' + idx);
+    if (scrub) scrub.addEventListener('click', e => {
+      const v = document.getElementById('strip-v' + idx);
+      if (!v || !v.duration) return;
+      const r = scrub.getBoundingClientRect();
+      v.currentTime = ((e.clientX - r.left) / r.width) * v.duration;
+    });
+  })(i);
+}
+
+// Scrub tick
+function vcTick() {
+  for (let i = 0; i < VCARDS; i++) {
+    const v = document.getElementById('strip-v' + i);
+    const fill = document.getElementById('vfill-' + i);
+    const time = document.getElementById('vtime-' + i);
+    if (v && fill) {
+      fill.style.width = (v.duration ? v.currentTime / v.duration * 100 : 0) + '%';
+      if (time) time.textContent = vcFmt(v.currentTime) + ' / ' + vcFmt(v.duration);
     }
-  });
-});
+  }
+  requestAnimationFrame(vcTick);
+}
+requestAnimationFrame(vcTick);
+
+// Click overlay or card to start
+for (let i = 0; i < VCARDS; i++) {
+  (function(idx) {
+    const ov = document.getElementById('vov-' + idx);
+    if (ov) ov.addEventListener('click', e => { e.stopPropagation(); vcStart(idx); });
+  })(i);
+}
+
+// Drag-to-scroll strip
 (function() {
   const strip = document.getElementById('vid-strip');
   if (!strip) return;
-  let down = false, startX = 0, scrollLeft = 0;
-  strip.addEventListener('pointerdown', e => { down = true; startX = e.clientX; scrollLeft = strip.scrollLeft; strip.setPointerCapture(e.pointerId); });
-  strip.addEventListener('pointermove', e => { if (!down) return; strip.scrollLeft = scrollLeft - (e.clientX - startX); });
-  strip.addEventListener('pointerup', () => down = false);
-  strip.addEventListener('pointercancel', () => down = false);
+  let down = false, startX = 0, scrollLeft = 0, moved = false;
+  strip.addEventListener('pointerdown', e => { down = true; moved = false; startX = e.clientX; scrollLeft = strip.scrollLeft; strip.setPointerCapture(e.pointerId); });
+  strip.addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - startX; if (Math.abs(dx) > 4) { moved = true; strip.scrollLeft = scrollLeft - dx; } });
+  strip.addEventListener('pointerup', () => { down = false; });
+  strip.addEventListener('pointercancel', () => { down = false; });
 })();
+
 
 // ─── GFX SLIDESHOW ───
 (function() {
