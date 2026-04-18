@@ -630,23 +630,39 @@ function vcTick() {
 }
 requestAnimationFrame(vcTick);
 
-// Click overlay or card to start
+// Click overlay to start — must come AFTER drag setup so stopPropagation works
 for (let i = 0; i < VCARDS; i++) {
   (function(idx) {
     const ov = document.getElementById('vov-' + idx);
-    if (ov) ov.addEventListener('click', e => { e.stopPropagation(); vcStart(idx); });
+    if (ov) {
+      ov.addEventListener('pointerup', e => {
+        e.stopPropagation();
+        if (!dragMoved) vcStart(idx);
+      });
+    }
   })(i);
 }
 
 // Drag-to-scroll strip
+let dragMoved = false;
 (function() {
   const strip = document.getElementById('vid-strip');
   if (!strip) return;
-  let down = false, startX = 0, scrollLeft = 0, moved = false;
-  strip.addEventListener('pointerdown', e => { down = true; moved = false; startX = e.clientX; scrollLeft = strip.scrollLeft; strip.setPointerCapture(e.pointerId); });
-  strip.addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - startX; if (Math.abs(dx) > 4) { moved = true; strip.scrollLeft = scrollLeft - dx; } });
+  let down = false, startX = 0, scrollLeft = 0;
+  strip.addEventListener('pointerdown', e => {
+    // Don't capture if clicking a button inside a vcard-ctrl
+    if (e.target.closest('.vcard-ctrl')) return;
+    down = true; dragMoved = false;
+    startX = e.clientX; scrollLeft = strip.scrollLeft;
+    strip.setPointerCapture(e.pointerId);
+  });
+  strip.addEventListener('pointermove', e => {
+    if (!down) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 5) { dragMoved = true; strip.scrollLeft = scrollLeft - dx; }
+  });
   strip.addEventListener('pointerup', () => { down = false; });
-  strip.addEventListener('pointercancel', () => { down = false; });
+  strip.addEventListener('pointercancel', () => { down = false; dragMoved = false; });
 })();
 
 
