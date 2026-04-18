@@ -76,15 +76,16 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 .about-hero{position:relative;width:100%;background:#000;flex-shrink:0}
 .about-hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
 .about-grad{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 0%,transparent 30%,rgba(0,0,0,.4) 70%,rgba(0,0,0,.9) 100%);pointer-events:none;z-index:1}
-.about-info{position:absolute;bottom:72px;left:48px;z-index:2}
+.about-info{position:absolute;top:40px;left:48px;z-index:2}
 .about-name{font-size:clamp(42px,7vw,84px);font-weight:800;letter-spacing:-.02em;line-height:.92;color:#f5f2ee}
 .about-role{margin-top:12px;font-size:10px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.44)}
 .about-role span{color:#7ecfc9}
 .about-ctrl{position:absolute;bottom:0;left:0;right:0;z-index:3;padding:48px 48px 18px;background:linear-gradient(to top,rgba(0,0,0,.75),transparent)}
-.about-hint{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:4;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45);cursor:pointer;transition:color .2s}
+.about-hint{position:absolute;bottom:72px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45);cursor:pointer;transition:color .2s}
 .about-hint svg{animation:bob 2s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
 
+.about-bio-bridge{height:80px;background:linear-gradient(to bottom,#000 0%,transparent 100%);margin-top:-2px}
 .about-bio{padding:72px 52px 96px;background:transparent}
 .bio-hello{font-size:clamp(52px,8vw,96px);font-weight:800;letter-spacing:-.03em;line-height:1;
   background:linear-gradient(110deg,#f0b090 0%,#a8d8ea 45%,#f5c0c8 100%);
@@ -102,14 +103,13 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 
 .roles-cloud{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px 20px;max-width:900px;margin-top:48px}
 .role{display:inline-block;font-weight:600;letter-spacing:.01em;cursor:default;
-  opacity:0;transform:translateY(14px);
-  animation:roleIn .6s cubic-bezier(.4,0,.2,1) forwards;
-  animation-delay:var(--d,0s)}
-@keyframes roleIn{to{opacity:1;transform:translateY(0)}}
-.role:hover{filter:brightness(1.2);transform:translateY(-2px) !important}
+  opacity:0;transform:translateY(14px);transition:filter .2s}
+.role:hover{filter:brightness(1.2);transform:translateY(-2px)}
 .role.big{font-size:clamp(20px,3vw,36px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
-.role.small{font-size:clamp(10px,1.3vw,14px);font-weight:500;letter-spacing:.04em;opacity:.0}
-.role.small{animation:roleInSmall .6s cubic-bezier(.4,0,.2,1) forwards;animation-delay:var(--d,0s)}
+.role.small{font-size:clamp(10px,1.3vw,14px);font-weight:500;letter-spacing:.04em}
+.roles-cloud.animated .role{animation:roleIn .6s cubic-bezier(.4,0,.2,1) forwards;animation-delay:var(--d,0s)}
+.roles-cloud.animated .role.small{animation:roleInSmall .6s cubic-bezier(.4,0,.2,1) forwards;animation-delay:var(--d,0s)}
+@keyframes roleIn{to{opacity:1;transform:translateY(0)}}
 @keyframes roleInSmall{to{opacity:.5;transform:translateY(0)}}
 .role-teal{color:var(--teal)}
 .role-salmon{color:var(--salmon)}
@@ -188,6 +188,11 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 .fcta-btn{width:50px;height:50px;background:var(--salmon);border:none;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(240,120,101,.38);transition:all .2s;color:#fff}
 .fcta-btn:hover{background:#f28873;transform:scale(1.06)}
 
+.sb-socials{display:flex;gap:4px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,0,0,.07);justify-content:center}
+.sidebar.collapsed .sb-socials{display:none}
+.sb-social{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;transition:all .18s}
+.sb-social:hover{background:rgba(0,0,0,.06);color:var(--teal)}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   :root { --pad: 10px; --gap: 8px; --topbar-h: 52px; }
@@ -216,6 +221,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
   .sidebar.collapsed .sb-toggle svg { transform: none !important; }
   .sb-link { padding: 7px 8px; font-size: 9px; border-radius: 8px; white-space: nowrap; letter-spacing: .1em; }
   .sb-dot { display: none; }
+  .sb-socials { display: none; }
 
   /* Main frame clears the top bar */
   .main-frame {
@@ -225,11 +231,13 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
     bottom: var(--pad);
   }
 
-  .about-info { left: 20px; bottom: 56px; }
+  .about-info { left: 20px; top: 24px; }
   .about-ctrl { padding: 36px 20px 14px; }
   .about-bio { padding: 40px 20px 48px; }
   .roles-cloud { gap: 8px 12px; }
-  .vcard { height: 38vh; min-height: 140px; }
+  .role.big { font-size: clamp(16px, 5vw, 28px); }
+  .role.small { font-size: clamp(9px, 2.5vw, 12px); }
+  .vcard { height: 42vh; min-height: 160px; }
   .vid-strip { padding: 0 12px; gap: 8px; }
   .des-intro { padding: 24px 20px; gap: 20px; }
   .des-gifs { flex-direction: column; max-width: 260px; }
@@ -241,7 +249,42 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 @media (max-width: 480px) {
   .about-name { font-size: clamp(36px, 11vw, 60px); }
   .about-photos { grid-template-columns: 1fr 1fr; }
-  .vcard { height: 32vh; }
+  .vcard { height: 36vh; }
+}
+/* SERVICES */
+.svc-header{margin-bottom:56px}
+.svc-title{font-size:clamp(28px,4vw,52px);font-weight:800;letter-spacing:-.03em;color:var(--text);line-height:1.1;margin:12px 0 10px}
+.svc-title em{font-style:normal;background:linear-gradient(110deg,#f0b090,#a8d8ea);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.svc-sub{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+
+.svc-rates{display:flex;align-items:center;gap:0;background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:40px 52px;backdrop-filter:blur(20px);box-shadow:var(--glass-shadow);max-width:520px}
+.svc-rate{flex:1;display:flex;flex-direction:column;gap:4px}
+.svc-rate-price{font-size:clamp(40px,6vw,64px);font-weight:800;letter-spacing:-.04em;color:var(--text);line-height:1}
+.svc-rate-label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--teal)}
+.svc-rate-note{font-size:11px;font-weight:400;color:var(--muted);margin-top:2px}
+.svc-rate-divider{width:1px;height:72px;background:rgba(0,0,0,.1);margin:0 48px}
+
+.svc-packages{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:0}
+.svc-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;padding:28px 24px;backdrop-filter:blur(16px);box-shadow:var(--glass-shadow);transition:transform .2s,box-shadow .2s;cursor:default}
+.svc-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.1),0 1.5px 0 rgba(255,255,255,.7) inset}
+.svc-card-icon{width:44px;height:44px;border-radius:12px;background:rgba(26,157,147,.1);border:1px solid rgba(26,157,147,.15);display:flex;align-items:center;justify-content:center;color:var(--teal);margin-bottom:16px}
+.svc-card-name{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--text);margin-bottom:8px}
+.svc-card-desc{font-size:12.5px;line-height:1.7;color:var(--dim);font-weight:300}
+
+.svc-cta{margin-top:64px;padding-top:48px;border-top:1px solid rgba(0,0,0,.07);display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.svc-cta-text{font-size:clamp(18px,2.5vw,26px);font-weight:700;letter-spacing:-.02em;color:var(--text);flex:1;min-width:180px}
+.svc-cta-btns{display:flex;gap:12px;flex-wrap:wrap}
+.svc-btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:100px;font-family:'Manrope',sans-serif;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .2s;white-space:nowrap}
+.svc-btn-primary{background:var(--teal);color:#fff;box-shadow:0 4px 16px rgba(26,157,147,.3)}
+.svc-btn-primary:hover{background:#158f85;transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,157,147,.4)}
+.svc-btn-ghost{background:var(--glass);border:1px solid rgba(0,0,0,.12);color:var(--text);backdrop-filter:blur(12px)}
+.svc-btn-ghost:hover{background:#fff;border-color:var(--teal);color:var(--teal)}
+
+@media(max-width:768px){
+  .svc-rates{padding:28px 28px;max-width:100%}
+  .svc-rate-divider{margin:0 28px}
+  .svc-packages{grid-template-columns:1fr}
+  .svc-cta{flex-direction:column;align-items:flex-start;gap:20px}
 }
 </style>
 </head>
@@ -257,6 +300,17 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
     <button class="sb-link" data-tab="1"><span class="sb-dot"></span>Projects</button>
     <button class="sb-link" data-tab="2"><span class="sb-dot"></span>Designs</button>
     <button class="sb-link" data-tab="3"><span class="sb-dot"></span>Services</button>
+    <div class="sb-socials">
+      <a class="sb-social" href="https://www.youtube.com/@groupxproductions6692" target="_blank" title="YouTube">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.6 2.8 12 2.8 12 2.8s-4.6 0-6.8.1c-.6.1-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.3.3 4.3s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.3 21.8 12 21.8 12 21.8s4.6 0 6.8-.2c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.3v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>
+      </a>
+      <a class="sb-social" href="https://www.instagram.com/tadashi.mov/" target="_blank" title="Instagram">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a class="sb-social" href="https://www.linkedin.com/in/maziah-brown-27511b37a" target="_blank" title="LinkedIn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+    </div>
   </div>
 </nav>
 
@@ -292,7 +346,8 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
     </div>
-    <div id="sec-about-bio" class="about-bio">
+    <div class="about-bio-bridge"></div>
+      <div id="sec-about-bio" class="about-bio">
       <p class="bio-hello">hello.</p>
       <p class="bio-line">my name is <span class="bio-name">Tadashi</span>, a creative producer focusing on <span class="bio-film">film</span> and <span class="bio-events">events</span>.</p>
       <p class="bio-line">i'm a freelancer often <strong>behind the camera</strong> exploring the future of brand development and narrative stories.</p>
@@ -431,9 +486,90 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
   </section>
 
   <!-- ── SERVICES ── -->
-  <section id="sec-services" class="page-section dark-section" style="min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px">
-    <h2 style="font-size:clamp(32px,5vw,56px);font-weight:800;letter-spacing:-.03em;color:rgba(0,0,0,.12)">Services</h2>
-    <p style="font-size:9.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(0,0,0,.1)">Coming Soon</p>
+  <section id="sec-services" class="page-section">
+
+    <div class="svc-header">
+      <div class="section-label">Services</div>
+      <h2 class="svc-title">let's make something <em>real.</em></h2>
+      <p class="svc-sub">based in los angeles · available for travel</p>
+    </div>
+
+    <!-- Rates -->
+    <div class="svc-rates">
+      <div class="svc-rate">
+        <div class="svc-rate-price">$350</div>
+        <div class="svc-rate-label">half day</div>
+        <div class="svc-rate-note">up to 4 hours</div>
+      </div>
+      <div class="svc-rate-divider"></div>
+      <div class="svc-rate">
+        <div class="svc-rate-price">$600</div>
+        <div class="svc-rate-label">full day</div>
+        <div class="svc-rate-note">up to 8 hours</div>
+      </div>
+    </div>
+
+    <!-- Packages -->
+    <div class="section-label" style="margin-top:64px">popular packages</div>
+    <div class="svc-packages">
+
+      <div class="svc-card">
+        <div class="svc-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div class="svc-card-name">Event Coverage</div>
+        <div class="svc-card-desc">Weddings, concerts, cultural events, corporate gatherings — captured with a cinematic eye.</div>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3l-4 4-4-4"/></svg>
+        </div>
+        <div class="svc-card-name">Narrative Short Films</div>
+        <div class="svc-card-desc">From concept to screen — direction, production, and post-production for original story-driven work.</div>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="svc-card-name">Brand Spec Ops</div>
+        <div class="svc-card-desc">High-impact brand visuals, identity storytelling, and content strategy for businesses ready to stand out.</div>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        </div>
+        <div class="svc-card-name">Music Videos</div>
+        <div class="svc-card-desc">Visual storytelling synced to your sound — from concept boards to final cut, fully handled.</div>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+        <div class="svc-card-name">Social Media Cinematic Reels</div>
+        <div class="svc-card-desc">Scroll-stopping short-form content shot and edited with cinematic quality for your platforms.</div>
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="svc-cta">
+      <p class="svc-cta-text">ready to collaborate?</p>
+      <div class="svc-cta-btns">
+        <a href="https://mail.google.com/mail/?view=cm&to=gxpbusiness@gmail.com" target="_blank" class="svc-btn svc-btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          gxpbusiness@gmail.com
+        </a>
+        <a href="tel:+18188068167" class="svc-btn svc-btn-ghost">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 7.81 19.79 19.79 0 01.34 2.18 2 2 0 012.33 0h3a2 2 0 012 1.72c.14.67.3 1.33.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c1.48.4 2.14.56 2.81.7A2 2 0 0122 16.92z"/></svg>
+          (818) 806-8167
+        </a>
+      </div>
+    </div>
+
   </section>
 
 </main>
@@ -704,7 +840,20 @@ document.addEventListener('click', e => {
   if (fcta && !fcta.contains(e.target)) document.getElementById('fmenu').classList.remove('open');
 });
 
-// ─── HERO HEIGHT ───
+// ─── ROLES CLOUD: animate only once on first view ───
+(function() {
+  const cloud = document.querySelector('.roles-cloud');
+  if (!cloud) return;
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      cloud.classList.add('animated');
+      obs.disconnect(); // fire once only
+    }
+  }, { threshold: 0.2 });
+  obs.observe(cloud);
+})();
+
+
 function lockHero() {
   const h = document.getElementById('about-hero');
   const f = document.getElementById('main-frame');
