@@ -323,7 +323,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
     <div class="vid-strip" id="vid-strip">
       <div class="vcard" id="vcard-0">
         <video class="vcard-vid" id="strip-v0" playsinline preload="metadata"><source src="the_gem.mp4" type="video/mp4"></video>
-        <div class="vcard-overlay" id="vov-0"><div class="vcard-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+        <div class="vcard-overlay" id="vov-0" onclick="vcStart(0)"><div class="vcard-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
         <div class="vcard-ctrl" id="vctrl-0">
           <div class="vc-scrub-row"><div class="vc-scrub" id="vscrub-0"><div class="vc-fill" id="vfill-0"><div class="vc-thumb"></div></div></div><span class="vc-time" id="vtime-0">0:00</span></div>
           <div class="vc-btns">
@@ -336,7 +336,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
       </div>
       <div class="vcard" id="vcard-1" style="aspect-ratio:9/16">
         <video class="vcard-vid" id="strip-v1" playsinline preload="metadata"><source src="vid3.mp4" type="video/mp4"></video>
-        <div class="vcard-overlay" id="vov-1"><div class="vcard-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+        <div class="vcard-overlay" id="vov-1" onclick="vcStart(1)"><div class="vcard-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
         <div class="vcard-ctrl" id="vctrl-1">
           <div class="vc-scrub-row"><div class="vc-scrub" id="vscrub-1"><div class="vc-fill" id="vfill-1"><div class="vc-thumb"></div></div></div><span class="vc-time" id="vtime-1">0:00</span></div>
           <div class="vc-btns">
@@ -349,7 +349,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
       </div>
       <div class="vcard" id="vcard-2">
         <video class="vcard-vid" id="strip-v2" playsinline preload="metadata"><source src="jumpsc.mp4" type="video/mp4"></video>
-        <div class="vcard-overlay" id="vov-2"><div class="vcard-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+        <div class="vcard-overlay" id="vov-2" onclick="vcStart(2)"><div class="vcard-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
         <div class="vcard-ctrl" id="vctrl-2">
           <div class="vc-scrub-row"><div class="vc-scrub" id="vscrub-2"><div class="vc-fill" id="vfill-2"><div class="vc-thumb"></div></div></div><span class="vc-time" id="vtime-2">0:00</span></div>
           <div class="vc-btns">
@@ -362,7 +362,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
       </div>
       <div class="vcard" id="vcard-3" style="aspect-ratio:9/16">
         <video class="vcard-vid" id="strip-v3" playsinline preload="metadata"><source src="vid4.mp4" type="video/mp4"></video>
-        <div class="vcard-overlay" id="vov-3"><div class="vcard-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+        <div class="vcard-overlay" id="vov-3" onclick="vcStart(3)"><div class="vcard-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
         <div class="vcard-ctrl" id="vctrl-3">
           <div class="vc-scrub-row"><div class="vc-scrub" id="vscrub-3"><div class="vc-fill" id="vfill-3"><div class="vc-thumb"></div></div></div><span class="vc-time" id="vtime-3">0:00</span></div>
           <div class="vc-btns">
@@ -630,39 +630,21 @@ function vcTick() {
 }
 requestAnimationFrame(vcTick);
 
-// Click overlay to start — must come AFTER drag setup so stopPropagation works
-for (let i = 0; i < VCARDS; i++) {
-  (function(idx) {
-    const ov = document.getElementById('vov-' + idx);
-    if (ov) {
-      ov.addEventListener('pointerup', e => {
-        e.stopPropagation();
-        if (!dragMoved) vcStart(idx);
-      });
-    }
-  })(i);
-}
-
-// Drag-to-scroll strip
-let dragMoved = false;
+// Drag-to-scroll strip (no pointer capture — keeps overlays clickable)
 (function() {
   const strip = document.getElementById('vid-strip');
   if (!strip) return;
   let down = false, startX = 0, scrollLeft = 0;
-  strip.addEventListener('pointerdown', e => {
-    // Don't capture if clicking a button inside a vcard-ctrl
-    if (e.target.closest('.vcard-ctrl')) return;
-    down = true; dragMoved = false;
-    startX = e.clientX; scrollLeft = strip.scrollLeft;
-    strip.setPointerCapture(e.pointerId);
+  strip.addEventListener('mousedown', e => {
+    if (e.target.closest('.vcard-overlay,.vcard-ctrl')) return;
+    down = true; startX = e.clientX; scrollLeft = strip.scrollLeft;
+    strip.style.cursor = 'grabbing';
   });
-  strip.addEventListener('pointermove', e => {
+  window.addEventListener('mousemove', e => {
     if (!down) return;
-    const dx = e.clientX - startX;
-    if (Math.abs(dx) > 5) { dragMoved = true; strip.scrollLeft = scrollLeft - dx; }
+    strip.scrollLeft = scrollLeft - (e.clientX - startX);
   });
-  strip.addEventListener('pointerup', () => { down = false; });
-  strip.addEventListener('pointercancel', () => { down = false; dragMoved = false; });
+  window.addEventListener('mouseup', () => { down = false; strip.style.cursor = ''; });
 })();
 
 
