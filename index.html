@@ -9,6 +9,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --teal:#1a9d93;--salmon:#f07865;--blue:#5ab4d0;
+  --amber:#e8872a;--rose:#d94f6e;--gold:#f0b340;--peach:#f5906a;
   --text:#1a1815;--muted:#a09a92;--dim:#6b6560;
   --glass:rgba(255,255,255,0.62);--glass-border:rgba(255,255,255,0.75);
   --glass-shadow:0 8px 32px rgba(0,0,0,0.08),0 1.5px 0 rgba(255,255,255,0.7) inset;
@@ -16,7 +17,7 @@
   --sb-w:172px;--gap:16px;--pad:20px;
 }
 html,body{height:100%;overflow:hidden;overscroll-behavior:none;
-  background:linear-gradient(160deg,rgba(180,220,235,.28),rgba(245,210,185,.22) 50%,rgba(240,185,195,.25)),#f0ece8;
+  background:linear-gradient(160deg,#f5c5a0 0%,#f09878 25%,#e87060 50%,#c25878 75%,#8a4a80 100%);
   font-family:'Manrope',sans-serif;color:var(--text);}
 
 /* SIDEBAR */
@@ -60,15 +61,67 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
   left:calc(var(--pad) + var(--sb-w) + var(--gap));
   right:var(--pad);top:var(--pad);bottom:var(--pad);
   border-radius:var(--radius-lg);overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,0.12) transparent;
-  background:linear-gradient(160deg,rgba(180,220,235,.28),rgba(245,210,185,.22) 50%,rgba(240,185,195,.25)),#f0ece8;
+  background:#f5ede6;
   box-shadow:0 8px 40px rgba(0,0,0,.2);
   transition:left .3s ease;
 }
 .sidebar.collapsed~.main-frame{left:calc(var(--pad) + 56px + var(--gap))}
 
-.page-section{padding:72px 52px}
+.page-section{padding:72px 52px;position:relative;overflow:hidden}
 .dark-section{background:transparent}
-.section-label{font-size:9px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#a09a92;margin-bottom:28px}
+.section-label{font-size:9px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#a09a92;margin-bottom:28px;position:relative;z-index:2}
+
+/* Parallax wash bands */
+.page-section::before{
+  content:'';position:absolute;inset:-60% 0;
+  background:var(--section-wash,transparent);
+  transform:translateY(var(--px-offset,0px));
+  transition:transform 0s linear;
+  pointer-events:none;z-index:0;
+  border-radius:inherit;
+}
+.page-section > *{position:relative;z-index:2}
+
+#sec-projects::before{
+  background:linear-gradient(180deg,
+    rgba(248,160,90,.18) 0%,
+    rgba(232,100,80,.22) 40%,
+    rgba(180,60,100,.16) 100%);
+}
+#sec-designs::before{
+  background:linear-gradient(180deg,
+    rgba(200,70,110,.15) 0%,
+    rgba(240,120,80,.2) 50%,
+    rgba(248,180,80,.18) 100%);
+}
+#sec-services::before{
+  background:linear-gradient(180deg,
+    rgba(248,170,70,.2) 0%,
+    rgba(232,100,60,.18) 50%,
+    rgba(180,60,90,.15) 100%);
+}
+
+/* Parallax floating orbs */
+.px-orb{
+  position:absolute;border-radius:50%;pointer-events:none;z-index:1;
+  filter:blur(60px);opacity:.35;
+  transform:translateY(var(--px-offset,0px));
+  transition:transform 0s linear;
+}
+.px-orb-1{width:420px;height:420px;background:radial-gradient(circle,#f0a060,transparent 70%);top:-80px;right:-100px}
+.px-orb-2{width:320px;height:320px;background:radial-gradient(circle,#d94f6e,transparent 70%);bottom:10%;left:-80px}
+.px-orb-3{width:360px;height:360px;background:radial-gradient(circle,#f0b340,transparent 70%);top:30%;right:5%}
+.px-orb-4{width:280px;height:280px;background:radial-gradient(circle,#e8872a,transparent 70%);top:60%;left:20%}
+.px-orb-5{width:300px;height:300px;background:radial-gradient(circle,#c25878,transparent 70%);bottom:-40px;right:15%}
+
+/* SVG decorative icons */
+.px-icon{
+  position:absolute;pointer-events:none;z-index:1;
+  transform:translateY(var(--px-offset,0px)) rotate(var(--rot,0deg));
+  transition:transform 0s linear;
+  opacity:var(--ico-opacity,.07);
+}
+.px-icon svg{display:block;}
 
 /* ABOUT */
 .about-wrap{width:100%;background:#000;}
@@ -88,14 +141,14 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 .about-bio-bridge{height:80px;background:linear-gradient(to bottom,#000 0%,transparent 100%);margin-top:-2px}
 .about-bio{padding:72px 52px 96px;background:transparent}
 .bio-hello{font-size:clamp(52px,8vw,96px);font-weight:800;letter-spacing:-.03em;line-height:1;
-  background:linear-gradient(110deg,#f0b090 0%,#a8d8ea 45%,#f5c0c8 100%);
+  background:linear-gradient(110deg,#f07040 0%,#e8402a 35%,#c83060 70%,#f0a030 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   background-size:200% 200%;animation:gradShift 5s ease infinite alternate;margin-bottom:20px}
 @keyframes gradShift{0%{background-position:0% 50%}100%{background-position:100% 50%}}
 .bio-line{font-size:clamp(15px,2vw,22px);font-weight:300;line-height:1.7;color:#6b6560;margin-bottom:12px}
 .bio-line strong{font-weight:700;color:#1a1815;-webkit-text-fill-color:#1a1815}
 .bio-name{font-weight:800;letter-spacing:-.02em;
-  background:linear-gradient(110deg,#f0b090,#a8d8ea,#f5c0c8);
+  background:linear-gradient(110deg,#f07040,#e84060,#f0a030);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   background-size:200% 200%;animation:gradShift 5s ease infinite alternate}
 .bio-film{font-weight:700;color:#5ab4d0;-webkit-text-fill-color:#5ab4d0}
@@ -245,8 +298,8 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 .evt-overlay:hover .evt-play{transform:scale(1.08)}
 .evt-ctrl{position:absolute;bottom:0;left:0;right:0;z-index:5;padding:28px 14px 12px;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);display:none;flex-direction:column;gap:7px}
 .evt-card.active .evt-ctrl{display:flex}
-.evt-photo{width:100%;overflow:hidden;border-top:1px solid rgba(0,0,0,.08)}
-.evt-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.evt-photo{width:100%;overflow:hidden;border-top:1px solid rgba(0,0,0,.08);max-height:220px}
+.evt-photo img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .4s}
 .evt-photo:hover img{transform:scale(1.03)}
 
 /* ── RESPONSIVE ── */
@@ -311,7 +364,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 /* SERVICES */
 .svc-header{margin-bottom:56px}
 .svc-title{font-size:clamp(28px,4vw,52px);font-weight:800;letter-spacing:-.03em;color:var(--text);line-height:1.1;margin:12px 0 10px}
-.svc-title em{font-style:normal;background:linear-gradient(110deg,#f0b090,#a8d8ea);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.svc-title em{font-style:normal;background:linear-gradient(110deg,#f07040,#e84060);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .svc-sub{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 
 .svc-rates{display:flex;align-items:center;gap:0;background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:40px 52px;backdrop-filter:blur(20px);box-shadow:var(--glass-shadow);max-width:520px}
@@ -373,6 +426,145 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 
 <!-- MAIN FRAME -->
 <main class="main-frame" id="main-frame">
+
+  <!-- Parallax orbs -->
+  <div class="px-orb px-orb-1" data-px-speed="0.18"></div>
+  <div class="px-orb px-orb-2" data-px-speed="0.28"></div>
+  <div class="px-orb px-orb-3" data-px-speed="0.14"></div>
+  <div class="px-orb px-orb-4" data-px-speed="0.22"></div>
+  <div class="px-orb px-orb-5" data-px-speed="0.1"></div>
+
+  <!-- SVG decorative icons -->
+
+  <!-- Film reel top-right -->
+  <div class="px-icon" data-px-speed="0.12" style="top:6%;right:4%;--rot:12deg;--ico-opacity:.09">
+    <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f07040"/><stop offset="100%" stop-color="#d94f6e"/></linearGradient>
+      </defs>
+      <circle cx="90" cy="90" r="86" stroke="url(#g1)" stroke-width="4"/>
+      <circle cx="90" cy="90" r="60" stroke="url(#g1)" stroke-width="2.5"/>
+      <circle cx="90" cy="90" r="14" fill="url(#g1)"/>
+      <circle cx="90" cy="90" r="8" fill="#f5ede6"/>
+      <!-- Sprocket holes -->
+      <circle cx="90" cy="24" r="9" fill="url(#g1)"/>
+      <circle cx="90" cy="156" r="9" fill="url(#g1)"/>
+      <circle cx="24" cy="90" r="9" fill="url(#g1)"/>
+      <circle cx="156" cy="90" r="9" fill="url(#g1)"/>
+      <circle cx="43" cy="43" r="9" fill="url(#g1)"/>
+      <circle cx="137" cy="43" r="9" fill="url(#g1)"/>
+      <circle cx="43" cy="137" r="9" fill="url(#g1)"/>
+      <circle cx="137" cy="137" r="9" fill="url(#g1)"/>
+    </svg>
+  </div>
+
+  <!-- Aperture / lens iris mid-left -->
+  <div class="px-icon" data-px-speed="0.2" style="top:32%;left:-2%;--rot:-8deg;--ico-opacity:.08">
+    <svg width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e8872a"/><stop offset="100%" stop-color="#f0b340"/></linearGradient>
+      </defs>
+      <circle cx="110" cy="110" r="106" stroke="url(#g2)" stroke-width="3"/>
+      <circle cx="110" cy="110" r="70" stroke="url(#g2)" stroke-width="2"/>
+      <circle cx="110" cy="110" r="32" stroke="url(#g2)" stroke-width="2"/>
+      <!-- Iris blades -->
+      <line x1="110" y1="4" x2="110" y2="216" stroke="url(#g2)" stroke-width="1.5" opacity=".6"/>
+      <line x1="4" y1="110" x2="216" y2="110" stroke="url(#g2)" stroke-width="1.5" opacity=".6"/>
+      <line x1="32" y1="32" x2="188" y2="188" stroke="url(#g2)" stroke-width="1.5" opacity=".6"/>
+      <line x1="188" y1="32" x2="32" y2="188" stroke="url(#g2)" stroke-width="1.5" opacity=".6"/>
+      <line x1="20" y1="68" x2="200" y2="152" stroke="url(#g2)" stroke-width="1" opacity=".4"/>
+      <line x1="68" y1="20" x2="152" y2="200" stroke="url(#g2)" stroke-width="1" opacity=".4"/>
+      <line x1="200" y1="68" x2="20" y2="152" stroke="url(#g2)" stroke-width="1" opacity=".4"/>
+      <line x1="152" y1="20" x2="68" y2="200" stroke="url(#g2)" stroke-width="1" opacity=".4"/>
+    </svg>
+  </div>
+
+  <!-- Star burst bottom-center -->
+  <div class="px-icon" data-px-speed="0.16" style="top:68%;left:38%;--rot:20deg;--ico-opacity:.07">
+    <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#c25878"/><stop offset="100%" stop-color="#f07040"/></linearGradient>
+      </defs>
+      <circle cx="80" cy="80" r="76" stroke="url(#g3)" stroke-width="2.5"/>
+      <!-- Star points -->
+      <polygon points="80,4 86,74 156,80 86,86 80,156 74,86 4,80 74,74" stroke="url(#g3)" stroke-width="2" fill="none"/>
+      <polygon points="80,22 84,76 138,80 84,84 80,138 76,84 22,80 76,76" stroke="url(#g3)" stroke-width="1.5" fill="none" opacity=".6"/>
+      <circle cx="80" cy="80" r="10" stroke="url(#g3)" stroke-width="2"/>
+    </svg>
+  </div>
+
+  <!-- Concentric rings top-left -->
+  <div class="px-icon" data-px-speed="0.24" style="top:14%;left:5%;--rot:0deg;--ico-opacity:.06">
+    <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d94f6e"/><stop offset="100%" stop-color="#c25878"/></linearGradient>
+      </defs>
+      <circle cx="100" cy="100" r="96" stroke="url(#g4)" stroke-width="2"/>
+      <circle cx="100" cy="100" r="78" stroke="url(#g4)" stroke-width="2"/>
+      <circle cx="100" cy="100" r="60" stroke="url(#g4)" stroke-width="2"/>
+      <circle cx="100" cy="100" r="42" stroke="url(#g4)" stroke-width="2"/>
+      <circle cx="100" cy="100" r="24" stroke="url(#g4)" stroke-width="2"/>
+      <circle cx="100" cy="100" r="8" fill="url(#g4)"/>
+    </svg>
+  </div>
+
+  <!-- Film strip / sprocket right-lower -->
+  <div class="px-icon" data-px-speed="0.13" style="top:55%;right:2%;--rot:5deg;--ico-opacity:.08">
+    <svg width="100" height="260" viewBox="0 0 100 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f0b340"/><stop offset="100%" stop-color="#e8872a"/></linearGradient>
+      </defs>
+      <rect x="2" y="2" width="96" height="256" rx="8" stroke="url(#g5)" stroke-width="2.5"/>
+      <!-- Left sprockets -->
+      <rect x="8" y="16" width="16" height="22" rx="4" fill="url(#g5)"/>
+      <rect x="8" y="54" width="16" height="22" rx="4" fill="url(#g5)"/>
+      <rect x="8" y="92" width="16" height="22" rx="4" fill="url(#g5)"/>
+      <rect x="8" y="130" width="16" height="22" rx="4" fill="url(#g5)"/>
+      <rect x="8" y="168" width="16" height="22" rx="4" fill="url(#g5)"/>
+      <rect x="8" y="206" width="16" height="22" rx="4" fill="url(#g5)"/>
+      <!-- Right sprockets -->
+      <rect x="76" y="16" width="16" height="22" rx="4" fill="url(#g5)"/>
+      <rect x="76" y="54" width="16" height="22" rx="4" fill="url(#g5)"/>
+      <rect x="76" y="92" width="16" height="22" rx="4" fill="url(#g5)"/>
+      <rect x="76" y="130" width="16" height="22" rx="4" fill="url(#g5)"/>
+      <rect x="76" y="168" width="16" height="22" rx="4" fill="url(#g5)"/>
+      <rect x="76" y="206" width="16" height="22" rx="4" fill="url(#g5)"/>
+      <!-- Frame lines -->
+      <line x1="30" y1="50" x2="70" y2="50" stroke="url(#g5)" stroke-width="1.5"/>
+      <line x1="30" y1="110" x2="70" y2="110" stroke="url(#g5)" stroke-width="1.5"/>
+      <line x1="30" y1="170" x2="70" y2="170" stroke="url(#g5)" stroke-width="1.5"/>
+      <line x1="30" y1="230" x2="70" y2="230" stroke="url(#g5)" stroke-width="1.5"/>
+    </svg>
+  </div>
+
+  <!-- Diamond grid mid-right -->
+  <div class="px-icon" data-px-speed="0.19" style="top:46%;right:8%;--rot:15deg;--ico-opacity:.06">
+    <svg width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g6" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f07040"/><stop offset="100%" stop-color="#d94f6e"/></linearGradient>
+      </defs>
+      <circle cx="75" cy="75" r="72" stroke="url(#g6)" stroke-width="2"/>
+      <polygon points="75,6 144,75 75,144 6,75" stroke="url(#g6)" stroke-width="2" fill="none"/>
+      <polygon points="75,28 122,75 75,122 28,75" stroke="url(#g6)" stroke-width="1.5" fill="none"/>
+      <polygon points="75,50 100,75 75,100 50,75" stroke="url(#g6)" stroke-width="1.5" fill="none"/>
+      <circle cx="75" cy="75" r="8" fill="url(#g6)"/>
+    </svg>
+  </div>
+
+  <!-- Small cluster: 3 tiny rings bottom-left -->
+  <div class="px-icon" data-px-speed="0.3" style="top:80%;left:10%;--rot:-5deg;--ico-opacity:.07">
+    <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g7" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#c25878"/><stop offset="100%" stop-color="#f0b340"/></linearGradient>
+      </defs>
+      <circle cx="22" cy="40" r="18" stroke="url(#g7)" stroke-width="2.5"/>
+      <circle cx="22" cy="40" r="10" stroke="url(#g7)" stroke-width="1.5"/>
+      <circle cx="60" cy="40" r="18" stroke="url(#g7)" stroke-width="2.5"/>
+      <circle cx="60" cy="40" r="10" stroke="url(#g7)" stroke-width="1.5"/>
+      <circle cx="98" cy="40" r="18" stroke="url(#g7)" stroke-width="2.5"/>
+      <circle cx="98" cy="40" r="10" stroke="url(#g7)" stroke-width="1.5"/>
+    </svg>
+  </div>
 
   <!-- ── ABOUT ME ── -->
   <section id="sec-about">
@@ -1086,6 +1278,43 @@ function lockHero() {
 window.addEventListener('resize', lockHero);
 setTimeout(lockHero, 50);
 lockHero();
+// ─── PARALLAX ───
+(function() {
+  const frame = document.getElementById('main-frame');
+  if (!frame) return;
+
+  const sections = document.querySelectorAll('.page-section');
+  const orbs = document.querySelectorAll('.px-orb');
+  const icons = document.querySelectorAll('.px-icon');
+
+  function onScroll() {
+    const sy = frame.scrollTop;
+
+    // Section wash parallax
+    sections.forEach(sec => {
+      const rect = sec.getBoundingClientRect();
+      const frameRect = frame.getBoundingClientRect();
+      const relY = rect.top - frameRect.top;
+      const offset = relY * -0.22;
+      sec.style.setProperty('--px-offset', offset + 'px');
+    });
+
+    // Floating orbs at different speeds
+    orbs.forEach(orb => {
+      const speed = parseFloat(orb.dataset.pxSpeed) || 0.15;
+      orb.style.setProperty('--px-offset', -(sy * speed) + 'px');
+    });
+
+    // SVG icons at their own speeds
+    icons.forEach(icon => {
+      const speed = parseFloat(icon.dataset.pxSpeed) || 0.15;
+      icon.style.setProperty('--px-offset', -(sy * speed) + 'px');
+    });
+  }
+
+  frame.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
 </script>
 </body>
 </html>
