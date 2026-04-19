@@ -200,7 +200,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 
 /* WHEN IT'S COLD OUTSIDE */
 .wico-card{display:flex;gap:28px;border-radius:16px;overflow:hidden;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.08);padding:0}
-.wico-thumb{position:relative;flex-shrink:0;width:56%;aspect-ratio:16/9;overflow:hidden;display:block}
+.wico-thumb{position:relative;flex-shrink:0;width:42%;aspect-ratio:16/9;overflow:hidden;display:block}
 .wico-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
 .wico-card:hover .wico-thumb img{transform:scale(1.03)}
 .wico-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.28);transition:background .2s}
@@ -230,6 +230,24 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 .mv-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
 .mv-meta{font-size:11px;color:var(--muted);margin-bottom:1px}
 .mv-role{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+
+/* EVENTS */
+.evt-sub{font-size:13px;line-height:1.8;color:#6b6560;font-weight:300;max-width:560px;margin-bottom:40px}
+.evt-card{border-radius:16px;overflow:hidden;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.08)}
+.evt-header{padding:20px 24px 16px;display:flex;flex-direction:column;gap:4px}
+.evt-title{font-size:clamp(17px,2.2vw,24px);font-weight:800;letter-spacing:-.02em;color:var(--text);line-height:1.1}
+.evt-date{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal)}
+.evt-video{position:relative;width:100%;aspect-ratio:16/9;background:#000;overflow:hidden}
+.evt-video video{width:100%;height:100%;object-fit:contain;display:block;background:#000}
+.evt-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);cursor:pointer;transition:opacity .2s}
+.evt-overlay.hidden{opacity:0;pointer-events:none}
+.evt-play{width:52px;height:52px;border-radius:50%;background:rgba(240,120,101,.9);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,120,101,.4);transition:transform .2s}
+.evt-overlay:hover .evt-play{transform:scale(1.08)}
+.evt-ctrl{position:absolute;bottom:0;left:0;right:0;z-index:5;padding:28px 14px 12px;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);display:none;flex-direction:column;gap:7px}
+.evt-card.active .evt-ctrl{display:flex}
+.evt-photo{width:100%;overflow:hidden;border-top:1px solid rgba(0,0,0,.08)}
+.evt-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.evt-photo:hover img{transform:scale(1.03)}
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
@@ -538,6 +556,35 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
       </a>
 
     </div>
+
+    <!-- Events -->
+    <div class="section-label" style="margin-top:56px">Events</div>
+    <p class="evt-sub">curating live music, visual art and film.</p>
+
+    <div class="evt-card" id="evt-card-0">
+      <div class="evt-header">
+        <div class="evt-date">2025</div>
+        <div class="evt-title">Dysonna Spring Art Festival</div>
+      </div>
+      <div class="evt-video">
+        <video id="evt-v0" playsinline preload="metadata"><source src="artshow_spring.mp4" type="video/mp4"></video>
+        <div class="evt-overlay" id="evt-ov0" onclick="evtStart(0)">
+          <div class="evt-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </div>
+        <div class="evt-ctrl" id="evt-ctrl0">
+          <div class="vc-scrub-row"><div class="vc-scrub" id="evt-scrub0"><div class="vc-fill" id="evt-fill0"><div class="vc-thumb"></div></div></div><span class="vc-time" id="evt-time0">0:00</span></div>
+          <div class="vc-btns">
+            <button class="vc-btn" id="evt-play0" onclick="evtPlay(0)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></button>
+            <button class="vc-btn" id="evt-mute0" onclick="evtMute(0)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+            <button class="vc-btn vc-full" onclick="evtFull(0)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></button>
+          </div>
+        </div>
+      </div>
+      <div class="evt-photo">
+        <img src="artshow_spring.jpg" alt="Dysonna Spring Art Festival 2025">
+      </div>
+    </div>
+
   </section>
 
 
@@ -890,7 +937,7 @@ requestAnimationFrame(vcTick);
   strip.addEventListener('pointermove', e => {
     if (!down) return;
     const dx = e.clientX - startX;
-    if (Math.abs(dx) > 5) { moved = true; strip.scrollLeft = scrollLeft - dx * 0.35; }
+    if (Math.abs(dx) > 5) { moved = true; strip.scrollLeft = scrollLeft - dx; }
   });
   strip.addEventListener('pointerup', e => {
     if (!down) return;
@@ -950,6 +997,66 @@ requestAnimationFrame(vcTick);
   stage.addEventListener('pointercancel', () => { drag = false; go(cur, true); });
   go(0, false);
 })();
+
+// ─── EVENTS VIDEO ───
+const EVT_CARDS = 1;
+function evtStart(i) {
+  const v = document.getElementById('evt-v' + i);
+  const card = document.getElementById('evt-card-' + i);
+  const ov = document.getElementById('evt-ov' + i);
+  if (!v || !card) return;
+  card.classList.add('active');
+  ov.classList.add('hidden');
+  v.muted = false; v.currentTime = 0;
+  v.play().catch(() => {});
+  const pb = document.getElementById('evt-play' + i);
+  if (pb) pb.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+}
+window.evtPlay = function(i) {
+  const v = document.getElementById('evt-v' + i);
+  const pb = document.getElementById('evt-play' + i);
+  if (!v) return;
+  if (v.paused) { v.play().catch(() => {}); if (pb) pb.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>'; }
+  else { v.pause(); if (pb) pb.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>'; }
+};
+window.evtMute = function(i) {
+  const v = document.getElementById('evt-v' + i);
+  const mb = document.getElementById('evt-mute' + i);
+  if (!v) return;
+  v.muted = !v.muted;
+  if (mb) mb.innerHTML = v.muted
+    ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>'
+    : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
+};
+window.evtFull = function(i) {
+  const card = document.getElementById('evt-card-' + i);
+  if (!card) return;
+  if (document.fullscreenElement) document.exitFullscreen();
+  else card.requestFullscreen().catch(() => {});
+};
+(function evtTick() {
+  for (let i = 0; i < EVT_CARDS; i++) {
+    const v = document.getElementById('evt-v' + i);
+    const fill = document.getElementById('evt-fill' + i);
+    const time = document.getElementById('evt-time' + i);
+    if (v && fill) {
+      fill.style.width = (v.duration ? v.currentTime / v.duration * 100 : 0) + '%';
+      if (time) time.textContent = vcFmt(v.currentTime) + ' / ' + vcFmt(v.duration);
+    }
+  }
+  requestAnimationFrame(evtTick);
+})();
+for (let i = 0; i < EVT_CARDS; i++) {
+  (function(idx) {
+    const scrub = document.getElementById('evt-scrub' + idx);
+    if (scrub) scrub.addEventListener('click', e => {
+      const v = document.getElementById('evt-v' + idx);
+      if (!v || !v.duration) return;
+      const r = scrub.getBoundingClientRect();
+      v.currentTime = ((e.clientX - r.left) / r.width) * v.duration;
+    });
+  })(i);
+}
 
 // ─── FCTA ───
 document.addEventListener('click', e => {
