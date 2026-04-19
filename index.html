@@ -200,7 +200,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 
 /* WHEN IT'S COLD OUTSIDE */
 .wico-card{display:flex;gap:28px;border-radius:16px;overflow:hidden;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.08);padding:0}
-.wico-thumb{position:relative;flex-shrink:0;width:42%;aspect-ratio:16/9;overflow:hidden;display:block}
+.wico-thumb{position:relative;flex-shrink:0;width:56%;aspect-ratio:16/9;overflow:hidden;display:block}
 .wico-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
 .wico-card:hover .wico-thumb img{transform:scale(1.03)}
 .wico-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.28);transition:background .2s}
@@ -890,7 +890,7 @@ requestAnimationFrame(vcTick);
   strip.addEventListener('pointermove', e => {
     if (!down) return;
     const dx = e.clientX - startX;
-    if (Math.abs(dx) > 5) { moved = true; strip.scrollLeft = scrollLeft - dx; }
+    if (Math.abs(dx) > 5) { moved = true; strip.scrollLeft = scrollLeft - dx * 0.35; }
   });
   strip.addEventListener('pointerup', e => {
     if (!down) return;
