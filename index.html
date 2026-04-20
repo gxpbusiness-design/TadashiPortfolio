@@ -300,9 +300,41 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 .evt-overlay:hover .evt-play{transform:scale(1.08)}
 .evt-ctrl{position:absolute;bottom:0;left:0;right:0;z-index:5;padding:28px 14px 12px;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);display:none;flex-direction:column;gap:7px}
 .evt-card.active .evt-ctrl{display:flex}
-.evt-photo{width:100%;overflow:hidden;border-top:1px solid rgba(0,0,0,.08);max-height:220px}
-.evt-photo img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .4s}
-.evt-photo:hover img{transform:scale(1.03)}
+.evt-photo{width:100%;overflow:hidden;border-top:1px solid rgba(0,0,0,.08);background:#000;display:flex;justify-content:center}
+.evt-photo img{max-width:100%;max-height:480px;width:auto;height:auto;object-fit:contain;display:block;transition:transform .4s}
+.evt-photo:hover img{transform:scale(1.02)}
+
+/* STATS */
+.stats-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  padding:48px 52px 72px;background:transparent;
+}
+.stat-card{
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:20px;padding:28px 24px 24px;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow:var(--glass-shadow);
+  display:flex;flex-direction:column;gap:6px;
+  opacity:0;transform:translateY(20px);
+  transition:transform .2s,box-shadow .2s;
+}
+.stat-card.visible{animation:statIn .55s cubic-bezier(.4,0,.2,1) forwards;animation-delay:var(--sd,0s)}
+@keyframes statIn{to{opacity:1;transform:translateY(0)}}
+.stat-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.1),0 1.5px 0 rgba(255,255,255,.7) inset}
+.stat-num{
+  font-size:clamp(36px,5vw,60px);font-weight:800;letter-spacing:-.04em;line-height:1;
+  background:var(--stat-grad, linear-gradient(110deg,#4db8cc,#2aac8a));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.stat-label{font-size:13px;font-weight:600;color:var(--text);letter-spacing:-.01em;line-height:1.3;margin-top:2px}
+.stat-sub{font-size:11px;font-weight:400;color:var(--muted);line-height:1.5;margin-top:4px}
+
+@media(max-width:768px){
+  .stats-grid{grid-template-columns:1fr 1fr;padding:32px 20px 48px}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr}
+}
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
@@ -489,6 +521,35 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
       </div>
     </div>
   </section>
+
+  <!-- ── STATS ── -->
+  <div class="stats-grid" id="stats-grid">
+
+    <div class="stat-card" style="--sd:0s;--stat-grad:linear-gradient(110deg,#4db8cc,#2aac8a)">
+      <div class="stat-num">30+</div>
+      <div class="stat-label">Productions Completed</div>
+      <div class="stat-sub">Spanning shorts, music videos, brand content & live events</div>
+    </div>
+
+    <div class="stat-card" style="--sd:.08s;--stat-grad:linear-gradient(110deg,#2aac8a,#7b8fd4)">
+      <div class="stat-num">$40K</div>
+      <div class="stat-label">Budget Raised & Managed</div>
+      <div class="stat-sub">Up to $5K per project — every dollar on screen</div>
+    </div>
+
+    <div class="stat-card" style="--sd:.16s;--stat-grad:linear-gradient(110deg,#7b8fd4,#4db8cc)">
+      <div class="stat-num">1K+</div>
+      <div class="stat-label">Organic Social Growth</div>
+      <div class="stat-sub">Built audience from zero — no ads, no shortcuts, just compelling content</div>
+    </div>
+
+    <div class="stat-card" style="--sd:.24s;--stat-grad:linear-gradient(110deg,#4db8cc,#7b8fd4)">
+      <div class="stat-num">3-in-1</div>
+      <div class="stat-label">Camera · Sound · Lighting</div>
+      <div class="stat-sub">Operating all three keeps your budget lean without sacrificing quality</div>
+    </div>
+
+  </div>
   <section id="sec-projects" class="page-section dark-section">
     <h2 class="sec-heading">Highlights</h2>
     <div class="vid-strip" id="vid-strip">
@@ -1141,6 +1202,16 @@ function lockHero() {
 window.addEventListener('resize', lockHero);
 setTimeout(lockHero, 50);
 lockHero();
+// ─── STATS: animate in on scroll ───
+(function() {
+  const cards = document.querySelectorAll('.stat-card');
+  if (!cards.length) return;
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+  }, { threshold: 0.15 });
+  cards.forEach(c => obs.observe(c));
+})();
+
 // ─── PARALLAX ───
 (function() {
   const frame = document.getElementById('main-frame');
