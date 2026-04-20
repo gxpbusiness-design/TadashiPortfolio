@@ -73,6 +73,63 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 .sec-heading{font-size:clamp(32px,5vw,64px);font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--text);margin-bottom:36px;position:relative;z-index:2}
 .sec-heading em{font-style:normal;background:linear-gradient(110deg,#4db8cc,#2aac8a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
+/* ── GLOBAL ANIMATION SYSTEM ── */
+
+/* Keyframes */
+@keyframes fadeUp    {from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeDown  {from{opacity:0;transform:translateY(-24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeLeft  {from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeRight {from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeIn    {from{opacity:0}to{opacity:1}}
+@keyframes scaleUp   {from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+@keyframes slideReveal{from{opacity:0;transform:translateY(48px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* Animate-on-scroll base — everything starts invisible */
+.anim{opacity:0;will-change:transform,opacity}
+.anim.in{animation-fill-mode:both;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+.anim.in.fade-up    {animation-name:fadeUp}
+.anim.in.fade-down  {animation-name:fadeDown}
+.anim.in.fade-left  {animation-name:fadeLeft}
+.anim.in.fade-right {animation-name:fadeRight}
+.anim.in.fade-in    {animation-name:fadeIn}
+.anim.in.scale-up   {animation-name:scaleUp}
+.anim.in.slide-reveal{animation-name:slideReveal}
+/* Default duration + stagger via CSS var */
+.anim.in{animation-duration:var(--dur,.7s);animation-delay:var(--delay,0s)}
+
+/* Section headings parallax drift */
+.sec-heading{
+  transform:translateY(var(--heading-py,0px));
+  transition:transform 0s linear;
+}
+
+/* Photo cards tilt on hover */
+.about-photo{
+  transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s;
+}
+.about-photo:hover{
+  transform:translateY(-6px) rotate(-1deg) scale(1.02);
+  box-shadow:0 16px 40px rgba(0,0,0,.18);
+}
+
+/* Video cards lift */
+.vcard{transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s}
+.vcard:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 14px 36px rgba(0,0,0,.18)}
+
+/* MV cards already have hover — enhance */
+.mv-card{transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s}
+
+/* Service cards */
+.svc-card{transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s}
+
+/* Wico card image zoom already exists, add lift */
+.wico-card{transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
+.wico-card:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.12)}
+
+/* Evt card */
+.evt-card{transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s}
+.evt-card:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.1)}
+
 /* Parallax wash bands */
 .page-section::before{
   content:'';position:absolute;inset:-60% 0;
@@ -493,9 +550,9 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
     </div>
     <div class="about-bio-bridge"></div>
       <div id="sec-about-bio" class="about-bio">
-      <p class="bio-hello">hello.</p>
-      <p class="bio-line">my name is <span class="bio-name">Tadashi</span>, a creative producer focusing on <span class="bio-film">film</span> and <span class="bio-events">events</span>.</p>
-      <p class="bio-line">i'm a freelancer often <strong>behind the camera</strong> exploring the future of brand development and narrative stories.</p>
+      <p class="bio-hello anim fade-up" style="--delay:.05s">hello.</p>
+      <p class="bio-line anim fade-up" style="--delay:.15s">my name is <span class="bio-name">Tadashi</span>, a creative producer focusing on <span class="bio-film">film</span> and <span class="bio-events">events</span>.</p>
+      <p class="bio-line anim fade-up" style="--delay:.25s">i'm a freelancer often <strong>behind the camera</strong> exploring the future of brand development and narrative stories.</p>
       <div class="roles-cloud">
         <span class="role big role-teal" style="--d:0s">producer</span>
         <span class="role small role-muted" style="--d:.05s">actor</span>
@@ -516,9 +573,9 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
       </div>
 
       <div class="about-photos">
-        <div class="about-photo"><img src="IMG_1238.jpg" alt="Tadashi with camera"><span>01 / 03</span></div>
-        <div class="about-photo"><img src="warm_happy.jpg" alt="Tadashi"><span>02 / 03</span></div>
-        <div class="about-photo"><img src="Screen_Shot_2024-09-29_at_5_24_31_PM.jpg" alt="Tadashi on set"><span>03 / 03</span></div>
+        <div class="about-photo anim scale-up" style="--delay:.05s"><img src="IMG_1238.jpg" alt="Tadashi with camera"><span>01 / 03</span></div>
+        <div class="about-photo anim scale-up" style="--delay:.15s"><img src="warm_happy.jpg" alt="Tadashi"><span>02 / 03</span></div>
+        <div class="about-photo anim scale-up" style="--delay:.25s"><img src="Screen_Shot_2024-09-29_at_5_24_31_PM.jpg" alt="Tadashi on set"><span>03 / 03</span></div>
       </div>
     </div>
   </section>
@@ -552,7 +609,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 
   </div>
   <section id="sec-projects" class="page-section dark-section">
-    <h2 class="sec-heading">Highlights</h2>
+    <h2 class="sec-heading anim fade-right">Highlights</h2>
     <div class="vid-strip" id="vid-strip">
       <div class="vcard" id="vcard-0">
         <video class="vcard-vid" id="strip-v0" playsinline preload="metadata"><source src="the_gem.mp4" type="video/mp4"></video>
@@ -609,8 +666,8 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
     </div>
 
     <!-- When It's Cold Outside -->
-    <h2 class="sec-heading" style="margin-top:56px">Short Film</h2>
-    <div class="wico-card">
+    <h2 class="sec-heading anim fade-right" style="margin-top:56px">Short Film</h2>
+    <div class="wico-card anim slide-reveal" style="--delay:.1s">
       <a class="wico-thumb" href="https://youtu.be/xbbgFH_aZTE" target="_blank">
         <img src="https://img.youtube.com/vi/xbbgFH_aZTE/maxresdefault.jpg" alt="When It's Cold Outside" onerror="this.src='https://img.youtube.com/vi/xbbgFH_aZTE/hqdefault.jpg'">
         <div class="wico-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
@@ -633,8 +690,8 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
     </div>
 
     <!-- Music Videos -->
-    <h2 class="sec-heading" style="margin-top:56px">Music Videos</h2>
-    <div class="mv-grid">
+    <h2 class="sec-heading anim fade-right" style="margin-top:56px">Music Videos</h2>
+    <div class="mv-grid anim fade-up" style="--delay:.1s">
 
       <a class="mv-card" href="https://youtu.be/Va8EOKMu8C0" target="_blank">
         <div class="mv-thumb">
@@ -675,10 +732,10 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
     </div>
 
     <!-- Events -->
-    <h2 class="sec-heading" style="margin-top:56px">Events</h2>
-    <p class="evt-sub">curating live music, visual art and film.</p>
+    <h2 class="sec-heading anim fade-right" style="margin-top:56px">Events</h2>
+    <p class="evt-sub anim fade-up" style="--delay:.08s">curating live music, visual art and film.</p>
 
-    <div class="evt-card" id="evt-card-0">
+    <div class="evt-card anim slide-reveal" style="--delay:.16s" id="evt-card-0">
       <div class="evt-header">
         <div class="evt-date">2025</div>
         <div class="evt-title">Dysonna Spring Art Festival</div>
@@ -706,14 +763,14 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 
 
   <section id="sec-designs" class="page-section dark-section">
-    <h2 class="sec-heading">Design & Visual Art</h2>
-    <p style="font-size:13px;line-height:1.8;color:#6b6560;font-weight:300;max-width:560px;margin-bottom:40px">Tadashi's design practice spans graphic design, photography, animation, and illustration.</p>
-    <div class="des-gifs">
+    <h2 class="sec-heading anim fade-right">Design & Visual Art</h2>
+    <p class="anim fade-up" style="--delay:.08s;font-size:13px;line-height:1.8;color:#6b6560;font-weight:300;max-width:560px;margin-bottom:40px">Tadashi's design practice spans graphic design, photography, animation, and illustration.</p>
+    <div class="des-gifs anim fade-up" style="--delay:.14s">
       <div class="des-gif"><img src="scar_animation_1.gif" alt="Animation 1"></div>
       <div class="des-gif"><img src="scar_city_anim.gif" alt="Animation 2"></div>
     </div>
-    <h3 class="sec-heading" style="font-size:clamp(22px,3vw,36px);margin-bottom:20px">Graphic Design</h3>
-    <div class="gfx-stage" id="gfx-stage" style="height:75vh;margin-bottom:16px">
+    <h3 class="sec-heading anim fade-right" style="font-size:clamp(22px,3vw,36px);margin-bottom:20px">Graphic Design</h3>
+    <div class="gfx-stage anim scale-up" style="--delay:.08s" id="gfx-stage" style="height:75vh;margin-bottom:16px">
       <div class="gfx-track" id="gfx-track">
         <div class="gfx-slide"><img src="gfx_design_1.jpg" loading="lazy" alt=""></div>
         <div class="gfx-slide"><img src="gfx_design_2.jpg" loading="lazy" alt=""></div>
@@ -735,8 +792,8 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
       <button class="gfx-arr" id="gfx-prev"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
       <button class="gfx-arr" id="gfx-next"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
     </div>
-    <h3 class="sec-heading" style="font-size:clamp(22px,3vw,36px);margin-bottom:20px">Photography</h3>
-    <div class="gfx-stage" id="photo-stage" style="height:75vh;margin-bottom:16px">
+    <h3 class="sec-heading anim fade-right" style="font-size:clamp(22px,3vw,36px);margin-bottom:20px">Photography</h3>
+    <div class="gfx-stage anim scale-up" style="--delay:.08s" id="photo-stage" style="height:75vh;margin-bottom:16px">
       <div class="gfx-track" id="photo-track">
         <div class="gfx-slide"><img src="photo_1.jpg" loading="lazy" alt=""></div>
         <div class="gfx-slide"><img src="photo_2.jpg" loading="lazy" alt=""></div>
@@ -761,14 +818,14 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
   <!-- ── SERVICES ── -->
   <section id="sec-services" class="page-section">
 
-    <div class="svc-header">
+    <div class="svc-header anim fade-up">
       <h2 class="sec-heading">Services</h2>
       <h2 class="svc-title">let's make something <em>real.</em></h2>
       <p class="svc-sub">based in los angeles · available for travel</p>
     </div>
 
     <!-- Rates -->
-    <div class="svc-rates">
+    <div class="svc-rates anim slide-reveal" style="--delay:.1s">
       <div class="svc-rate">
         <div class="svc-rate-price">$350</div>
         <div class="svc-rate-label">half day</div>
@@ -783,10 +840,10 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
     </div>
 
     <!-- Packages -->
-    <h3 class="sec-heading" style="font-size:clamp(22px,3vw,36px);margin-top:64px">Popular Packages</h3>
+    <h3 class="sec-heading anim fade-right" style="font-size:clamp(22px,3vw,36px);margin-top:64px">Popular Packages</h3>
     <div class="svc-packages">
 
-      <div class="svc-card">
+      <div class="svc-card anim fade-up" style="--delay:.0s">
         <div class="svc-card-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
         </div>
@@ -794,7 +851,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
         <div class="svc-card-desc">Weddings, concerts, cultural events, corporate gatherings — captured with a cinematic eye.</div>
       </div>
 
-      <div class="svc-card">
+      <div class="svc-card anim fade-up" style="--delay:.08s">
         <div class="svc-card-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3l-4 4-4-4"/></svg>
         </div>
@@ -802,7 +859,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
         <div class="svc-card-desc">From concept to screen — direction, production, and post-production for original story-driven work.</div>
       </div>
 
-      <div class="svc-card">
+      <div class="svc-card anim fade-up" style="--delay:.16s">
         <div class="svc-card-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
         </div>
@@ -810,7 +867,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
         <div class="svc-card-desc">High-impact brand visuals, identity storytelling, and content strategy for businesses ready to stand out.</div>
       </div>
 
-      <div class="svc-card">
+      <div class="svc-card anim fade-up" style="--delay:.24s">
         <div class="svc-card-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
         </div>
@@ -818,7 +875,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
         <div class="svc-card-desc">Visual storytelling synced to your sound — from concept boards to final cut, fully handled.</div>
       </div>
 
-      <div class="svc-card">
+      <div class="svc-card anim fade-up" style="--delay:.32s">
         <div class="svc-card-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         </div>
@@ -829,7 +886,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
     </div>
 
     <!-- CTA -->
-    <div class="svc-cta">
+    <div class="svc-cta anim fade-up" style="--delay:.1s">
       <p class="svc-cta-text">ready to collaborate?</p>
       <div class="svc-cta-btns">
         <a href="https://mail.google.com/mail/?view=cm&to=gxpbusiness@gmail.com" target="_blank" class="svc-btn svc-btn-primary">
@@ -1239,6 +1296,22 @@ lockHero();
   }, { threshold: 0.2 });
 
   items.forEach(c => obs.observe(c));
+})();
+
+// ─── SCROLL ANIMATIONS ───
+(function() {
+  const frame = document.getElementById('main-frame');
+  if (!frame) return;
+  const els = frame.querySelectorAll('.anim');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { root: frame, threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(el => obs.observe(el));
 })();
 
 // ─── PARALLAX ───
