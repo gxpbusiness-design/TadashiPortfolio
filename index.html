@@ -326,15 +326,19 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 
 
 /* VIDEO GRID */
-.vid-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:0 0 24px;grid-auto-rows:280px}
-.vgrid-card{position:relative;border-radius:12px;overflow:hidden;background:#000;cursor:pointer;height:100%}
-.vgrid-card.tall{grid-row:span 2}
-.vgrid-pair{grid-row:span 2;display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.vgrid-pair .vgrid-card{grid-row:span 1}
+.vid-grid{display:grid;grid-template-columns:1fr 2fr;gap:16px;padding:0 0 24px}
+.vgrid-card{position:relative;border-radius:12px;overflow:hidden;background:#000;cursor:pointer}
+.vgrid-card.full{grid-column:1/-1}
+.vgrid-row2{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.vgrid-row2 .vgrid-card{aspect-ratio:4/3}
+.vgrid-card.row1-left{aspect-ratio:9/16}
+.vgrid-card.row1-right{aspect-ratio:16/9}
+.vgrid-card.full{aspect-ratio:21/9}
 @media(max-width:640px){
-  .vid-grid{grid-template-columns:1fr;grid-auto-rows:220px}
-  .vgrid-card.tall{grid-row:span 1}
-  .vgrid-pair{grid-template-columns:1fr 1fr;grid-row:span 1}
+  .vid-grid{grid-template-columns:1fr}
+  .vgrid-card.row1-left,.vgrid-card.row1-right,.vgrid-card.full{aspect-ratio:16/9}
+  .vgrid-row2{grid-template-columns:1fr}
+  .vgrid-row2 .vgrid-card{aspect-ratio:16/9}
 }
 .vgrid-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s,opacity .3s}
 .vgrid-card:hover .vgrid-thumb{transform:scale(1.04);opacity:.85}
@@ -694,38 +698,45 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
       </div>
     </div>
     <div class="vid-grid">
-      <div class="vgrid-card" onclick="openVModal('the_gem.mp4','The Gem (Short)')">
+
+      <!-- ROW 1: David's Shower (1/3) + The Gem (2/3) -->
+      <div class="vgrid-card row1-left" onclick="openVModal('David_Reel.mp4','Davids Shower (Visual Poem)')">
+        <video class="vgrid-thumb-vid" id="thumb-v4" src="David_Reel.mp4" preload="metadata" muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
+        <div class="vgrid-overlay"><div class="vgrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+        <div class="vgrid-label">David's Shower <span style="opacity:.5;font-weight:400">(Visual Poem)</span></div>
+      </div>
+      <div class="vgrid-card row1-right" onclick="openVModal('the_gem.mp4','The Gem (Short)')">
         <video class="vgrid-thumb-vid" id="thumb-v0" src="the_gem.mp4" preload="metadata" muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
         <div class="vgrid-overlay"><div class="vgrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
         <div class="vgrid-label">The Gem <span style="opacity:.5;font-weight:400">(Short)</span></div>
       </div>
-      <div class="vgrid-card tall" onclick="openVModal('vid3.mp4','Just a Cat (Visual Poem)')">
-        <video class="vgrid-thumb-vid" id="thumb-v1" src="vid3.mp4" preload="metadata" muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
-        <div class="vgrid-overlay"><div class="vgrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
-        <div class="vgrid-label">Just a Cat <span style="opacity:.5;font-weight:400">(Visual Poem)</span></div>
+
+      <!-- ROW 2: Just a Cat, Artist Struggles, CLOAKS — 4:3 equally -->
+      <div class="vgrid-row2">
+        <div class="vgrid-card" onclick="openVModal('vid3.mp4','Just a Cat (Visual Poem)')">
+          <video class="vgrid-thumb-vid" id="thumb-v1" src="vid3.mp4" preload="metadata" muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
+          <div class="vgrid-overlay"><div class="vgrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+          <div class="vgrid-label">Just a Cat <span style="opacity:.5;font-weight:400">(Visual Poem)</span></div>
+        </div>
+        <div class="vgrid-card" onclick="openVModal('artistsvid.mp4','Artist Struggles (Interview)')">
+          <video class="vgrid-thumb-vid" id="thumb-v5" src="artistsvid.mp4" preload="metadata" muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
+          <div class="vgrid-overlay"><div class="vgrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+          <div class="vgrid-label">Artist Struggles <span style="opacity:.5;font-weight:400">(Interview)</span></div>
+        </div>
+        <div class="vgrid-card" onclick="openVModal('vid4.mp4','CLOAKS (Short)')">
+          <video class="vgrid-thumb-vid" id="thumb-v3" src="vid4.mp4" preload="metadata" muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
+          <div class="vgrid-overlay"><div class="vgrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+          <div class="vgrid-label">CLOAKS <span style="opacity:.5;font-weight:400">(Short)</span></div>
+        </div>
       </div>
-      <div class="vgrid-card" onclick="openVModal('jumpsc.mp4','Unlocked (Short)')">
+
+      <!-- ROW 3: Unlocked full width -->
+      <div class="vgrid-card full" onclick="openVModal('jumpsc.mp4','Unlocked (Short)')">
         <video class="vgrid-thumb-vid" id="thumb-v2" src="jumpsc.mp4" preload="metadata" muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
         <div class="vgrid-overlay"><div class="vgrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
         <div class="vgrid-label">Unlocked <span style="opacity:.5;font-weight:400">(Short)</span></div>
       </div>
-      <div class="vgrid-card tall" onclick="openVModal('vid4.mp4','CLOAKS (Short)')">
-        <video class="vgrid-thumb-vid" id="thumb-v3" src="vid4.mp4" preload="metadata" muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
-        <div class="vgrid-overlay"><div class="vgrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
-        <div class="vgrid-label">CLOAKS <span style="opacity:.5;font-weight:400">(Short)</span></div>
-      </div>
-      <div class="vgrid-pair">
-        <div class="vgrid-card" onclick="openVModal('David_Reel.mp4','Davids Shower (Visual Poem)')">
-          <video class="vgrid-thumb-vid" id="thumb-v4" src="David_Reel.mp4" preload="metadata" muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
-          <div class="vgrid-overlay"><div class="vgrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
-          <div class="vgrid-label">David's Shower <span style="opacity:.5;font-weight:400">(Visual Poem)</span></div>
-        </div>
-        <div class="vgrid-card" onclick="openVModal('artist_struggles.mp4','Artist Struggles (Interview)')">
-          <video class="vgrid-thumb-vid" id="thumb-v5" src="artist_struggles.mp4" preload="metadata" muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
-          <div class="vgrid-overlay"><div class="vgrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
-          <div class="vgrid-label">Artist Struggles <span style="opacity:.5;font-weight:400">(Interview)</span></div>
-        </div>
-      </div>
+
     </div>
 
     <!-- Video Modal -->
