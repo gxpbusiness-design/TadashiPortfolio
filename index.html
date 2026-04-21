@@ -326,13 +326,10 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 
 
 /* VIDEO GRID */
-.vid-grid{display:grid;grid-template-columns:1fr 2fr;gap:16px;padding:0 0 24px}
-.vgrid-card{position:relative;border-radius:12px;overflow:hidden;background:#000;cursor:pointer}
+.vid-grid{display:grid;grid-template-columns:1fr 2fr;gap:16px;padding:2px 2px 24px;margin:0 -2px}
+.vgrid-card{position:relative;border-radius:12px;overflow:hidden;background:#000;cursor:pointer;isolation:isolate}
 .vgrid-card.full{grid-column:1/-1}
 .vgrid-row2{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.vgrid-row2 .vgrid-card{aspect-ratio:4/3}
-.vgrid-card.row1-left{aspect-ratio:9/16}
-.vgrid-card.row1-right{aspect-ratio:16/9}
 .vgrid-card.full{aspect-ratio:21/9}
 @media(max-width:640px){
   .vid-grid{grid-template-columns:1fr}
@@ -344,8 +341,10 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 .vgrid-card:hover .vgrid-thumb{transform:scale(1.04);opacity:.85}
 .vgrid-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.25);transition:background .2s}
 .vgrid-card:hover .vgrid-overlay{background:rgba(0,0,0,.1)}
-.vgrid-play{width:52px;height:52px;border-radius:50%;background:rgba(77,184,204,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(77,184,204,.45);transition:transform .2s}
-.vgrid-card:hover .vgrid-play{transform:scale(1.1)}
+.vgrid-play{display:none}
+.vgrid-row2 .vgrid-card{aspect-ratio:3/4}
+.vgrid-card.row1-left{aspect-ratio:9/16}
+.vgrid-card.row1-right{aspect-ratio:unset;align-self:stretch}
 .vgrid-label{position:absolute;bottom:0;left:0;right:0;padding:28px 14px 12px;background:linear-gradient(to top,rgba(0,0,0,.8),transparent);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.9);text-shadow:0 1px 4px rgba(0,0,0,.5)}
 
 /* VIDEO MODAL */
@@ -672,7 +671,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
   </div>
 
   <!-- ── 4. HIGHLIGHTS ── -->
-  <div class="pg-card" id="sec-projects">
+  <div class="pg-card" id="sec-projects" style="overflow:visible">
     <p class="section-label anim fade-up">Work</p>
     <h2 class="sec-heading anim fade-right">Highlights</h2>
     <div class="stats-grid" id="stats-grid">
