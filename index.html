@@ -290,7 +290,11 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 
 
 /* DESIGNS */
-.des-gifs-wrap{display:flex;flex-direction:column;gap:16px;max-width:700px;margin-bottom:56px}
+.des-anim-block{display:flex;flex-direction:column;gap:10px;max-width:700px;margin-bottom:56px}
+.des-anim-title{font-size:clamp(36px,5vw,64px);font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--text);margin:0}
+.des-anim-desc{font-size:13px;font-weight:300;color:var(--dim);line-height:1.6;max-width:560px;margin:0}
+.des-anim-vid{width:100%;border-radius:14px;display:block;background:#000}
+.des-gifs-wrap{display:flex;flex-direction:column;gap:10px;max-width:700px;margin-bottom:56px}
 .des-gifs{display:flex;gap:20px;width:100%}
 .des-sketch-wrap{display:flex;flex-direction:column;gap:10px;width:100%;max-width:700px}
 .des-sketch-img{width:100%;max-width:700px;border-radius:14px;display:block;border:1px solid rgba(0,0,0,.08);background:#f9f8f7}
@@ -592,10 +596,9 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
     <button class="sb-toggle" id="sb-toggle">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
     </button>
-    <button class="sb-link active" data-tab="0"><span class="sb-dot"></span>About Me</button>
-    <button class="sb-link" data-tab="1"><span class="sb-dot"></span>Projects</button>
-    <button class="sb-link" data-tab="2"><span class="sb-dot"></span>Designs</button>
-    <button class="sb-link" data-tab="3"><span class="sb-dot"></span>Services</button>
+    <button class="sb-link active" data-tab="0"><span class="sb-dot"></span>Projects</button>
+    <button class="sb-link" data-tab="1"><span class="sb-dot"></span>Designs</button>
+    <button class="sb-link" data-tab="2"><span class="sb-dot"></span>Services</button>
     <div class="sb-socials">
       <a class="sb-social" href="https://www.youtube.com/@groupxproductions6692" target="_blank" title="YouTube">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.6 2.8 12 2.8 12 2.8s-4.6 0-6.8.1c-.6.1-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.3.3 4.3s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.3 21.8 12 21.8 12 21.8s4.6 0 6.8-.2c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.3v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>
@@ -615,9 +618,12 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 <div class="card-stack">
 
   <!-- ── 1. TADASHI NAME CARD ── -->
-  <div class="pg-card anim fade-down" id="about-hero-header">
-    <div class="about-hero-name">Tadashi</div>
-    <div class="about-hero-role">Filmmaker &nbsp;<span>·</span>&nbsp; Producer &nbsp;<span>·</span>&nbsp; Creative Director</div>
+  <div class="pg-card anim fade-down" id="about-hero-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+    <div>
+      <div class="about-hero-name">Tadashi</div>
+      <div class="about-hero-role">Filmmaker &nbsp;<span>·</span>&nbsp; Producer &nbsp;<span>·</span>&nbsp; Creative Director</div>
+    </div>
+    <button class="aboutme-btn" onclick="openAboutModal()">About Me</button>
   </div>
 
   <!-- ── 2. WELCOME VIDEO ── -->
@@ -635,37 +641,6 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
           </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- ── 3. ABOUT ME + PHOTOS ── -->
-  <div class="pg-card" id="sec-about-bio">
-    <p class="section-label anim fade-up">About</p>
-    <p class="bio-hello anim fade-up" style="--delay:.05s">hello.</p>
-    <p class="bio-line anim fade-up" style="--delay:.15s">my name is <span class="bio-name">Tadashi</span>, a creative producer focusing on <span class="bio-film">film</span> and <span class="bio-events">events</span>.</p>
-    <p class="bio-line anim fade-up" style="--delay:.25s">i'm a freelancer often <strong>behind the camera</strong> exploring the future of brand development and narrative stories.</p>
-    <div class="roles-cloud">
-      <span class="role big role-teal" style="--d:0s">producer</span>
-      <span class="role small role-muted" style="--d:.05s">actor</span>
-      <span class="role big role-salmon" style="--d:.1s">director of photography</span>
-      <span class="role small role-dim" style="--d:.15s">music producer</span>
-      <span class="role big role-blue" style="--d:.2s">graphic designer</span>
-      <span class="role small role-muted" style="--d:.25s">animator</span>
-      <span class="role big role-teal" style="--d:.3s">editor</span>
-      <span class="role small role-dim" style="--d:.35s">cook</span>
-      <span class="role big role-salmon" style="--d:.4s">creative director</span>
-      <span class="role small role-muted" style="--d:.45s">mixer</span>
-      <span class="role small role-dim" style="--d:.5s">sound scorer</span>
-      <span class="role small role-muted" style="--d:.55s">storyboard artist</span>
-      <span class="role small role-dim" style="--d:.6s">painter</span>
-      <span class="role small role-muted" style="--d:.65s">writer</span>
-      <span class="role small role-dim" style="--d:.7s">martial arts choreographer</span>
-      <span class="role small role-muted" style="--d:.75s">teacher / mentor</span>
-    </div>
-    <div class="about-photos">
-      <div class="about-photo anim scale-up" style="--delay:.05s"><img src="IMG_1238.jpg" alt="Tadashi with camera"><span>01 / 03</span></div>
-      <div class="about-photo anim scale-up" style="--delay:.15s"><img src="warm_happy.jpg" alt="Tadashi"><span>02 / 03</span></div>
-      <div class="about-photo anim scale-up" style="--delay:.25s"><img src="Screen_Shot_2024-09-29_at_5_24_31_PM.jpg" alt="Tadashi on set"><span>03 / 03</span></div>
     </div>
   </div>
 
@@ -864,14 +839,21 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
     <p class="section-label anim fade-up">Creative</p>
     <h2 class="sec-heading anim fade-right">Design & Visual Art</h2>
     <p class="anim fade-up" style="--delay:.08s;font-size:13px;line-height:1.8;color:#6b6560;font-weight:300;max-width:560px;margin-bottom:40px">Tadashi's design practice spans graphic design, photography, animation, and illustration.</p>
+
+    <!-- NAPRI -->
+    <div class="des-anim-block anim fade-up" style="--delay:.1s">
+      <h3 class="des-anim-title">Napri</h3>
+      <p class="des-anim-desc">Short rotoscope and stylistic animation for Music Video working with Napri</p>
+      <video class="des-anim-vid" src="napri_baitj.mp4" autoplay muted loop playsinline></video>
+    </div>
+
+    <!-- SCAR -->
     <div class="des-gifs-wrap anim fade-up" style="--delay:.14s">
+      <h3 class="des-anim-title">Scar</h3>
+      <p class="des-anim-desc">concept art for a samurai vigilante in a 16-bit fighting game</p>
       <div class="des-gifs">
         <div class="des-gif"><img src="scar_animation_1.gif" alt="Animation 1"></div>
         <div class="des-gif"><img src="scar_city_anim.gif" alt="Animation 2"></div>
-      </div>
-        <div class="des-gifs-label">
-        <span class="des-gifs-title">Scar</span>
-        <span class="des-gifs-desc">concept art for a samurai vigilante in a 16-bit fighting game</span>
       </div>
     </div>
     <h3 class="sec-heading anim fade-right" style="font-size:clamp(22px,3vw,36px);margin-bottom:20px">Graphic Design</h3>
@@ -1021,7 +1003,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 
 <script>
 // ─── NAV: scroll to section ───
-const SECTIONS = ['sec-about-bio','sec-projects','sec-designs','sec-services'];
+const SECTIONS = ['sec-projects','sec-designs','sec-services'];
 
 function scrollToSection(i) {
   const el = document.getElementById(SECTIONS[i]);
@@ -1379,6 +1361,84 @@ requestAnimationFrame(lockHero);
   frame.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 })();
+</script>
+
+<!-- ABOUT ME MODAL -->
+<div class="aboutme-backdrop" id="aboutme-modal" onclick="closeAboutModal(event)">
+  <div class="aboutme-box">
+    <button class="aboutme-close" onclick="closeAboutModalBtn()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="aboutme-inner">
+      <p class="bio-hello" style="font-size:clamp(36px,5vw,56px);margin-bottom:16px">hello.</p>
+      <p class="bio-line" style="margin-bottom:8px">my name is <span class="bio-name">Tadashi</span>, a creative producer focusing on <span class="bio-film">film</span> and <span class="bio-events">events</span>.</p>
+      <p class="bio-line" style="margin-bottom:28px">i'm a freelancer often <strong>behind the camera</strong> exploring the future of brand development and narrative stories.</p>
+      <div class="aboutme-photos">
+        <div class="about-photo"><img src="IMG_1238.jpg" alt="Tadashi with camera"><span>01 / 03</span></div>
+        <div class="about-photo"><img src="warm_happy.jpg" alt="Tadashi"><span>02 / 03</span></div>
+        <div class="about-photo"><img src="Screen_Shot_2024-09-29_at_5_24_31_PM.jpg" alt="Tadashi on set"><span>03 / 03</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.aboutme-btn{
+  display:inline-flex;align-items:center;padding:10px 20px;
+  border-radius:100px;border:1px solid rgba(0,0,0,.14);
+  background:var(--glass);backdrop-filter:blur(12px);
+  font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--text);
+  cursor:pointer;transition:all .2s;white-space:nowrap;
+}
+.aboutme-btn:hover{background:#fff;border-color:var(--teal);color:var(--teal)}
+
+.aboutme-backdrop{
+  position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+  backdrop-filter:blur(8px);padding:20px;
+}
+.aboutme-backdrop.open{opacity:1;pointer-events:all}
+.aboutme-box{
+  position:relative;width:100%;max-width:720px;max-height:88vh;
+  background:#eef7f8;border-radius:24px;overflow-y:auto;
+  box-shadow:0 24px 80px rgba(0,0,0,.4);
+  transform:scale(.95);transition:transform .25s cubic-bezier(.22,1,.36,1);
+  scrollbar-width:thin;
+}
+.aboutme-backdrop.open .aboutme-box{transform:scale(1)}
+.aboutme-close{
+  position:sticky;top:16px;float:right;margin:16px 16px 0 0;
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(0,0,0,.08);border:none;cursor:pointer;
+  color:var(--text);display:flex;align-items:center;justify-content:center;
+  transition:background .2s;z-index:2;flex-shrink:0;
+}
+.aboutme-close:hover{background:rgba(0,0,0,.15)}
+.aboutme-inner{padding:32px 40px 40px;clear:both}
+.aboutme-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+.aboutme-photos .about-photo{aspect-ratio:2/3;border-radius:14px;overflow:hidden;background:rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.08);position:relative;display:flex;align-items:flex-end;padding:10px}
+.aboutme-photos .about-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.aboutme-photos .about-photo span{position:relative;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+@media(max-width:480px){.aboutme-inner{padding:24px 20px 28px}.aboutme-photos{grid-template-columns:1fr}}
+</style>
+
+<script>
+function openAboutModal() {
+  document.getElementById('aboutme-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeAboutModal(e) {
+  if (e.target !== document.getElementById('aboutme-modal')) return;
+  _closeAbout();
+}
+function closeAboutModalBtn() { _closeAbout(); }
+function _closeAbout() {
+  document.getElementById('aboutme-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') _closeAbout(); });
 </script>
 </body>
 </html>
