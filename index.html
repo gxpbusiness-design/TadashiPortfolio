@@ -60,9 +60,8 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
   position:fixed;
   left:calc(var(--pad) + var(--sb-w) + var(--gap));
   right:var(--pad);top:var(--pad);bottom:var(--pad);
-  border-radius:var(--radius-lg);overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,0.12) transparent;
-  background:#eef7f8;
-  box-shadow:0 8px 40px rgba(0,0,0,.2);
+  overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.25) transparent;
+  background:transparent;
   transition:left .3s ease;
 }
 .sidebar.collapsed~.main-frame{left:calc(var(--pad) + 56px + var(--gap))}
@@ -176,10 +175,41 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 }
 .px-icon svg{display:block;}
 
-/* ABOUT */
-.about-wrap{width:100%;background:#000;}
+/* ── CARD STACK ── */
+.card-stack{display:flex;flex-direction:column;gap:12px;padding:12px}
+.pg-card{
+  background:#eef7f8;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.7);
+  padding:40px 48px;
+  box-shadow:0 2px 16px rgba(0,0,0,.06);
+  overflow:hidden;
+  position:relative;
+}
+.pg-card--dark{background:#000;padding:0;border-color:rgba(255,255,255,.12)}
+.pg-card--cta{background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-color:var(--glass-border);display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:20px;padding:32px 48px;box-shadow:var(--glass-shadow)}
 
-.about-hero{position:relative;width:100%;background:#000;flex-shrink:0}
+/* about-hero fills its dark card fully */
+.pg-card--dark .about-hero{
+  position:relative;width:100%;margin:0;border-radius:0;
+  aspect-ratio:16/9;height:auto;
+}
+
+@media(max-width:768px){
+  .card-stack{gap:8px;padding:8px}
+  .pg-card{padding:24px 20px;border-radius:16px}
+  .pg-card--cta{padding:24px 20px}
+}
+
+/* Override old section padding since cards handle it now */
+.page-section{padding:0}
+.about-bio{padding:0}
+.about-photos{padding:0 0 8px}
+
+.about-hero{position:relative;width:calc(100% - 40px);background:#000;flex-shrink:0;
+  border-radius:16px;overflow:hidden;margin:0 20px 20px;}
 .about-hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
 .about-grad{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 0%,transparent 30%,rgba(0,0,0,.4) 70%,rgba(0,0,0,.9) 100%);pointer-events:none;z-index:1}
 .about-info{display:none}
@@ -191,13 +221,24 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 .about-hint svg{animation:bob 2s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
 
-.about-hero-header{padding:52px 52px 28px;display:flex;flex-direction:column;gap:10px;
-  animation:fadeDown .7s cubic-bezier(.22,1,.36,1) both .1s}
+.about-hero-header{
+  padding:20px 28px;
+  display:inline-flex;flex-direction:column;gap:8px;
+  animation:fadeDown .7s cubic-bezier(.22,1,.36,1) both .1s;
+  margin:20px 20px 12px;
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-radius:18px;
+  box-shadow:var(--glass-shadow);
+  align-self:flex-start;
+}
 .about-hero-name{font-size:clamp(52px,8vw,96px);font-weight:800;letter-spacing:-.03em;line-height:.92;color:var(--text)}
 .about-hero-role{font-size:10px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
 .about-hero-role span{color:var(--teal)}
 @media(max-width:768px){
-  .about-hero-header{padding:28px 20px 16px}
+  .about-hero-header{margin:12px 12px 8px;padding:14px 18px}
+  .about-hero{width:calc(100% - 24px);margin:0 12px 12px;border-radius:12px}
 }
 .about-bio{padding:72px 52px 96px;background:transparent}
 .bio-hello{font-size:clamp(52px,8vw,96px);font-weight:800;letter-spacing:-.03em;line-height:1;
@@ -247,7 +288,13 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 
 
 /* DESIGNS */
-.des-gifs{display:flex;gap:20px;width:100%;max-width:700px;margin-bottom:56px}
+.des-gifs-wrap{display:flex;flex-direction:column;gap:16px;max-width:700px;margin-bottom:56px}
+.des-gifs{display:flex;gap:20px;width:100%}
+.des-sketch-wrap{display:flex;flex-direction:column;gap:10px;width:100%}
+.des-sketch-img{width:100%;max-width:700px;border-radius:14px;overflow:hidden;display:block;border:1px solid rgba(0,0,0,.08);background:#f9f8f7}
+.des-sketch-label{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.des-gifs-title{font-size:clamp(18px,2.5vw,26px);font-weight:800;letter-spacing:-.02em;color:var(--text);line-height:1.1}
+.des-gifs-desc{font-size:13px;font-weight:300;color:var(--dim);line-height:1.6}
 .des-gif{flex:1;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:#e8e4df;display:flex;align-items:center;justify-content:center}
 .des-gif img{width:100%;height:100%;object-fit:cover;display:block}
 /* Slideshow — works both inside des-port-body and standalone */
@@ -368,9 +415,9 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 .evt-overlay:hover .evt-play{transform:scale(1.08)}
 .evt-ctrl{position:absolute;bottom:0;left:0;right:0;z-index:5;padding:28px 14px 12px;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);display:none;flex-direction:column;gap:7px}
 .evt-card.active .evt-ctrl{display:flex}
-.evt-photo{width:100%;overflow:hidden;border-top:1px solid rgba(0,0,0,.08);background:#000;display:flex;justify-content:center}
-.evt-photo img{max-width:100%;max-height:480px;width:auto;height:auto;object-fit:contain;display:block;transition:transform .4s}
-.evt-photo:hover img{transform:scale(1.02)}
+.evt-photo-card{margin-top:16px;border-radius:16px;overflow:hidden;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.08);display:flex;justify-content:center;align-items:center}
+.evt-photo-card img{width:100%;max-height:520px;object-fit:cover;display:block;transition:transform .4s}
+.evt-photo-card:hover img{transform:scale(1.02)}
 
 /* STATS */
 .stats-grid{
@@ -540,22 +587,21 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 
 <!-- MAIN FRAME -->
 <main class="main-frame" id="main-frame">
+<div class="card-stack">
 
-  <!-- ── ABOUT ME ── -->
-  <section id="sec-about">
-    <div class="about-hero-header" id="about-hero-header">
-      <div class="about-hero-name">Tadashi</div>
-      <div class="about-hero-role">Filmmaker &nbsp;<span>·</span>&nbsp; Producer &nbsp;<span>·</span>&nbsp; Creative Director</div>
-    </div>
+  <!-- ── 1. TADASHI NAME CARD ── -->
+  <div class="pg-card anim fade-down" id="about-hero-header">
+    <div class="about-hero-name">Tadashi</div>
+    <div class="about-hero-role">Filmmaker &nbsp;<span>·</span>&nbsp; Producer &nbsp;<span>·</span>&nbsp; Creative Director</div>
+  </div>
+
+  <!-- ── 2. WELCOME VIDEO ── -->
+  <div class="pg-card pg-card--dark" id="sec-about">
     <div class="about-hero" id="about-hero">
       <video id="herov" autoplay muted loop playsinline preload="auto">
         <source src="reel.mp4" type="video/mp4">
       </video>
       <div class="about-grad"></div>
-      <div class="about-info">
-        <div class="about-name">Tadashi</div>
-        <div class="about-role">Filmmaker &nbsp;<span>·</span>&nbsp; Producer &nbsp;<span>·</span>&nbsp; Creative Director</div>
-      </div>
       <div class="about-ctrl">
         <div class="vctrl">
           <div class="vscrub-row">
@@ -569,76 +615,66 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
           </div>
         </div>
       </div>
-      <div class="about-hint" onclick="document.getElementById('sec-about-bio').scrollIntoView({behavior:'smooth'})">
-        <span>about me</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
     </div>
-    <div class="about-bio-bridge"></div>
-      <div id="sec-about-bio" class="about-bio">
-      <p class="bio-hello anim fade-up" style="--delay:.05s">hello.</p>
-      <p class="bio-line anim fade-up" style="--delay:.15s">my name is <span class="bio-name">Tadashi</span>, a creative producer focusing on <span class="bio-film">film</span> and <span class="bio-events">events</span>.</p>
-      <p class="bio-line anim fade-up" style="--delay:.25s">i'm a freelancer often <strong>behind the camera</strong> exploring the future of brand development and narrative stories.</p>
-      <div class="roles-cloud">
-        <span class="role big role-teal" style="--d:0s">producer</span>
-        <span class="role small role-muted" style="--d:.05s">actor</span>
-        <span class="role big role-salmon" style="--d:.1s">director of photography</span>
-        <span class="role small role-dim" style="--d:.15s">music producer</span>
-        <span class="role big role-blue" style="--d:.2s">graphic designer</span>
-        <span class="role small role-muted" style="--d:.25s">animator</span>
-        <span class="role big role-teal" style="--d:.3s">editor</span>
-        <span class="role small role-dim" style="--d:.35s">cook</span>
-        <span class="role big role-salmon" style="--d:.4s">creative director</span>
-        <span class="role small role-muted" style="--d:.45s">mixer</span>
-        <span class="role small role-dim" style="--d:.5s">sound scorer</span>
-        <span class="role small role-muted" style="--d:.55s">storyboard artist</span>
-        <span class="role small role-dim" style="--d:.6s">painter</span>
-        <span class="role small role-muted" style="--d:.65s">writer</span>
-        <span class="role small role-dim" style="--d:.7s">martial arts choreographer</span>
-        <span class="role small role-muted" style="--d:.75s">teacher / mentor</span>
-      </div>
+  </div>
 
-      <div class="about-photos">
-        <div class="about-photo anim scale-up" style="--delay:.05s"><img src="IMG_1238.jpg" alt="Tadashi with camera"><span>01 / 03</span></div>
-        <div class="about-photo anim scale-up" style="--delay:.15s"><img src="warm_happy.jpg" alt="Tadashi"><span>02 / 03</span></div>
-        <div class="about-photo anim scale-up" style="--delay:.25s"><img src="Screen_Shot_2024-09-29_at_5_24_31_PM.jpg" alt="Tadashi on set"><span>03 / 03</span></div>
-      </div>
+  <!-- ── 3. ABOUT ME + PHOTOS ── -->
+  <div class="pg-card" id="sec-about-bio">
+    <p class="section-label anim fade-up">About</p>
+    <p class="bio-hello anim fade-up" style="--delay:.05s">hello.</p>
+    <p class="bio-line anim fade-up" style="--delay:.15s">my name is <span class="bio-name">Tadashi</span>, a creative producer focusing on <span class="bio-film">film</span> and <span class="bio-events">events</span>.</p>
+    <p class="bio-line anim fade-up" style="--delay:.25s">i'm a freelancer often <strong>behind the camera</strong> exploring the future of brand development and narrative stories.</p>
+    <div class="roles-cloud">
+      <span class="role big role-teal" style="--d:0s">producer</span>
+      <span class="role small role-muted" style="--d:.05s">actor</span>
+      <span class="role big role-salmon" style="--d:.1s">director of photography</span>
+      <span class="role small role-dim" style="--d:.15s">music producer</span>
+      <span class="role big role-blue" style="--d:.2s">graphic designer</span>
+      <span class="role small role-muted" style="--d:.25s">animator</span>
+      <span class="role big role-teal" style="--d:.3s">editor</span>
+      <span class="role small role-dim" style="--d:.35s">cook</span>
+      <span class="role big role-salmon" style="--d:.4s">creative director</span>
+      <span class="role small role-muted" style="--d:.45s">mixer</span>
+      <span class="role small role-dim" style="--d:.5s">sound scorer</span>
+      <span class="role small role-muted" style="--d:.55s">storyboard artist</span>
+      <span class="role small role-dim" style="--d:.6s">painter</span>
+      <span class="role small role-muted" style="--d:.65s">writer</span>
+      <span class="role small role-dim" style="--d:.7s">martial arts choreographer</span>
+      <span class="role small role-muted" style="--d:.75s">teacher / mentor</span>
     </div>
-  </section>
+    <div class="about-photos">
+      <div class="about-photo anim scale-up" style="--delay:.05s"><img src="IMG_1238.jpg" alt="Tadashi with camera"><span>01 / 03</span></div>
+      <div class="about-photo anim scale-up" style="--delay:.15s"><img src="warm_happy.jpg" alt="Tadashi"><span>02 / 03</span></div>
+      <div class="about-photo anim scale-up" style="--delay:.25s"><img src="Screen_Shot_2024-09-29_at_5_24_31_PM.jpg" alt="Tadashi on set"><span>03 / 03</span></div>
+    </div>
+  </div>
 
-  <section id="sec-projects" class="page-section dark-section">
+  <!-- ── 4. HIGHLIGHTS ── -->
+  <div class="pg-card" id="sec-projects">
     <p class="section-label anim fade-up">Work</p>
     <h2 class="sec-heading anim fade-right">Highlights</h2>
-
-    <!-- ── STATS ── -->
     <div class="stats-grid" id="stats-grid">
-
       <div class="stat-item" style="--sd:0s;--stat-grad:linear-gradient(110deg,#4db8cc,#2aac8a)">
         <div class="stat-num" data-count="30" data-suffix="+">0</div>
         <div class="stat-label">Productions Completed</div>
         <div class="stat-sub">Spanning shorts, music videos, brand content & live events</div>
       </div>
-
       <div class="stat-item" style="--sd:.12s;--stat-grad:linear-gradient(110deg,#2aac8a,#7b8fd4)">
         <div class="stat-num" data-prefix="$" data-count="40" data-suffix="K">0</div>
         <div class="stat-label">Budget Raised & Managed</div>
         <div class="stat-sub">Up to $5K per project — every dollar on screen</div>
       </div>
-
       <div class="stat-item" style="--sd:.24s;--stat-grad:linear-gradient(110deg,#7b8fd4,#4db8cc)">
         <div class="stat-num" data-count="1000" data-suffix="+">0</div>
         <div class="stat-label">Organic Social Growth</div>
         <div class="stat-sub">Built from zero — no ads, no shortcuts, just compelling content</div>
       </div>
-
       <div class="stat-item" style="--sd:.36s;--stat-grad:linear-gradient(110deg,#4db8cc,#7b8fd4)">
         <div class="stat-num">3-in-1</div>
         <div class="stat-label">Camera · Sound · Lighting</div>
         <div class="stat-sub">One operator, full production value, leaner budget</div>
       </div>
-
     </div>
-
     <div class="vid-strip" id="vid-strip">
       <div class="vcard" id="vcard-0">
         <video class="vcard-vid" id="strip-v0" playsinline preload="metadata"><source src="the_gem.mp4" type="video/mp4"></video>
@@ -693,9 +729,12 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
         <div class="vcard-label">CLOAKS <span style="opacity:.5;font-weight:400">(Short)</span></div>
       </div>
     </div>
+  </div>
 
-    <!-- When It's Cold Outside -->
-    <h2 class="sec-heading anim fade-right" style="margin-top:56px">Short Film</h2>
+  <!-- ── 5. SHORT FILM ── -->
+  <div class="pg-card">
+    <p class="section-label anim fade-up">Film</p>
+    <h2 class="sec-heading anim fade-right">Short Film</h2>
     <div class="wico-card anim slide-reveal" style="--delay:.1s">
       <a class="wico-thumb" href="https://youtu.be/xbbgFH_aZTE" target="_blank">
         <img src="https://img.youtube.com/vi/xbbgFH_aZTE/maxresdefault.jpg" alt="When It's Cold Outside" onerror="this.src='https://img.youtube.com/vi/xbbgFH_aZTE/hqdefault.jpg'">
@@ -717,11 +756,13 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
         </a>
       </div>
     </div>
+  </div>
 
-    <!-- Music Videos -->
-    <h2 class="sec-heading anim fade-right" style="margin-top:56px">Music Videos</h2>
+  <!-- ── 6. MUSIC VIDEOS ── -->
+  <div class="pg-card">
+    <p class="section-label anim fade-up">Music</p>
+    <h2 class="sec-heading anim fade-right">Music Videos</h2>
     <div class="mv-grid anim fade-up" style="--delay:.1s">
-
       <a class="mv-card" href="https://youtu.be/Va8EOKMu8C0" target="_blank">
         <div class="mv-thumb">
           <img src="https://img.youtube.com/vi/Va8EOKMu8C0/maxresdefault.jpg" alt="Falling is Okay" onerror="this.src='https://img.youtube.com/vi/Va8EOKMu8C0/hqdefault.jpg'">
@@ -733,7 +774,6 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
           <div class="mv-role">Director · Camera Operator · Editor</div>
         </div>
       </a>
-
       <a class="mv-card" href="https://youtu.be/kGuZri3eh2g" target="_blank">
         <div class="mv-thumb">
           <img src="https://img.youtube.com/vi/kGuZri3eh2g/maxresdefault.jpg" alt="Window Pain" onerror="this.src='https://img.youtube.com/vi/kGuZri3eh2g/hqdefault.jpg'">
@@ -742,10 +782,9 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
         <div class="mv-info">
           <div class="mv-title">Window Pain</div>
           <div class="mv-meta">Sage X Price</div>
-          <div class="mv-role">Director · Camera Operator · Editor</div>
+          <div class="mv-role">B Cam Operator · Storyboard Artist</div>
         </div>
       </a>
-
       <a class="mv-card" href="https://youtu.be/sAlFHX4HCeo" target="_blank">
         <div class="mv-thumb">
           <img src="https://img.youtube.com/vi/sAlFHX4HCeo/maxresdefault.jpg" alt="Eastside Boogie & My Step" onerror="this.src='https://img.youtube.com/vi/sAlFHX4HCeo/hqdefault.jpg'">
@@ -757,13 +796,14 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
           <div class="mv-role">Associate Producer</div>
         </div>
       </a>
-
     </div>
+  </div>
 
-    <!-- Events -->
-    <h2 class="sec-heading anim fade-right" style="margin-top:56px">Events</h2>
+  <!-- ── 7. EVENTS ── -->
+  <div class="pg-card">
+    <p class="section-label anim fade-up">Events</p>
+    <h2 class="sec-heading anim fade-right">Events</h2>
     <p class="evt-sub anim fade-up" style="--delay:.08s">curating live music, visual art and film.</p>
-
     <div class="evt-card anim slide-reveal" style="--delay:.16s" id="evt-card-0">
       <div class="evt-header">
         <div class="evt-date">2025</div>
@@ -779,25 +819,34 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
           <div class="vc-btns">
             <button class="vc-btn" id="evt-play0" onclick="evtPlay(0)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></button>
             <button class="vc-btn" id="evt-mute0" onclick="evtMute(0)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
-            <button class="vc-btn vc-full" onclick="evtFull(0)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></button>
+            <button class="vc-btn vc-full" onclick="evtFull(0)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></button>
           </div>
         </div>
       </div>
-      <div class="evt-photo">
-        <img src="artshow_spring.jpg" alt="Dysonna Spring Art Festival 2025">
-      </div>
     </div>
+    <div class="evt-photo-card anim slide-reveal" style="--delay:.28s">
+      <img src="artshow_spring.jpg" alt="Dysonna Spring Art Festival 2025">
+    </div>
+  </div>
 
-  </section>
-
-
-  <section id="sec-designs" class="page-section dark-section">
+  <!-- ── 8. DESIGN & VISUAL ART ── -->
+  <div class="pg-card" id="sec-designs">
     <p class="section-label anim fade-up">Creative</p>
     <h2 class="sec-heading anim fade-right">Design & Visual Art</h2>
     <p class="anim fade-up" style="--delay:.08s;font-size:13px;line-height:1.8;color:#6b6560;font-weight:300;max-width:560px;margin-bottom:40px">Tadashi's design practice spans graphic design, photography, animation, and illustration.</p>
-    <div class="des-gifs anim fade-up" style="--delay:.14s">
-      <div class="des-gif"><img src="scar_animation_1.gif" alt="Animation 1"></div>
-      <div class="des-gif"><img src="scar_city_anim.gif" alt="Animation 2"></div>
+    <div class="des-gifs-wrap anim fade-up" style="--delay:.14s">
+      <div class="des-gifs">
+        <div class="des-gif"><img src="scar_animation_1.gif" alt="Animation 1"></div>
+        <div class="des-gif"><img src="scar_city_anim.gif" alt="Animation 2"></div>
+      </div>
+        <div class="des-gifs-label">
+        <span class="des-gifs-title">Scar</span>
+        <span class="des-gifs-desc">concept art for a samurai vigilante in a 16-bit fighting game</span>
+      </div>
+      <div class="des-sketch-wrap anim fade-up" style="--delay:.2s">
+        <img src="eyes_practice.png" alt="Eyes Practice" class="des-sketch-img">
+        <span class="des-sketch-label">Eyes Practice, 2024</span>
+      </div>
     </div>
     <h3 class="sec-heading anim fade-right" style="font-size:clamp(22px,3vw,36px);margin-bottom:20px">Graphic Design</h3>
     <div class="gfx-stage anim scale-up" style="--delay:.08s;height:75vh;margin-bottom:16px" id="gfx-stage">
@@ -835,7 +884,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
       <button class="gfx-arr gfx-arr-prev" id="photo-prev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>
       <button class="gfx-arr gfx-arr-next" id="photo-next"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>
     </div>
-    <div class="des-port-nav" style="padding:0 0 64px">
+    <div class="des-port-nav" style="padding:0 0 16px">
       <div class="gfx-dots" id="photo-dots">
         <button class="gfx-dot on" data-i="0"></button><button class="gfx-dot" data-i="1"></button>
         <button class="gfx-dot" data-i="2"></button><button class="gfx-dot" data-i="3"></button>
@@ -843,21 +892,16 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
       </div>
       <span class="gfx-counter" id="photo-counter">1 / 6</span>
     </div>
-  </section>
+  </div>
 
-  <!-- ── SERVICES ── -->
-  <section id="sec-services" class="page-section">
-
-    <div class="svc-header anim fade-up">
-      <p class="section-label">Hire</p>
-      <h2 class="sec-heading">Services</h2>
-      <h2 class="svc-title">let's make something <em>real.</em></h2>
-      <h1 style="font-size:clamp(48px,9vw,120px);font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--text);margin:8px 0 16px;font-family:'Manrope',sans-serif">VIDEOGRAPHY</h1>
-      <p class="svc-sub">based in los angeles · available for travel</p>
-    </div>
-
-    <!-- Rates -->
-    <div class="svc-rates anim slide-reveal" style="--delay:.1s">
+  <!-- ── 9. SERVICES ── -->
+  <div class="pg-card" id="sec-services">
+    <p class="section-label">Hire</p>
+    <h2 class="sec-heading">Services</h2>
+    <h2 class="svc-title">let's make something <em>real.</em></h2>
+    <h1 style="font-size:clamp(48px,9vw,120px);font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--text);margin:8px 0 16px;font-family:'Manrope',sans-serif">VIDEOGRAPHY</h1>
+    <p class="svc-sub">based in los angeles · available for travel</p>
+    <div class="svc-rates anim slide-reveal" style="--delay:.1s;margin-top:40px">
       <div class="svc-rate">
         <div class="svc-rate-price">$350</div>
         <div class="svc-rate-label">half day</div>
@@ -870,81 +914,59 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
         <div class="svc-rate-note">up to 8 hours</div>
       </div>
     </div>
-
-    <!-- Packages -->
     <h3 class="sec-heading anim fade-right" style="font-size:clamp(22px,3vw,36px);margin-top:64px">Popular Packages</h3>
     <div class="svc-packages">
-
       <div class="svc-card anim fade-up" style="--delay:.0s">
-        <div class="svc-card-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-        </div>
+        <div class="svc-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
         <div class="svc-card-name">Event Coverage</div>
         <div class="svc-card-desc">Weddings, concerts, cultural events, corporate gatherings — captured with a cinematic eye.</div>
       </div>
-
       <div class="svc-card anim fade-up" style="--delay:.08s">
-        <div class="svc-card-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3l-4 4-4-4"/></svg>
-        </div>
+        <div class="svc-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3l-4 4-4-4"/></svg></div>
         <div class="svc-card-name">Narrative Short Films</div>
         <div class="svc-card-desc">From concept to screen — direction, production, and post-production for original story-driven work.</div>
       </div>
-
       <div class="svc-card anim fade-up" style="--delay:.16s">
-        <div class="svc-card-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </div>
+        <div class="svc-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <div class="svc-card-name">Brand Spec Ops</div>
         <div class="svc-card-desc">High-impact brand visuals, identity storytelling, and content strategy for businesses ready to stand out.</div>
       </div>
-
       <div class="svc-card anim fade-up" style="--delay:.24s">
-        <div class="svc-card-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-        </div>
+        <div class="svc-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
         <div class="svc-card-name">Music Videos</div>
         <div class="svc-card-desc">Visual storytelling synced to your sound — from concept boards to final cut, fully handled.</div>
       </div>
-
       <div class="svc-card anim fade-up" style="--delay:.32s">
-        <div class="svc-card-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </div>
+        <div class="svc-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
         <div class="svc-card-name">Social Media Cinematic Reels</div>
         <div class="svc-card-desc">Scroll-stopping short-form content shot and edited with cinematic quality for your platforms.</div>
       </div>
-
     </div>
-
-    <!-- Gear -->
     <div class="svc-gear anim fade-up" style="--delay:.2s">
-      <div class="svc-gear-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="3"/><path d="M22 10V8a2 2 0 00-2-2H4a2 2 0 00-2 2v2"/><line x1="7" y1="10" x2="7" y2="10"/></svg>
-      </div>
+      <div class="svc-gear-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="3"/><path d="M22 10V8a2 2 0 00-2-2H4a2 2 0 00-2 2v2"/><line x1="7" y1="10" x2="7" y2="10"/></svg></div>
       <div>
         <div class="svc-gear-label">Shot on</div>
         <div class="svc-gear-name">Blackmagic Pocket Cinema Camera 4K</div>
       </div>
     </div>
+  </div>
 
-    <!-- CTA -->
-    <div class="svc-cta anim fade-up" style="--delay:.1s">
-      <p class="svc-cta-text">ready to collaborate?</p>
-      <div class="svc-cta-btns">
-        <a href="https://mail.google.com/mail/?view=cm&to=gxpbusiness@gmail.com" target="_blank" class="svc-btn svc-btn-primary">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          gxpbusiness@gmail.com
-        </a>
-        <a href="tel:+18188068167" class="svc-btn svc-btn-ghost">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 7.81 19.79 19.79 0 01.34 2.18 2 2 0 012.33 0h3a2 2 0 012 1.72c.14.67.3 1.33.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c1.48.4 2.14.56 2.81.7A2 2 0 0122 16.92z"/></svg>
-          (818) 806-8167
-        </a>
-      </div>
+  <!-- ── 10. READY TO COLLABORATE ── -->
+  <div class="pg-card pg-card--cta anim fade-up">
+    <p class="svc-cta-text">ready to collaborate?</p>
+    <div class="svc-cta-btns">
+      <a href="https://mail.google.com/mail/?view=cm&to=gxpbusiness@gmail.com" target="_blank" class="svc-btn svc-btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        gxpbusiness@gmail.com
+      </a>
+      <a href="tel:+18188068167" class="svc-btn svc-btn-ghost">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 7.81 19.79 19.79 0 01.34 2.18 2 2 0 012.33 0h3a2 2 0 012 1.72c.14.67.3 1.33.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c1.48.4 2.14.56 2.81.7A2 2 0 0122 16.92z"/></svg>
+        (818) 806-8167
+      </a>
     </div>
+  </div>
 
-  </section>
-
+</div><!-- /card-stack -->
 </main>
 
 <!-- FCTA -->
@@ -966,12 +988,13 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 
 <script>
 // ─── NAV: scroll to section ───
-const SECTIONS = ['sec-about','sec-projects','sec-designs','sec-services'];
+const SECTIONS = ['sec-about-bio','sec-projects','sec-designs','sec-services'];
 
 function scrollToSection(i) {
   const el = document.getElementById(SECTIONS[i]);
   if (!el) return;
-  el.scrollIntoView({behavior:'smooth', block:'start'});
+  const frame = document.getElementById('main-frame');
+  frame.scrollTo({top: el.offsetTop - 16, behavior:'smooth'});
 }
 
 // Highlight active nav link based on scroll position
@@ -1315,13 +1338,8 @@ document.addEventListener('click', e => {
 
 
 function lockHero() {
-  const h = document.getElementById('about-hero');
-  const f = document.getElementById('main-frame');
-  const header = document.querySelector('.about-hero-header');
-  if (h && f) {
-    const headerH = header ? header.offsetHeight : 0;
-    h.style.height = (f.offsetHeight - headerH) + 'px';
-  }
+  // Video card now uses aspect-ratio:16/9, no JS sizing needed
+  // Keep function stub for resize listener compatibility
 }
 window.addEventListener('resize', lockHero);
 window.addEventListener('load', lockHero);
