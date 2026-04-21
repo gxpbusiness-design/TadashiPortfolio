@@ -217,6 +217,8 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 .about-role{margin-top:12px;font-size:10px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.44)}
 .about-role span{color:#7dd4e8}
 .about-ctrl{position:absolute;bottom:0;left:0;right:0;z-index:3;padding:48px 48px 18px;background:linear-gradient(to top,rgba(0,0,0,.75),transparent)}
+.hero-scrub-row{opacity:0;transition:opacity .3s}
+.about-hero:hover .hero-scrub-row{opacity:1}
 .about-hint{position:absolute;bottom:72px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45);cursor:pointer;transition:color .2s}
 .about-hint svg{animation:bob 2s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
@@ -627,14 +629,9 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
       <div class="about-grad"></div>
       <div class="about-ctrl">
         <div class="vctrl">
-          <div class="vscrub-row">
+          <div class="vscrub-row hero-scrub-row">
             <div class="vscrub" id="scrub-herov"><div class="vscrub-fill" id="fill-herov" style="width:0%"><div class="vscrub-thumb"></div></div></div>
             <span class="vtime" id="time-herov">0:00 / 0:00</span>
-          </div>
-          <div class="vbtn-row">
-            <button class="vbtn" id="playbtn-herov" onclick="togglePlay('herov')"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
-            <button class="vsound-btn" id="sndbtn-herov" onclick="toggleMute('herov')">Unmute</button>
-            <button class="vbtn vfull" onclick="goFull('about-hero')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></button>
           </div>
         </div>
       </div>
@@ -672,8 +669,8 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
     </div>
   </div>
 
-  <!-- ── 4. HIGHLIGHTS ── -->
-  <div class="pg-card" id="sec-projects" style="overflow:visible">
+  <!-- ── 4. HIGHLIGHTS / STATS ── -->
+  <div class="pg-card" id="sec-projects">
     <p class="section-label anim fade-up">Work</p>
     <h2 class="sec-heading anim fade-right">Highlights</h2>
     <div class="stats-grid" id="stats-grid">
@@ -698,6 +695,11 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
         <div class="stat-sub">One operator, full production value, leaner budget</div>
       </div>
     </div>
+  </div>
+
+  <!-- ── 4b. HIGHLIGHT VIDEOS ── -->
+  <div class="pg-card" style="overflow:visible">
+    <p class="section-label anim fade-up">Videos</p>
     <div class="vid-grid">
 
       <!-- HIGHLIGHT: The Dream — full width above row 1 -->
@@ -717,7 +719,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
         <div class="vgrid-label">The Gem <span style="opacity:.5;font-weight:400">(Short)</span></div>
       </div>
 
-      <!-- ROW 2: Just a Cat, Artist Struggles, CLOAKS — 4:3 equally -->
+      <!-- ROW 2: Just a Cat, Artist Struggles, CLOAKS -->
       <div class="vgrid-row2">
         <div class="vgrid-card" onclick="openVModal('vid3.mp4','Just a Cat (Visual Poem)')">
           <video class="vgrid-thumb-vid" id="thumb-v1" src="vid3.mp4" preload="metadata" muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
