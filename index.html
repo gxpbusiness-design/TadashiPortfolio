@@ -329,9 +329,12 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 .vid-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:0 0 24px;grid-auto-rows:280px}
 .vgrid-card{position:relative;border-radius:12px;overflow:hidden;background:#000;cursor:pointer;height:100%}
 .vgrid-card.tall{grid-row:span 2}
+.vgrid-pair{grid-row:span 2;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.vgrid-pair .vgrid-card{grid-row:span 1}
 @media(max-width:640px){
   .vid-grid{grid-template-columns:1fr;grid-auto-rows:220px}
   .vgrid-card.tall{grid-row:span 1}
+  .vgrid-pair{grid-template-columns:1fr 1fr;grid-row:span 1}
 }
 .vgrid-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s,opacity .3s}
 .vgrid-card:hover .vgrid-thumb{transform:scale(1.04);opacity:.85}
@@ -711,15 +714,17 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
         <div class="vgrid-overlay"><div class="vgrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
         <div class="vgrid-label">CLOAKS <span style="opacity:.5;font-weight:400">(Short)</span></div>
       </div>
-      <div class="vgrid-card tall" onclick="openVModal('David_s_Shower_Instagram_Reel.mp4','David\'s Shower (Visual Poem)')">
-        <video class="vgrid-thumb-vid" id="thumb-v4" src="David_s_Shower_Instagram_Reel.mp4" preload="metadata" muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
-        <div class="vgrid-overlay"><div class="vgrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
-        <div class="vgrid-label">David's Shower <span style="opacity:.5;font-weight:400">(Visual Poem)</span></div>
-      </div>
-      <div class="vgrid-card tall" onclick="openVModal('artists_struggles.mp4','Artist Struggles (Interview)')">
-        <video class="vgrid-thumb-vid" id="thumb-v5" src="artists_struggles.mp4" preload="metadata" muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
-        <div class="vgrid-overlay"><div class="vgrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
-        <div class="vgrid-label">Artist Struggles <span style="opacity:.5;font-weight:400">(Interview)</span></div>
+      <div class="vgrid-pair">
+        <div class="vgrid-card" onclick="openVModal('David_s_Shower_Instagram_Reel.mp4','David\'s Shower (Visual Poem)')">
+          <video class="vgrid-thumb-vid" id="thumb-v4" src="David_s_Shower_Instagram_Reel.mp4" preload="metadata" muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
+          <div class="vgrid-overlay"><div class="vgrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+          <div class="vgrid-label">David's Shower <span style="opacity:.5;font-weight:400">(Visual Poem)</span></div>
+        </div>
+        <div class="vgrid-card" onclick="openVModal('artists_struggles.mp4','Artist Struggles (Interview)')">
+          <video class="vgrid-thumb-vid" id="thumb-v5" src="artists_struggles.mp4" preload="metadata" muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
+          <div class="vgrid-overlay"><div class="vgrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+          <div class="vgrid-label">Artist Struggles <span style="opacity:.5;font-weight:400">(Interview)</span></div>
+        </div>
       </div>
     </div>
 
