@@ -290,11 +290,17 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 
 
 /* DESIGNS */
-.des-anim-block{display:flex;flex-direction:column;gap:10px;max-width:700px;margin-bottom:56px}
-.des-anim-title{font-size:clamp(36px,5vw,64px);font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--text);margin:0}
-.des-anim-desc{font-size:13px;font-weight:300;color:var(--dim);line-height:1.6;max-width:560px;margin:0}
-.des-anim-vid{width:100%;border-radius:14px;display:block;background:#000}
-.des-gifs-wrap{display:flex;flex-direction:column;gap:10px;max-width:700px;margin-bottom:56px}
+.des-anim-block{display:flex;flex-direction:row;align-items:flex-start;gap:32px;max-width:100%;margin-bottom:56px}
+.des-anim-meta{display:flex;flex-direction:column;gap:10px;min-width:140px;max-width:200px;flex-shrink:0;padding-top:4px}
+.des-anim-title{font-size:clamp(36px,5vw,64px);font-weight:800;letter-spacing:-.03em;line-height:1;margin:0;background:linear-gradient(110deg,#4db8cc,#4a7fc1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.des-anim-desc{font-size:13px;font-weight:300;color:var(--dim);line-height:1.6;margin:0}
+.des-anim-vid{border-radius:14px;display:block;background:#000;flex:1;min-width:0;width:100%}
+.des-gifs-wrap{display:flex;flex-direction:row;align-items:flex-start;gap:32px;max-width:100%;margin-bottom:56px}
+.des-gifs-meta{display:flex;flex-direction:column;gap:10px;min-width:140px;max-width:200px;flex-shrink:0;padding-top:4px}
+@media(max-width:640px){
+  .des-anim-block,.des-gifs-wrap{flex-direction:column}
+  .des-anim-meta,.des-gifs-meta{max-width:100%;min-width:0}
+}
 .des-gifs{display:flex;gap:20px;width:100%}
 .des-sketch-wrap{display:flex;flex-direction:column;gap:10px;width:100%;max-width:700px}
 .des-sketch-img{width:100%;max-width:700px;border-radius:14px;display:block;border:1px solid rgba(0,0,0,.08);background:#f9f8f7}
@@ -350,7 +356,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 .vgrid-play{display:none}
 .vgrid-row2 .vgrid-card{aspect-ratio:3/4}
 .vgrid-card.row1-left{aspect-ratio:9/16}
-.vgrid-card.row1-right{aspect-ratio:unset;align-self:stretch}
+.vgrid-card.row1-right{aspect-ratio:unset;align-self:stretch;min-height:200px}
 .vgrid-label{position:absolute;bottom:0;left:0;right:0;padding:48px 16px 16px;background:linear-gradient(to top,rgba(0,0,0,.8),transparent);font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.95);text-shadow:0 1px 4px rgba(0,0,0,.5)}
 
 /* VIDEO MODAL */
@@ -516,17 +522,31 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
     bottom: var(--pad);
   }
 
+  /* Center-align cards and content */
+  .pg-card { padding: 24px 20px; text-align: center; }
+  .pg-card--cta { text-align: center; justify-content: center; }
+  .section-label { text-align: center; }
+  .sec-heading { text-align: center; }
+  .bio-line { text-align: center; }
+  .svc-sub { text-align: center; }
+  .svc-cta-text { text-align: center; }
+  .svc-cta-btns { justify-content: center; }
+  .svc-rates { justify-content: center; }
+  .svc-packages { justify-content: center; }
+  .stats-grid { justify-content: center; }
+  .stat-item { text-align: center; align-items: center; }
+  .wico-body { text-align: center; align-items: center; }
+  .wico-roles { justify-content: center; }
+  .evt-header { text-align: center; align-items: center; }
+  .des-anim-block,.des-gifs-wrap { align-items: center; text-align: center; }
+  .des-anim-meta,.des-gifs-meta { align-items: center; max-width: 100%; }
+  .about-hero-header { align-self: center; text-align: center; }
+  .svc-gear { justify-content: center; }
+  .svc-gear-label,.svc-gear-name { text-align: center; }
+
   .mv-grid{grid-template-columns:1fr}
-  .about-info { left: 20px; top: 24px; }
   .about-ctrl { padding: 36px 20px 14px; }
-  .about-bio { padding: 40px 20px 48px; }
-  .roles-cloud { gap: 8px 12px; }
-  .role.big { font-size: clamp(16px, 5vw, 28px); }
-  .role.small { font-size: clamp(9px, 2.5vw, 12px); }
-  .vcard { height: 42vh; min-height: 160px; }
-  .vid-strip { padding: 0 12px; gap: 8px; }
-  .des-intro { padding: 24px 20px; gap: 20px; }
-  .des-gifs { flex-direction: column; max-width: 260px; }
+  .des-gifs { flex-direction: column; max-width: 260px; margin: 0 auto; }
   .des-port-head { padding: 14px 16px 10px; }
   .des-port-nav { padding: 8px 16px; }
   .fcta { bottom: 18px; right: 18px; }
@@ -842,16 +862,20 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;
 
     <!-- NAPRI -->
     <div class="des-anim-block anim fade-up" style="--delay:.1s">
-      <h3 class="des-anim-title">Napri</h3>
-      <p class="des-anim-desc">Short rotoscope and stylistic animation for Music Video working with Napri</p>
+      <div class="des-anim-meta">
+        <h3 class="des-anim-title">Napri</h3>
+        <p class="des-anim-desc">Short rotoscope and stylistic animation for Music Video working with Napri</p>
+      </div>
       <video class="des-anim-vid" src="napri_baitj.mp4" autoplay muted loop playsinline></video>
     </div>
 
     <!-- SCAR -->
     <div class="des-gifs-wrap anim fade-up" style="--delay:.14s">
-      <h3 class="des-anim-title">Scar</h3>
-      <p class="des-anim-desc">concept art for a samurai vigilante in a 16-bit fighting game</p>
-      <div class="des-gifs">
+      <div class="des-gifs-meta">
+        <h3 class="des-anim-title">Scar</h3>
+        <p class="des-anim-desc">concept art for a samurai vigilante in a 16-bit fighting game</p>
+      </div>
+      <div class="des-gifs" style="flex:1;min-width:0">
         <div class="des-gif"><img src="scar_animation_1.gif" alt="Animation 1"></div>
         <div class="des-gif"><img src="scar_city_anim.gif" alt="Animation 2"></div>
       </div>
@@ -1035,10 +1059,12 @@ document.getElementById('sb-toggle').addEventListener('click', () => {
 });
 
 // ─── VIDEO CONTROLS ───
+// ─── HERO SCRUBBER ───
 function fmt(s) {
   if (!s || isNaN(s)) return '0:00';
   return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
 }
+let scrubRunning = false;
 function tickScrub() {
   const v = document.getElementById('herov');
   const fill = document.getElementById('fill-herov');
@@ -1047,9 +1073,18 @@ function tickScrub() {
     fill.style.width = (v.duration ? v.currentTime / v.duration * 100 : 0) + '%';
     if (time) time.textContent = fmt(v.currentTime) + ' / ' + fmt(v.duration);
   }
-  requestAnimationFrame(tickScrub);
+  if (!v || !v.paused) requestAnimationFrame(tickScrub);
+  else scrubRunning = false;
 }
-requestAnimationFrame(tickScrub);
+function ensureScrubRunning() {
+  if (!scrubRunning) { scrubRunning = true; requestAnimationFrame(tickScrub); }
+}
+const _herov = document.getElementById('herov');
+if (_herov) {
+  _herov.addEventListener('play', ensureScrubRunning);
+  _herov.addEventListener('playing', ensureScrubRunning);
+  ensureScrubRunning();
+}
 
 document.getElementById('scrub-herov').addEventListener('click', e => {
   const v = document.getElementById('herov');
@@ -1120,7 +1155,7 @@ function _closeModal() {
 }
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') _closeModal();
+  if (e.key === 'Escape') { _closeModal(); _closeAbout(); }
 });
 
 
@@ -1249,18 +1284,7 @@ document.addEventListener('click', e => {
   if (fcta && !fcta.contains(e.target)) document.getElementById('fmenu').classList.remove('open');
 });
 
-// ─── ROLES CLOUD: animate only once on first view ───
-(function() {
-  const cloud = document.querySelector('.roles-cloud');
-  if (!cloud) return;
-  const obs = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) {
-      cloud.classList.add('animated');
-      obs.disconnect(); // fire once only
-    }
-  }, { threshold: 0.2 });
-  obs.observe(cloud);
-})();
+// roles-cloud removed
 
 
 function lockHero() {
@@ -1427,7 +1451,6 @@ requestAnimationFrame(lockHero);
 <script>
 function openAboutModal() {
   document.getElementById('aboutme-modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
 }
 function closeAboutModal(e) {
   if (e.target !== document.getElementById('aboutme-modal')) return;
@@ -1436,9 +1459,7 @@ function closeAboutModal(e) {
 function closeAboutModalBtn() { _closeAbout(); }
 function _closeAbout() {
   document.getElementById('aboutme-modal').classList.remove('open');
-  document.body.style.overflow = '';
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') _closeAbout(); });
 </script>
 </body>
 </html>
